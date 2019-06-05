@@ -1,0 +1,14 @@
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\bin\Debug\netcoreapp2.1\DigitalSignage.Web.deps.json
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\bin\Debug\netcoreapp2.1\DigitalSignage.Web.runtimeconfig.json
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\bin\Debug\netcoreapp2.1\DigitalSignage.Web.runtimeconfig.dev.json
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\bin\Debug\netcoreapp2.1\DigitalSignage.Web.dll
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.csprojAssemblyReference.cache
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.csproj.CoreCompileInputs.cache
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.RazorAssemblyInfo.cache
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.RazorAssemblyInfo.cs
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.AssemblyInfoInputs.cache
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.AssemblyInfo.cs
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.RazorTargetAssemblyInfo.cache
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\bin\Debug\netcoreapp2.1\DigitalSignage.Web.pdb
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.dll
+C:\REPO\DigitalSignage-2.0\DigitalSignage-2.0\DigitalSignage.Web\obj\Debug\netcoreapp2.1\DigitalSignage.Web.pdb
