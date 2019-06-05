@@ -2703,7 +2703,7 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "runtime.native.System.Data.SqlClient.sni/4.4.0": {
+      "runtime.native.System.Data.SqlClient.sni/4.5.0": {
         "type": "package",
         "dependencies": {
           "runtime.win-arm64.runtime.native.System.Data.SqlClient.sni": "4.4.0",
@@ -2988,13 +2988,13 @@
           "ref/netstandard1.3/System.Console.dll": {}
         }
       },
-      "System.Data.SqlClient/4.5.1": {
+      "System.Data.SqlClient/4.6.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Win32.Registry": "4.5.0",
           "System.Security.Principal.Windows": "4.5.0",
           "System.Text.Encoding.CodePages": "4.5.0",
-          "runtime.native.System.Data.SqlClient.sni": "4.4.0"
+          "runtime.native.System.Data.SqlClient.sni": "4.5.0"
         },
         "compile": {
           "ref/netcoreapp2.1/System.Data.SqlClient.dll": {}
@@ -4335,6 +4335,19 @@
         },
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
+        }
+      },
+      "DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "System.Data.SqlClient": "4.6.1"
+        },
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
         }
       }
     }
@@ -7202,15 +7215,16 @@
         "runtime.native.system.nuspec"
       ]
     },
-    "runtime.native.System.Data.SqlClient.sni/4.4.0": {
-      "sha512": "A8v6PGmk+UGbfWo5Ixup0lPM4swuSwOiayJExZwKIOjTlFFQIsu3QnDXECosBEyrWSPryxBVrdqtJyhK3BaupQ==",
+    "runtime.native.System.Data.SqlClient.sni/4.5.0": {
+      "sha512": "AJfX7owAAkMjWQYhoml5IBfXh8UyYPjktn8pK0BFGAdKgBS7HqMz1fw5vdzfZUWfhtTPDGCjgNttt46ZyEmSjg==",
       "type": "package",
-      "path": "runtime.native.system.data.sqlclient.sni/4.4.0",
+      "path": "runtime.native.system.data.sqlclient.sni/4.5.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
+        "runtime.native.system.data.sqlclient.sni.4.5.0.nupkg.sha512",
         "runtime.native.system.data.sqlclient.sni.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -7861,10 +7875,10 @@
         "system.console.nuspec"
       ]
     },
-    "System.Data.SqlClient/4.5.1": {
-      "sha512": "HV8pqcYlH7bNnX1n4i6F5RG7r6+WVErE2jUMNjXRrrkLFVIWLoerXtXDFs80pHvDBjxoG4rG0p2BUH3iXRs7hQ==",
+    "System.Data.SqlClient/4.6.1": {
+      "sha512": "7MTJhBFt4/tSJ2VRpG+TQNPcDdbCnWuoYzbe0kD5O3mQ7aZ2Q+Q3D9Y5Y3/aper5Gp3Lrs+8edk9clvxyPYXPw==",
       "type": "package",
-      "path": "system.data.sqlclient/4.5.1",
+      "path": "system.data.sqlclient/4.6.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7929,7 +7943,7 @@
         "runtimes/win/lib/netstandard1.3/System.Data.SqlClient.dll",
         "runtimes/win/lib/netstandard2.0/System.Data.SqlClient.dll",
         "runtimes/win/lib/uap10.0.16299/System.Data.SqlClient.dll",
-        "system.data.sqlclient.4.5.1.nupkg.sha512",
+        "system.data.sqlclient.4.6.1.nupkg.sha512",
         "system.data.sqlclient.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -11801,10 +11815,16 @@
         "system.xml.xpath.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xdocument.nuspec"
       ]
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
+      "DAL >= 1.0.0",
       "Microsoft.AspNet.SignalR >= 2.4.1",
       "Microsoft.AspNetCore.App >= 2.1.1",
       "Microsoft.AspNetCore.Razor.Design >= 2.1.2",
@@ -11812,23 +11832,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\luca.ceccato\\.nuget\\packages\\": {},
+    "C:\\Users\\leon.rahman\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\REPO\\SignalIR\\Backend\\DigitalSignage.Web\\DigitalSignage.Web.csproj",
+      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\Backend\\DigitalSignage.Web\\DigitalSignage.Web.csproj",
       "projectName": "DigitalSignage.Web",
-      "projectPath": "C:\\REPO\\SignalIR\\Backend\\DigitalSignage.Web\\DigitalSignage.Web.csproj",
-      "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-      "outputPath": "C:\\REPO\\SignalIR\\Backend\\DigitalSignage.Web\\obj\\",
+      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\Backend\\DigitalSignage.Web\\DigitalSignage.Web.csproj",
+      "packagesPath": "C:\\Users\\leon.rahman\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\Backend\\DigitalSignage.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\luca.ceccato\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\leon.rahman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11840,7 +11860,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\Backend\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\Backend\\DAL\\DAL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
