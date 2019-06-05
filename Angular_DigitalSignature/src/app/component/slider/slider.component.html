@@ -1,11 +1,8 @@
 <section id="wrapper">
-<ngb-carousel  >
+
+  <ngb-carousel  >
     <ng-template ngbSlide >
-      <img [src]="images[0]" alt="Random first slide">
-      <div class="carousel-caption">
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-      </div>
+      
     </ng-template>
     <ng-template ngbSlide>
       <img [src]="images[1]" alt="Random second slide">
@@ -26,4 +23,7 @@
       
     </ng-template>
   </ngb-carousel>
+  <div *ngFor="let one of data">
+    {{one.Name}}
+  </div>
   <section>
