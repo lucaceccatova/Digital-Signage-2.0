@@ -1,0 +1,9 @@
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp2.1\DAL.deps.json
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp2.1\DAL.dll
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.csproj.CoreCompileInputs.cache
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.AssemblyInfoInputs.cache
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.AssemblyInfo.cs
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\bin\Debug\netcoreapp2.1\DAL.pdb
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.csprojAssemblyReference.cache
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.dll
+C:\Users\luca.ceccato\source\repos\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.pdb
