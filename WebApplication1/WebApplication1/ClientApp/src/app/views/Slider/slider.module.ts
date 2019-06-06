@@ -9,6 +9,9 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import {SliderComponent} from './slider.component';
 import { sliderRoutingModule } from './slider-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {GetMediaService} from '../../Services/GetMedia/get-media.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -16,10 +19,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ChartsModule,
     BsDropdownModule,
     ButtonsModule.forRoot(),
-    NgbModule
+    NgbModule,
+    HttpClient,
+    HttpHeaders
+    
     
   ],
-  declarations: [ SliderComponent ]
+  declarations: [ SliderComponent ],
+  providers:[GetMediaService,HttpClient]
 })
 export class SliderModule { 
 
