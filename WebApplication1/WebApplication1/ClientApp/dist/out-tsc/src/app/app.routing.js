@@ -82,7 +82,6 @@ export var routes = [
             }
         ]
     },
-    { path: '**', component: P404Component }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
