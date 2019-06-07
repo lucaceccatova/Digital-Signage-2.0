@@ -32,7 +32,6 @@ var AppModule = /** @class */ (function () {
             imports: [
                 BrowserModule,
                 BrowserAnimationsModule,
-                AppRoutingModule,
                 AppAsideModule,
                 AppBreadcrumbModule.forRoot(),
                 AppFooterModule,
@@ -41,7 +40,8 @@ var AppModule = /** @class */ (function () {
                 PerfectScrollbarModule,
                 BsDropdownModule.forRoot(),
                 TabsModule.forRoot(),
-                ChartsModule
+                ChartsModule,
+                AppRoutingModule
             ],
             declarations: [
                 AppComponent
@@ -49,7 +49,7 @@ var AppModule = /** @class */ (function () {
                 P404Component,
                 P500Component,
                 LoginComponent,
-                RegisterComponent
+                RegisterComponent,
             ]),
             providers: [{
                     provide: LocationStrategy,
