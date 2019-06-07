@@ -10,7 +10,7 @@ import {SliderComponent} from './slider.component';
 import { sliderRoutingModule } from './slider-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {GetMediaService} from '../../Services/GetMedia/get-media.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -20,13 +20,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     BsDropdownModule,
     ButtonsModule.forRoot(),
     NgbModule,
-    HttpClient,
-    HttpHeaders
+    HttpClientModule
+    
     
     
   ],
   declarations: [ SliderComponent ],
-  providers:[GetMediaService,HttpClient]
+  providers:[GetMediaService]
 })
 export class SliderModule { 
 

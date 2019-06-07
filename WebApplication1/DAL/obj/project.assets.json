@@ -1181,11 +1181,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\WebApplication1\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\WebApplication1\\DAL\\DAL.csproj",
+      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
       "packagesPath": "C:\\Users\\leon.rahman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\WebApplication1\\DAL\\obj\\",
+      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

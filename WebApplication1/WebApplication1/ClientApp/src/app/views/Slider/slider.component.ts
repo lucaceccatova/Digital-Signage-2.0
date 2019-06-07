@@ -6,6 +6,8 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {GetMediaService}from '../../Services/GetMedia/get-media.service';
 import {element} from '../../Models/Element';
 import { observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 @Component({
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
@@ -13,24 +15,25 @@ import { observable } from 'rxjs';
 export class SliderComponent implements OnInit
 {
   images = [1, 2, 3].map(() => `https://picsum.photos/900/500?random&t=${Math.random()}`);
-  elements:element[];
+  elements:element[]=[];
+  
 constructor(private getJson:GetMediaService)
 {
-  this.ParseData();
-  console.log(this.elements);
 }
 ngOnInit()
 {
-  this.getJson.GetJSON().subscribe
-  (
-    data=>
-    {
-      this.elements=JSON.parse(data.toString());
-    }
-  )
-}
-  ParseData(){
- 
-  }
+this.getJS()
+console.log(this.elements);
 }
 
+getJS() {
+  let x;
+  this.getJson.GetJSON().pipe(
+    map(
+      x=> this.elements=x
+    )
+  )
+  
+    .subscribe();
+}
+}
