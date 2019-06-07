@@ -10,17 +10,27 @@ import { observable } from 'rxjs';
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
-export class SliderComponent
+export class SliderComponent implements OnInit
 {
   images = [1, 2, 3].map(() => `https://picsum.photos/900/500?random&t=${Math.random()}`);
-  elements:element[]=new element[0];
+  elements:element[];
 constructor(private getJson:GetMediaService)
 {
   this.ParseData();
   console.log(this.elements);
 }
-ParseData():void{
- this.elements=JSON.parse(this.getJson.GetJSON())
+ngOnInit()
+{
+  this.getJson.GetJSON().subscribe
+  (
+    data=>
+    {
+      this.elements=JSON.parse(data.toString());
+    }
+  )
 }
-  
+  ParseData(){
+ 
+  }
+}
 
