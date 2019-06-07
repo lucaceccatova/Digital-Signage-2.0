@@ -79,6 +79,10 @@ export var routes = [
             {
                 path: 'widgets',
                 loadChildren: function () { return import('./views/widgets/widgets.module').then(function (m) { return m.WidgetsModule; }); }
+            },
+            {
+                path: 'slider',
+                loadChildren: function () { return import('./views/Slider/slider.module').then(function (m) { return m.SliderModule; }); }
             }
         ]
     },

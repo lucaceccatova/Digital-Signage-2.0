@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Web.Http;
 
 namespace WebApplication1
 {
@@ -19,8 +18,6 @@ namespace WebApplication1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-
         }
 
         public IConfiguration Configuration { get; }
@@ -37,10 +34,11 @@ namespace WebApplication1
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSpaStaticFiles(configuration =>
+            //CODICE AGGIUNTO
+           /* services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,9 +57,11 @@ namespace WebApplication1
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSpaStaticFiles();
+            //MODIFICA FATTA
+           // app.UseSpaStaticFiles();
 
-            app.UseSpa(spa =>
+            //MODIFICA FATTA
+          /*  app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
@@ -73,7 +73,8 @@ namespace WebApplication1
                     spa.UseAngularCliServer(npmScript: "start");
                     spa.Options.StartupTimeout = TimeSpan.FromSeconds(600);
                 }
-            });
+            });*/
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
