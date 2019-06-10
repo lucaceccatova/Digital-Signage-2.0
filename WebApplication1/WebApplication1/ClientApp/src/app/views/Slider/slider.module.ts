@@ -12,6 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -21,7 +23,8 @@ import {CommonModule} from '@angular/common';
     ButtonsModule.forRoot(),
     NgbModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    CarouselModule
     
     
     

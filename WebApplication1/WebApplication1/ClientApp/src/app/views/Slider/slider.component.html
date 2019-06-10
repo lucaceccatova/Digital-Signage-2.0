@@ -2,7 +2,7 @@
     <ngb-carousel class="MyCarousel" [showNavigationArrows]="showNavigationArrows">
       <div *ngFor="let item of elements" >
         <ng-template ngbSlide>
-          
+
           <img src={{item.path}} alt="Random first slide" *ngIf="item.value==1">
           <video *ngIf="item.value==0" controls>
             <source src={{item.path}} type="video/mp4">
@@ -18,3 +18,43 @@
 
         
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-sm-6">
+    <div class="card">
+      <div class="card-header">
+        Bootstrap Carousel
+        <div class="card-header-actions">
+          <a href="https://valor-software.com/ngx-bootstrap/#/carousel" target="_blank">
+            <small className="text-muted">docs</small>
+          </a>
+        </div>
+      </div>
+      <div class="card-body">
+        <carousel >
+          <slide *ngFor="let one of elements">
+            <img src={{one.path}} alt="First slide" style="display: block; width: 100%;">
+          </slide>
+        </carousel>
+      </div>
+    </div>
+  </div>
+
+
+
+ 

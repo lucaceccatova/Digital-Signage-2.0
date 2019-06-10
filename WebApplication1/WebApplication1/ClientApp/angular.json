@@ -31,8 +31,8 @@
               "includePaths": ["./node_modules"]
             },
             "scripts": [
-              "node_modules/chart.js/dist/Chart.min.js",
-              "node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+        "node_modules/bootstrap/dist/js/bootstrap.min.js"
 
             ]
           },
