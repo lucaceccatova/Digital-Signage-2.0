@@ -11,7 +11,7 @@ import { sliderRoutingModule } from './slider-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import {CommonModule} from '@angular/common';
 @NgModule({
   imports: [
     FormsModule,
@@ -20,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     BsDropdownModule,
     ButtonsModule.forRoot(),
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
     
     
     

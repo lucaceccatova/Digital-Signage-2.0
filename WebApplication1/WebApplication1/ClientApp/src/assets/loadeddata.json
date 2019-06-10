@@ -1,0 +1,5 @@
+[{"id":3,"name":"Pianura","description":"Paesaggio di pianura","value":0,"timer":2,"create_date":"2019-06-05T00:00:00","path":"assets/img/foto.jpg"},
+{"id":4,"name":"Montagna","description":"Immagine del Monte Bianco dal satellite","value":1,"timer":1,"create_date":"2019-07-06T00:00:00","path":"assets/img/altrafoto.jpg"}
+,{
+    "id":5,"name":"Città","description":"Una bella città","value":1,"timer":1,"create_date":"2019-07-06T00:00:00","path":"assets/img/altraaltrafoto.jpg"
+}]
