@@ -1,10 +1,12 @@
 <section id="wrapper">
-    <ngb-carousel class="MyCarousel">
+    <ngb-carousel class="MyCarousel" [showNavigationArrows]="showNavigationArrows">
       <div *ngFor="let item of elements" >
-          ciao
         <ng-template ngbSlide>
-          <img src={{item.path}} alt="Random first slide">
           
+          <img src={{item.path}} alt="Random first slide" *ngIf="item.value==1">
+          <video *ngIf="item.value==0" controls>
+            <source src={{item.path}} type="video/mp4">
+          </video>
           <div class="carousel-caption">
             <h3>{{item.name}}</h3>
             <p>{{item.description}}</p>

@@ -6,11 +6,15 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {GetMediaService}from '../../Services/GetMedia/get-media.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable } from 'rxjs';
+import { ViewEncapsulation } from '@angular/core'
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
+
 import { map } from 'rxjs/operators';
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 @Component({
+  encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
@@ -28,7 +32,7 @@ constructor(private http:GetMediaService)
 ngOnInit():void
 {
   this.getDataMock();
-
+  
 }
 
  getDataMock()
