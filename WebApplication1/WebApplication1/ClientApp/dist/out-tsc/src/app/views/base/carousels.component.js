@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 var CarouselsComponent = /** @class */ (function () {
     function CarouselsComponent() {
-        this.myInterval = 6000;
+        this.myInterval = 2000;
         this.slides = [];
         this.activeSlideIndex = 0;
         this.noWrapSlides = false;
@@ -24,7 +24,7 @@ var CarouselsComponent = /** @class */ (function () {
         Component({
             templateUrl: 'carousels.component.html',
             providers: [
-                { provide: CarouselConfig, useValue: { interval: 1500, noPause: true } },
+                { provide: CarouselConfig, useValue: { interval: 5000, noPause: true } },
             ]
         }),
         tslib_1.__metadata("design:paramtypes", [])

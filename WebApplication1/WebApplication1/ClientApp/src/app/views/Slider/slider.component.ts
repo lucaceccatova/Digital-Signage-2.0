@@ -1,4 +1,4 @@
-import { Component, OnInit ,OnDestroy} from '@angular/core';
+import { Component, OnInit ,OnDestroy, Output} from '@angular/core';
 
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
@@ -14,35 +14,79 @@ import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 import {CarouselsComponent} from '../../views/base/carousels.component';
-
+import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
-export class SliderComponent implements OnInit
+export class SliderComponent implements OnInit,OnDestroy
 {
   url:string="/assets/loadeddata.json"
   elements:element[];
-  unsubscribes: Array<Subscription>;
-  
-constructor(private http:GetMediaService, private config:NgbCarouselConfig)
+  unsubscribes: Subscription[]=[];
+  nick='prova';
+  message='';
+  messageString:string[]=[];
+  private connection : HubConnection;
+constructor(private http:GetMediaService)
 {
- 
+  
 }
-ngOnInit():void
+ngOnInit()
 {
   this.getDataMock();
-
   
+
+ 
+}
+public SendMessage():void
+{
+  this.connection.invoke("sendToAll",this.nick,this.message)
+  .catch();
+  this.message='';
+}
+ngOnDestroy()
+{
+  this.unsubscribes.forEach(element => {
+    element.unsubscribe();
+  });
 }
 
  getDataMock()
  {
    
-  this.http.get(this.url).subscribe(data=>
+  this.unsubscribes.push(this.http.get(this.url).subscribe(data=>
     {
       this.elements=data;
     })  
+    );
+ }
+ Send()
+ {
+   this.messageString.push(this.message);
+   this.message='';
+ }
+ DebugConnection()
+ {
+   console.log("Ciao");
+  //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
+this.connection=new HubConnectionBuilder().withUrl('https://localhost:44393/chat')
+.configureLogging(signalR.LogLevel.Information)
+.build();
+  this.connection
+  .start()
+  .then(()=>console.log("connection started"))
+  .catch(err=>console.log("Errore di connessione"));
+
+
+  //
+
+  this.connection.on("sendToAll",(nick :string,message :string)=>
+  {
+  const text=nick+'#'+message;
+  });
+  
  }
 }

@@ -13,7 +13,6 @@ import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
-
 @NgModule({
   imports: [
     FormsModule,
@@ -25,6 +24,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     HttpClientModule,
     CommonModule,
     CarouselModule
+    
     
     
     
