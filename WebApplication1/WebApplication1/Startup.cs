@@ -44,11 +44,10 @@ namespace WebApplication1
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //CODICE AGGIUNTO
-           /* services.AddSpaStaticFiles(configuration =>
+            services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
-            });*/
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,11 +67,9 @@ namespace WebApplication1
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseCors(MyAllowSpecificOrigins);
-            //MODIFICA FATTA
-           // app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
 
-            //MODIFICA FATTA
-          /*  app.UseSpa(spa =>
+            app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
@@ -84,7 +81,7 @@ namespace WebApplication1
                     spa.UseAngularCliServer(npmScript: "start");
                     spa.Options.StartupTimeout = TimeSpan.FromSeconds(600);
                 }
-            });*/
+            });
 
             app.UseMvc(routes =>
             {
