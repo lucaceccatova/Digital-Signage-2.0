@@ -12632,11 +12632,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\luca.ceccato\\Desktop\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "C:\\Users\\luca.ceccato\\Desktop\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+      "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\luca.ceccato\\Desktop\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\obj\\",
+      "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12655,8 +12655,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\luca.ceccato\\Desktop\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
-              "projectPath": "C:\\Users\\luca.ceccato\\Desktop\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
+            "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
             }
           }
         }
