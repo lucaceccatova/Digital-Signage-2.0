@@ -72,7 +72,7 @@ ngOnDestroy()
  {
    console.log("Ciao");
   //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
-this.connection=new HubConnectionBuilder().withUrl('https://localhost:44393/chat')
+this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat')
 .configureLogging(signalR.LogLevel.Information)
 .build();
   this.connection
