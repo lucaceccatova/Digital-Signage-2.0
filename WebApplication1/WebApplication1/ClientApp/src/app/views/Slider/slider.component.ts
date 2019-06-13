@@ -16,6 +16,8 @@ import { compileBaseDefFromMetadata } from '@angular/compiler';
 import {CarouselsComponent} from '../../views/base/carousels.component';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
+import { stringify } from '@angular/compiler/src/util';
+import { start } from 'repl';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -31,7 +33,7 @@ export class SliderComponent implements OnInit,OnDestroy
   message='';
   messageString:string[]=[];
   private connection : HubConnection;
-  startingSlide=1;
+  startingSlide=0;
 
 constructor(private http:GetMediaService)
 {
@@ -97,7 +99,14 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voic
 slideEngine()
   {
     setTimeout(() => {
-      this.startingSlide++;
+      if(this.elements.length>this.startingSlide+1)
+      {
+        this.startingSlide++;
+      }
+      else
+      {
+        this.startingSlide=0;
+      }
       this.slideEngine();
       console.log(this.elements);
     }, this.elements[this.startingSlide].timer*1000);
