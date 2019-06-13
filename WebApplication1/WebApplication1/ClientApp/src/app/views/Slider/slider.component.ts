@@ -23,8 +23,9 @@ import * as signalR from '@aspnet/signalr';
 })
 export class SliderComponent implements OnInit,OnDestroy
 {
-  url:string="/assets/loadeddata.json"
-  public elements:element[];
+  //url:string="/assets/loadeddata.json"
+  url:string="https://localhost:44303/api/test/getdati"
+  public elements: element[];
   unsubscribes: Subscription[]=[];
   nick='prova';
   message='';

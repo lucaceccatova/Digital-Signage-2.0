@@ -22,9 +22,16 @@ namespace WebApplication1.Models
         {
             List<MediaBL> mx = new List<MediaBL>();
             mx = GestoreBLL.GetMedia();
-            //MANCANO CONTROLLI
-            MediaBL m =(MediaBL)mx.Where(p => p.id.Equals(int.Parse(id)));
-            Clients.All.SendAsync("sendID",m.id);
+            
+            try
+            {
+                MediaBL m = (MediaBL)mx.Where(p => p.id.Equals(int.Parse(id)));
+                Clients.All.SendAsync("sendID", m.id);
+            }
+            catch (NotFoundException)
+            {
+                Clients.All.SendAsync("sendID", "ID NON VALIDO");
+            }
         }
     }
 }

@@ -20,12 +20,12 @@ C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebAp
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\login\login.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\register\register.component.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\register\register.component.js.map
-C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\dataType.js
-C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\dataType.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\Element.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\Element.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Services\GetMedia\get-media.service.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Services\GetMedia\get-media.service.js.map
+C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\carousels.component.js
+C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\carousels.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\Slider\slider.component.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\Slider\slider.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\Slider\slider-routing.module.js
@@ -42,8 +42,6 @@ C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebAp
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\tables.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\tabs.component.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\tabs.component.js.map
-C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\carousels.component.js
-C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\carousels.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\collapses.component.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\collapses.component.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\views\base\popovers.component.js
@@ -130,6 +128,8 @@ C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebAp
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\test.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\app.component.spec.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\app.component.spec.js.map
+C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\dataType.js
+C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Models\dataType.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Services\GetMedia\get-media.service.spec.js
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\app\Services\GetMedia\get-media.service.spec.js.map
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\ClientApp\dist\out-tsc\src\environments\environment.prod.js
