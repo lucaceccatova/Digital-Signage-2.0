@@ -4,12 +4,11 @@ import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {GetMediaService}from '../../Services/GetMedia/get-media.service';
+import {ServerListnerService} from '../../Services/Listner/server-listner.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core'
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
-import { map } from 'rxjs/operators';
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata } from '@angular/compiler';
@@ -25,16 +24,22 @@ import { start } from 'repl';
 })
 export class SliderComponent implements OnInit,OnDestroy
 {
-  url:string="/assets/loadeddata.json"
+  private connection : HubConnection;
+  //api route
+  url:string="/assets/loadeddata.json";
+  //array of object receved from api that include all information about media content of the slider
   public elements:element[];
   unsubscribes: Subscription[]=[];
-  nick='prova';
-  message='';
-  messageString:string[]=[];
-  private connection : HubConnection;
+  //startingSlide is the index of the media displayed in slider
   startingSlide=0;
+  //id, server directive for showing a specific slide 
+  id:number;
+  newDirective:boolean;
+  //observable for newDirective
+  public interrupt:Observable<boolean>;
 
-constructor(private http:GetMediaService)
+
+constructor(private http:GetMediaService,private dir:ServerListnerService)
 {
   
 }
@@ -43,14 +48,8 @@ ngOnInit()
   this.getDataMock();
  
   
-  //  this.slideEngine(this.elements);
+  this.sliderListner();
  
-}
-public SendMessage():void
-{
-  this.connection.invoke("sendToAll",this.nick,this.message)
-  .catch();
-  this.message='';
 }
 ngOnDestroy()
 {
@@ -69,11 +68,7 @@ ngOnDestroy()
     })  
     );
  }
- Send()
- {
-   this.messageString.push(this.message);
-   this.message='';
- }
+ 
  DebugConnection()
  {
    console.log("Ciao");
@@ -89,16 +84,23 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat
 
   //
 
-  this.connection.on("sendToAll",(nick :string,message :string)=>
+  this.connection.on("sendId",(numero:number)=>
   {
-  const text=nick+'#'+message;
+    this.id=numero;
+    this.newDirective=true;
+
   });
   
  }
 slideEngine()
   {
     setTimeout(() => {
-      if(this.elements.length>this.startingSlide+1)
+      if(this.newDirective==true)
+      { this.id=null;
+        this.startingSlide=this.id;
+        this.newDirective=false;
+      }
+      else if(this.elements.length>this.startingSlide+1)
       {
         this.startingSlide++;
       }
@@ -107,8 +109,15 @@ slideEngine()
         this.startingSlide=0;
       }
       this.slideEngine();
-      console.log(this.elements);
     }, this.elements[this.startingSlide].timer*1000);
+  }
+  sliderListner()
+  {
+   this.dir.GetId().subscribe(data=>
+    {
+      this.id==data;
+      this.newDirective==true;
+    });
   }
 }
 

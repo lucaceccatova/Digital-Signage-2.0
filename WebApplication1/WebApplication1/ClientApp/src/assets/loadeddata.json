@@ -3,5 +3,5 @@
 ,{
     "id":3,"name":"Città","description":"Una bella città","value":1,"timer":5,"create_date":"2019-07-06T00:00:00","path":"assets/img/altraaltrafoto.jpg"
 },{
-    "id":4,"name":"Video","description":"Una bella città","value":0,"timer":20,"create_date":"2019-07-06T00:00:00","path":"assets/img/mov_bbb.mp4"
+    "id":4,"name":"Video","description":"Una bella città","value":0,"timer":10,"create_date":"2019-07-06T00:00:00","path":"assets/img/mov_bbb.mp4"
 }]
