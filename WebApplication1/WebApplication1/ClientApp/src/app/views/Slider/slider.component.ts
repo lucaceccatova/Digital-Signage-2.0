@@ -111,7 +111,7 @@ slideEngine()
   }
   sliderListner()
   {
-   this.dir.GetId().subscribe(data=>
+   this.dir.getDirective().subscribe(data=>
     {
       
       this.id==data;
