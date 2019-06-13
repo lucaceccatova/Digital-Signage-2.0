@@ -10,7 +10,7 @@ import { RegisterComponent } from './views/register/register.component';
 export var routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'slider',
         pathMatch: 'full',
     },
     {

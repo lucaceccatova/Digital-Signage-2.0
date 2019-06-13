@@ -24,10 +24,8 @@ import { start } from 'repl';
 })
 export class SliderComponent implements OnInit,OnDestroy
 {
-  private connection : HubConnection;
-  //api route
-  url:string="/assets/loadeddata.json";
-  //array of object receved from api that include all information about media content of the slider
+  //url:string="/assets/loadeddata.json"
+  url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -69,11 +67,11 @@ ngOnDestroy()
     );
  }
  
- DebugConnection()
+ /*DebugConnection()
  {
    console.log("Ciao");
   //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
-this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat')
+this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
 .configureLogging(signalR.LogLevel.Information)
 .build();
   this.connection
@@ -91,7 +89,7 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat
 
   });
   
- }
+ }*/
 slideEngine()
   {
     setTimeout(() => {
