@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DAL;
+using BLL;
 
 namespace WebApplication1.Controllers
 {
@@ -19,10 +19,10 @@ namespace WebApplication1.Controllers
 
         [Route("api/test/getdati")]
         [HttpGet]
-        public List<Media> GetMedia()
+        public List<MediaBL> GetMedia()
         {
-            DB_Access d = new DB_Access();
-           return d.GetTodos();
+            
+            return GestoreBLL.GetMedia();
         }
 
     //    // GET: Test/Details/5

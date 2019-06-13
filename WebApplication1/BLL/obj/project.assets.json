@@ -359,6 +359,19 @@
             "rid": "win"
           }
         }
+      },
+      "DAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.1",
+        "dependencies": {
+          "System.Data.SqlClient": "4.6.1"
+        },
+        "compile": {
+          "bin/placeholder/DAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DAL.dll": {}
+        }
       }
     }
   },
@@ -1166,12 +1179,17 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "DAL/1.0.0": {
+      "type": "project",
+      "path": "../DAL/DAL.csproj",
+      "msbuildProject": "../DAL/DAL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Microsoft.NETCore.App >= 2.1.0",
-      "System.Data.SqlClient >= 4.6.1"
+      "DAL >= 1.0.0",
+      "Microsoft.NETCore.App >= 2.1.0"
     ]
   },
   "packageFolders": {
@@ -1181,11 +1199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
-      "projectName": "DAL",
-      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
+      "projectName": "BLL",
+      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\leon.rahman\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
+      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1203,7 +1221,11 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -1220,10 +1242,6 @@
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
-          },
-          "System.Data.SqlClient": {
-            "target": "Package",
-            "version": "[4.6.1, )"
           }
         },
         "imports": [
