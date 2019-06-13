@@ -1,4 +1,4 @@
-.MyCarousel
+.myCarousel
 {
     img
     {
@@ -7,4 +7,14 @@
     video{
         width:100%;
     }
+}
+
+.mySlides
+{
+    display: none;
+}
+
+.mySlidesVisible
+{
+    display: block;
 }

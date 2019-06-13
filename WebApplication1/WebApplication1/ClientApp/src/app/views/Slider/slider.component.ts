@@ -24,12 +24,14 @@ import * as signalR from '@aspnet/signalr';
 export class SliderComponent implements OnInit,OnDestroy
 {
   url:string="/assets/loadeddata.json"
-  elements:element[];
+  public elements:element[];
   unsubscribes: Subscription[]=[];
   nick='prova';
   message='';
   messageString:string[]=[];
   private connection : HubConnection;
+  startingSlide=1;
+
 constructor(private http:GetMediaService)
 {
   
@@ -37,8 +39,9 @@ constructor(private http:GetMediaService)
 ngOnInit()
 {
   this.getDataMock();
+ 
   
-
+  //  this.slideEngine(this.elements);
  
 }
 public SendMessage():void
@@ -60,6 +63,7 @@ ngOnDestroy()
   this.unsubscribes.push(this.http.get(this.url).subscribe(data=>
     {
       this.elements=data;
+
     })  
     );
  }
@@ -89,4 +93,13 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat
   });
   
  }
+slideEngine()
+  {
+    setTimeout(() => {
+      this.startingSlide++;
+      this.slideEngine();
+      console.log(this.elements);
+    }, this.elements[this.startingSlide].timer*1000);
+  }
 }
+
