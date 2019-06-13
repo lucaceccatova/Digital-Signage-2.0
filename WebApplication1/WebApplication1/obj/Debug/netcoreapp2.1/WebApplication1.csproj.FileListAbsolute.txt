@@ -175,3 +175,5 @@ C:\Users\luca.ceccato\Desktop\Digital-Signage-2.0\WebApplication1\WebApplication
 C:\Users\luca.ceccato\Desktop\Digital-Signage-2.0\WebApplication1\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.pdb
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\bin\Debug\netcoreapp2.1\BLL.dll
 C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\WebApplication1\bin\Debug\netcoreapp2.1\BLL.pdb
+C:\REPO\Digital-Signage-2.0\WebApplication1\WebApplication1\bin\Debug\netcoreapp2.1\BLL.dll
+C:\REPO\Digital-Signage-2.0\WebApplication1\WebApplication1\bin\Debug\netcoreapp2.1\BLL.pdb

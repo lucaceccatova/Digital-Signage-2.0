@@ -28,7 +28,7 @@ namespace WebApplication1.Models
                 MediaBL m = (MediaBL)mx.Where(p => p.id.Equals(int.Parse(id)));
                 Clients.All.SendAsync("sendID", m.id);
             }
-            catch (NotFoundException)
+            catch (Exception)
             {
                 Clients.All.SendAsync("sendID", "ID NON VALIDO");
             }
