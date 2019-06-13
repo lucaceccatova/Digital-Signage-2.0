@@ -26,11 +26,7 @@ export class SliderComponent implements OnInit,OnDestroy
 {
   //url:string="/assets/loadeddata.json"
   url:string="https://localhost:44303/api/test/getdati"
-<<<<<<< HEAD
-  public elements: element[];
-=======
   public elements:element[];
->>>>>>> e7e8eaa867340ae99c59743008f0d94146a914d5
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
   startingSlide=0;
