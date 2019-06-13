@@ -10,7 +10,7 @@ export class ServerListnerService {
   private connection : HubConnection;
 
   constructor() {
-    this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat')
+    this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
 .configureLogging(signalR.LogLevel.Information)
 .build();
   this.connection
