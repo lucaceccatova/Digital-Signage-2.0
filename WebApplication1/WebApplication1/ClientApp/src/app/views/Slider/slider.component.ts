@@ -115,8 +115,12 @@ slideEngine()
   {
    this.dir.GetId().subscribe(data=>
     {
+      
       this.id==data;
+      if(this.id<this.elements.length && this.id>=0)
+      {
       this.newDirective==true;
+      }
     });
   }
 }
