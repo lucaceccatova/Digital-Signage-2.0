@@ -4,18 +4,19 @@ import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {GetMediaService}from '../../Services/GetMedia/get-media.service';
+import {ServerListnerService} from '../../Services/Listner/server-listner.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core'
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
-import { map } from 'rxjs/operators';
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata } from '@angular/compiler';
 import {CarouselsComponent} from '../../views/base/carousels.component';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
+import { stringify } from '@angular/compiler/src/util';
+import { start } from 'repl';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -25,15 +26,22 @@ export class SliderComponent implements OnInit,OnDestroy
 {
   //url:string="/assets/loadeddata.json"
   url:string="https://localhost:44303/api/test/getdati"
+<<<<<<< HEAD
   public elements: element[];
+=======
+  public elements:element[];
+>>>>>>> e7e8eaa867340ae99c59743008f0d94146a914d5
   unsubscribes: Subscription[]=[];
-  nick='prova';
-  message='';
-  messageString:string[]=[];
-  private connection : HubConnection;
-  startingSlide=1;
+  //startingSlide is the index of the media displayed in slider
+  startingSlide=0;
+  //id, server directive for showing a specific slide 
+  id:number;
+  newDirective:boolean;
+  //observable for newDirective
+  public interrupt:Observable<boolean>;
 
-constructor(private http:GetMediaService)
+
+constructor(private http:GetMediaService,private dir:ServerListnerService)
 {
   
 }
@@ -42,14 +50,8 @@ ngOnInit()
   this.getDataMock();
  
   
-  //  this.slideEngine(this.elements);
+  this.sliderListner();
  
-}
-public SendMessage():void
-{
-  this.connection.invoke("sendToAll",this.nick,this.message)
-  .catch();
-  this.message='';
 }
 ngOnDestroy()
 {
@@ -68,16 +70,12 @@ ngOnDestroy()
     })  
     );
  }
- Send()
- {
-   this.messageString.push(this.message);
-   this.message='';
- }
- DebugConnection()
+ 
+ /*DebugConnection()
  {
    console.log("Ciao");
   //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
-this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat')
+this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
 .configureLogging(signalR.LogLevel.Information)
 .build();
   this.connection
@@ -88,19 +86,44 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat
 
   //
 
-  this.connection.on("sendToAll",(nick :string,message :string)=>
+  this.connection.on("sendId",(numero:number)=>
   {
-  const text=nick+'#'+message;
+    this.id=numero;
+    this.newDirective=true;
+
   });
   
- }
+ }*/
 slideEngine()
   {
     setTimeout(() => {
-      this.startingSlide++;
+      if(this.newDirective==true)
+      { this.id=null;
+        this.startingSlide=this.id;
+        this.newDirective=false;
+      }
+      else if(this.elements.length>this.startingSlide+1)
+      {
+        this.startingSlide++;
+      }
+      else
+      {
+        this.startingSlide=0;
+      }
       this.slideEngine();
-      console.log(this.elements);
     }, this.elements[this.startingSlide].timer*1000);
+  }
+  sliderListner()
+  {
+   this.dir.GetId().subscribe(data=>
+    {
+      
+      this.id==data;
+      if(this.id<this.elements.length && this.id>=0)
+      {
+      this.newDirective==true;
+      }
+    });
   }
 }
 

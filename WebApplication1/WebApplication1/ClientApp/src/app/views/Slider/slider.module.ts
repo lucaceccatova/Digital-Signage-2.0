@@ -13,6 +13,8 @@ import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {ServerListnerService} from '../../Services/Listner/server-listner.service';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -30,7 +32,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     
   ],
   declarations: [ SliderComponent ],
-  providers:[GetMediaService]
+  providers:[GetMediaService,ServerListnerService]
 })
 export class SliderModule { 
 

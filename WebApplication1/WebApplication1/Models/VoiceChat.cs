@@ -8,7 +8,7 @@ using BLL;
 
 namespace WebApplication1.Models
 {
-    public class VoiceChat :Hub
+    public class VoiceHub :Hub
     {
         public void SendToAll(string name, string message)
 
