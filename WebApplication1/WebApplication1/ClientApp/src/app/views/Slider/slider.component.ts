@@ -23,7 +23,8 @@ import * as signalR from '@aspnet/signalr';
 })
 export class SliderComponent implements OnInit,OnDestroy
 {
-  url:string="/assets/loadeddata.json"
+  //url:string="/assets/loadeddata.json"
+  url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   nick='prova';
@@ -76,7 +77,7 @@ ngOnDestroy()
  {
    console.log("Ciao");
   //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
-this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/chat')
+this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
 .configureLogging(signalR.LogLevel.Information)
 .build();
   this.connection

@@ -1175,23 +1175,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\luca.ceccato\\.nuget\\packages\\": {},
+    "C:\\Users\\leon.rahman\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+      "projectUniqueName": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
-      "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-      "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
+      "projectPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+      "packagesPath": "C:\\Users\\leon.rahman\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\leon.rahman\\Desktop\\Progetto1\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\luca.ceccato\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\leon.rahman\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
