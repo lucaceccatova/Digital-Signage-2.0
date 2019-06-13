@@ -1,22 +1,22 @@
 <section id="wrapper">
-    <ngb-carousel class="myCarousel" [showNavigationArrows]="showNavigationArrows">
-      <div *ngFor="let item of elements" >
-        <ng-template ngbSlide>
+  <ngb-carousel class="myCarousel" [showNavigationArrows]="showNavigationArrows">
+    <div *ngFor="let item of elements" >
+      <ng-template ngbSlide>
 
-          <img src={{item.path}} alt="Random first slide" *ngIf="item.value==1">
-          <video *ngIf="item.value==0" controls>
-            <source src={{item.path}} type="video/mp4">
-          </video>
-          <div class="carousel-caption">
-            <h3>{{item.name}}</h3>
-            <p>{{item.description}}</p>
-          </div>
-        </ng-template>
-      </div>
+        <img src={{item.path}} alt="Random first slide" *ngIf="item.value==1">
+        <video *ngIf="item.value==0" controls>
+          <source src={{item.path}} type="video/mp4">
+        </video>
+        <div class="carousel-caption">
+          <h3>{{item.name}}</h3>
+          <p>{{item.description}}</p>
+        </div>
+      </ng-template>
+    </div>
 
-      </ngb-carousel>
+    </ngb-carousel>
 
-        
+      
 </section>
 
 
@@ -36,42 +36,45 @@
 
 
 <div class="col-sm-6">
-    <div class="card">
-      <div class="card-header">
-        Bootstrap Carousel
-        <div class="card-header-actions">
-          <a href="https://valor-software.com/ngx-bootstrap/#/carousel" target="_blank">
-            <small className="text-muted">docs</small>
-          </a>
-        </div>
-      </div>
-      <div class="card-body">
-        <carousel >
-          <slide *ngFor="let one of elements">
-            <img src={{one.path}} alt="First slide" style="display: block; width: 100%;">
-          </slide>
-        </carousel>
+  <div class="card">
+    <div class="card-header">
+      Bootstrap Carousel
+      <div class="card-header-actions">
+        <a href="https://valor-software.com/ngx-bootstrap/#/carousel" target="_blank">
+          <small className="text-muted">docs</small>
+        </a>
       </div>
     </div>
+    <div class="card-body">
+      <carousel >
+        <slide *ngFor="let one of elements">
+          <img src={{one.path}} alt="First slide" style="display: block; width: 100%;">
+        </slide>
+      </carousel>
+    </div>
   </div>
+</div>
 
-  <div id="chat">
-    <form class="form-group" #messageForm="ngForm" (submit)="SendMesssage($model)">
-      <label for="m">Message</label>
-      <input class="form-control" required [(ngModel)]="message" name="message" id="m">
-      <button type="button" (click)="SendMessage()" class="btn btn-primary mb-2" [disabled]="!messageForm.valid">Invia</button>
-    </form>
+<div id="chat">
+  <form class="form-group" #messageForm="ngForm" (submit)="SendMesssage($model)">
+    <label for="m">Message</label>
+    <input class="form-control" required [(ngModel)]="message" name="message" id="m">
+    <button type="button" (click)="SendMessage()" class="btn btn-primary mb-2" [disabled]="!messageForm.valid">Invia</button>
+  </form>
 
-  </div>
+</div>
 
-  <button type="button" class="btn btn-primary" (click)="DebugConnection()">Debug </button>
+<button type="button" class="btn btn-primary" (click)="DebugConnection()">Debug </button>
 
  
 
   <!---->
 
-  <div>
-    <img *ngFor="let media of elements" class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==media.id}" src="{{media.path}}" style="width:100%">
+  <div *ngFor="let media of elements;let i = index"  class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
+    <img  src="{{media.path}}" style="width:100%" *ngIf="media.value==1">
+    <video  controls *ngIf="media.value==0">
+      <source src={{media.path}} type="video/mp4">
+    </video>
     {{startingSlide}}
   </div>
-  <button (click)="slideEngine()" class="btn btn-primary"> start sldie</button>
+  <button (click)="slideEngine()" (click)="disabled" class="btn btn-primary"> start sldie</button>
