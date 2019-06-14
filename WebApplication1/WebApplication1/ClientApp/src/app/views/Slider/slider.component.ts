@@ -46,7 +46,6 @@ ngOnInit()
   this.getDataMock();
  
   
-  this.sliderListner();
  
 }
 ngOnDestroy()

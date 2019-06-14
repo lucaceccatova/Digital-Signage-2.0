@@ -20,6 +20,8 @@ export class ServerListnerService {
   .then(()=>console.log("connection started"))
   .catch(err=>console.log("Errore di connessione"));
 
+
+
  
    }
 
@@ -29,8 +31,9 @@ export class ServerListnerService {
 
    public getDirective(): any {
     const directiveObservable = new Observable(observer => {
-      this.connection.on("sendId", (n:number)=>
+      this.connection.on("sendID", (n)=>
       {
+      console.log(n);
       this.id=n;
       });
       observer.next(this.id);

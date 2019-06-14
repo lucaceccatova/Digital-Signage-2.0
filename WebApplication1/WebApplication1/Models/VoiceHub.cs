@@ -18,10 +18,10 @@ namespace WebApplication1.Models
 
         //}
 
-        public void SendToAll(string id)
+        public async Task SendToAll(string id)
         {
-            List<MediaBL> mx = new List<MediaBL>();
-            mx = GestoreBLL.GetMedia();
+            //List<MediaBL> mx = new List<MediaBL>();
+            //mx = GestoreBLL.GetMedia();
 
             //try
             //{
@@ -32,7 +32,7 @@ namespace WebApplication1.Models
             //{
             //    Clients.All.SendAsync("sendID", "ID NON VALIDO");
             //}
-           Clients.All.SendAsync("sendID", 2);
+           await Clients.All.SendAsync("sendID", 2);
         }
     }
 }

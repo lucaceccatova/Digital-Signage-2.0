@@ -1,10 +1,13 @@
 <!--Self made slider with ng classes controlled by sliderEngine()-->
 
-<div *ngFor="let media of elements;let i = index"  class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
-  <img  src="{{media.path}}" style="width:100%" *ngIf="media.value==1">
-  <video  controls *ngIf="media.value==0">
+<div *ngFor="let media of elements;let i = index" class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
+  <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1">
+  <video controls *ngIf="media.value==0">
     <source src={{media.path}} type="video/mp4">
   </video>
   {{startingSlide}}
 </div>
-<button (click)="slideEngine()"  class="btn btn-primary"> start sldie</button>
+<button (click)="slideEngine()" class="btn btn-primary"> start sldie</button>
+<button (click)="sliderListner()" class="btn btn-primary"> start sldie</button>
+
+
