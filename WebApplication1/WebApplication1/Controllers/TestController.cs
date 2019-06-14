@@ -11,11 +11,7 @@ namespace WebApplication1.Controllers
     public class TestController : Controller
     {
         // GET: Test
-        [Route("test/ciao")]
-        public ActionResult About()
-        {
-            return View();
-        }
+     
 
         [Route("api/test/getdati")]
         [HttpGet]

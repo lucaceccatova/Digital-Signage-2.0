@@ -76,8 +76,8 @@ namespace WebApplication1
                     spa.Options.StartupTimeout = TimeSpan.FromSeconds(600);
                 }
             });
-          
 
+          
         }
     }
 }
