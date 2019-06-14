@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@aspnet/signalr'
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
-import { Observable, observable } from 'rxjs';
+import { Observable, observable,Subject } from 'rxjs';
 import { connect } from 'net';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { connect } from 'net';
 
 export class ServerListnerService {
   private connection : HubConnection;
-  
+  public directves:number[]=[];
   id:number;
   constructor() {
     this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
@@ -30,21 +30,18 @@ export class ServerListnerService {
 
 
 
-  public getDirective(): any {
-  
+  public getDirective() {
     this.connection
       .invoke('SendMessage', 2)
       .catch(err => console.error(err));
- 
-    const directiveObservable = new Observable(observer => {
+    
+
       this.connection.on("ReceiveMessage", (n)=>
       {
       console.log(n);
-      this.id=n;
+      this.directves.push(n);
       });
-      observer.next(this.id);
-    });
-    return directiveObservable;
 
 }
+
 }

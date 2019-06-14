@@ -35,7 +35,7 @@ export class SliderComponent implements OnInit,OnDestroy
   newDirective:boolean;
   //observable for newDirective
   public interrupt:Observable<boolean>;
-
+  indexInterrup:number=0;
 
 constructor(private http:GetMediaService,private dir:ServerListnerService)
 {
@@ -92,10 +92,11 @@ this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voic
 slideEngine()
   {
     setTimeout(() => {
-      if(this.newDirective==true)
+      if(this.dir.directves.length>this.indexInterrup)
       { this.id=null;
-        this.startingSlide=this.id;
+        this.startingSlide=this.dir.directves[this.dir.directves.length-1]
         this.newDirective=false;
+        this.indexInterrup=this.dir.directves.length;
       }
       else if(this.elements.length>this.startingSlide+1)
       {
@@ -108,17 +109,11 @@ slideEngine()
       this.slideEngine();
     }, this.elements[this.startingSlide].timer*1000);
   }
+
+
   sliderListner()
   {
-   this.dir.getDirective().subscribe(data=>
-    {
-      
-      this.id==data;
-      if(this.id<this.elements.length && this.id>=0)
-      {
-      this.newDirective==true;
-      }
-    });
+    var cons = this.dir.getDirective()  
   }
 }
 
