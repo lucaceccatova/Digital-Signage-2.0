@@ -1,0 +1,29 @@
+#wrapper
+{
+    background-color: #fff;
+    border-radius: 20;
+    margin:auto;
+
+   
+    .listItem
+    {   
+        margin: 5%;
+        width: 40%; 
+        float: left;
+        img
+        {
+            width: 100%;
+            margin: 0;
+            border-radius: 20;
+        }
+    }
+
+}
+.textbox
+{
+    text-align: center;
+    color: black;
+    margin-bottom: 20;
+    position: relative;
+    
+}
