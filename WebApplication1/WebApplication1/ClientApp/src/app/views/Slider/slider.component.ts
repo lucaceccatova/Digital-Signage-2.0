@@ -1,5 +1,4 @@
 import { Component, OnInit ,OnDestroy, Output, Input} from '@angular/core';
-
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
@@ -8,7 +7,6 @@ import {ServerListnerService} from '../../Services/Listner/server-listner.servic
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core'
-
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata } from '@angular/compiler';
@@ -18,15 +16,19 @@ import * as signalR from '@aspnet/signalr';
 import { stringify } from '@angular/compiler/src/util';
 import { start } from 'repl';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import {ActivatedRoute} from '@angular/router';
+import { Routes } from '@angular/router';
+import { TouchSequence } from 'selenium-webdriver';
+
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
+
 export class SliderComponent implements OnInit,OnDestroy
 {
-  
-  
+ 
   url:string="/assets/loadeddata.json";
   //url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
@@ -40,23 +42,27 @@ export class SliderComponent implements OnInit,OnDestroy
   indexInterrup:number=0;
   //set timeout 
   setTimeoutInterceptor;
-  //
+  //signalR connection object
   private connection : HubConnection;
-  public directves:number[]=[];
-
-constructor(private http:GetMediaService,private dir:ServerListnerService)
+  MyId:number;
+constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router)
 {
   
 }
-@Input()
-listID:number;
+  // this is the id of the gallery that will be displayed,
+  //http get will have a int param
+
+  
 ngOnInit()
 {
   this.getDataMock();
-  this.signalRConnection();  
-  
- 
+  this.signalRConnection(); 
+  this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
+    
+  console.log(this.MyId);
 }
+
+//to keep application lightweight also after long session
 ngOnDestroy()
 {
   this.unsubscribes.forEach(element => {
@@ -64,28 +70,23 @@ ngOnDestroy()
   });
 }
 
+  //get json from BE and deserialize it into an array of element
  getDataMock()
  {
-   
   this.unsubscribes.push(this.http.get(this.url).subscribe(data=>
     {
       this.elements=data;
-
     })  
     );
  }
 
+  //recursive function that display a slide by changing variable starting slide
 slideEngine()
   {
     this.setTimeoutInterceptor=setTimeout(() => {
-      if(this.dir.directves.length>this.indexInterrup)
-      {
-        this.startingSlide=this.dir.directves[this.dir.directves.length-1]
-        this.newDirective=false;
-        this.indexInterrup=this.dir.directves.length;
-
-      }
-      else if(this.elements.length>this.startingSlide+1)
+      //if slides are ended restart from zero
+      //idea: switch slides gallery when one end
+       if(this.elements.length>this.startingSlide+1)
       {
         this.startingSlide++;
       }
@@ -97,6 +98,7 @@ slideEngine()
     }, this.elements[this.startingSlide].timer*1000);
   }
 
+  //function that estabilish a connection withe backend service
   signalRConnection(){
   this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
   .configureLogging(signalR.LogLevel.Information)
@@ -106,19 +108,28 @@ slideEngine()
     .then(()=>console.log("connection started"))
     .catch(err=>console.log("Errore di connessione"));
   }
+
+  //method that listen to signalR messages from backend and verify them
   signalRDirectiveListener(){
+    //provvisory: invoke signalr method 
     this.connection
     .invoke('SendMessage', 2)
     .catch(err => console.error(err));
-  
-
+    //what happens whe ReceiveMessage signalR function is invoked
     this.connection.on("ReceiveMessage", (n)=>
     {
-      this.startingSlide=n;
-      clearTimeout(this.setTimeoutInterceptor);
-      this.slideEngine();
+      if(n<=this.elements.length&&n>=0)
+      {
+        this.startingSlide=n;
+        clearTimeout(this.setTimeoutInterceptor);
+        this.slideEngine();
+      }
+      else{
+        console.log("Direttiva errata da backend");
+      }
     });
-
   }
+  
+
 }
 
