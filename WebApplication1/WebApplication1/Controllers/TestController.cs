@@ -11,16 +11,22 @@ namespace WebApplication1.Controllers
     public class TestController : Controller
     {
         // GET: Test
-     
+
 
         [Route("api/test/getdati")]
         [HttpGet]
         public List<MediaBL> GetMedia()
         {
-            
+
             return GestoreBLL.GetMedia();
         }
 
+        [Route("api/test/getlista/{id}")]
+        [HttpGet]
+        public List<MediaBL> GetListaMedia(int id)
+        {
+            return GestoreBLL.GetLista(id);
+        }
     //    // GET: Test/Details/5
     //    public ActionResult Details(int id)
     //    {

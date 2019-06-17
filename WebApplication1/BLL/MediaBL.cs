@@ -18,6 +18,7 @@ namespace BLL
         public int timer { get; set; }
         public DateTime create_date { get; set; }
         public string path { get; set; }
+        public int ListaID { get; set; } 
 
 
     }

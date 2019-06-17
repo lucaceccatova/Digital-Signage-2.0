@@ -21,6 +21,8 @@ namespace BLL
                     med.value = (type)x.value;
                     med.create_date = x.create_date;
                     med.path = x.path;
+                    med.ListaID = x.listaID;
+                    med.description = x.description;
                     medias.Add(med);
                 }
                 return medias;
@@ -30,5 +32,33 @@ namespace BLL
                 return medias;
             }
         }
+
+        public static List<MediaBL> GetLista(int idLista)
+        {
+            var medias = new List<MediaBL>();
+            try
+            {
+                var mediasDB = new DB_Access(@"Server=localhost\SQLEXPRESS02;Database=MediaDB;Trusted_Connection=True;").GetListaById(idLista); //MANCA GESTIONE ERRORI
+
+                foreach (Media x in mediasDB)
+                {
+                    var med = new MediaBL();
+                    med.id = x.id;
+                    med.name = x.name;
+                    med.timer = x.timer;
+                    med.value = (type)x.value;
+                    med.create_date = x.create_date;
+                    med.path = x.path;
+                    med.ListaID = x.listaID;
+                    med.description = x.description;
+                    medias.Add(med);
+                }
+                return medias;
+            }
+            catch (Exception)
+            {
+                return medias;
+            }
+        } //MODIFICA
     }
 }
