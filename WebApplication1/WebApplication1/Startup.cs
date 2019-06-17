@@ -60,7 +60,7 @@ namespace WebApplication1
             app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Models.VoiceChat>("/chat");
+                routes.MapHub<Models.VoiceHub>("/voice");
             });
 
             app.UseSpa(spa =>
@@ -76,8 +76,8 @@ namespace WebApplication1
                     spa.Options.StartupTimeout = TimeSpan.FromSeconds(600);
                 }
             });
-          
 
+          
         }
     }
 }

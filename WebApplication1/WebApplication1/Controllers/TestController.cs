@@ -4,100 +4,110 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DAL;
+using BLL;
 
 namespace WebApplication1.Controllers
 {
     public class TestController : Controller
     {
         // GET: Test
-        [Route("test/ciao")]
-        public ActionResult About()
-        {
-            return View();
-        }
+
 
         [Route("api/test/getdati")]
         [HttpGet]
-        public List<Media> GetMedia()
+        public List<MediaBL> GetMedia()
         {
-            DB_Access d = new DB_Access();
-           return d.GetTodos();
+
+            return GestoreBLL.GetMedia();
         }
 
-    //    // GET: Test/Details/5
-    //    public ActionResult Details(int id)
-    //    {
-    //        return View();
-    //    }
+        [Route("api/test/getlistaById/{id}")]
+        [HttpGet]
+        public List<MediaBL> GetListaById(int id)
+        {
+            return GestoreBLL.GetListById(id);
+        }
 
-    //    // GET: Test/Create
-    //    public ActionResult Create()
-    //    {
-    //        return View();
-    //    }
+        [Route("api/test/getlista")]
+        [HttpGet]
+        public List<ListaMediaBL> GetLista()
+        {
+            return GestoreBLL.GetLista();
+        }
 
-    //    // POST: Test/Create
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public ActionResult Create(IFormCollection collection)
-    //    {
-    //        try
-    //        {
-    //            // TODO: Add insert logic here
+        //    // GET: Test/Details/5
+        //    public ActionResult Details(int id)
+        //    {
+        //        return View();
+        //    }
 
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        catch
-    //        {
-    //            return View();
-    //        }
-    //    }
+        //    // GET: Test/Create
+        //    public ActionResult Create()
+        //    {
+        //        return View();
+        //    }
 
-    //    // GET: Test/Edit/5
-    //    public ActionResult Edit(int id)
-    //    {
-    //        return View();
-    //    }
+        //    // POST: Test/Create
+        //    [HttpPost]
+        //    [ValidateAntiForgeryToken]
+        //    public ActionResult Create(IFormCollection collection)
+        //    {
+        //        try
+        //        {
+        //            // TODO: Add insert logic here
 
-    //    // POST: Test/Edit/5
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public ActionResult Edit(int id, IFormCollection collection)
-    //    {
-    //        try
-    //        {
-    //            // TODO: Add update logic here
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch
+        //        {
+        //            return View();
+        //        }
+        //    }
 
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        catch
-    //        {
-    //            return View();
-    //        }
-    //    }
+        //    // GET: Test/Edit/5
+        //    public ActionResult Edit(int id)
+        //    {
+        //        return View();
+        //    }
 
-    //    // GET: Test/Delete/5
-    //    public ActionResult Delete(int id)
-    //    {
-    //        return View();
-    //    }
+        //    // POST: Test/Edit/5
+        //    [HttpPost]
+        //    [ValidateAntiForgeryToken]
+        //    public ActionResult Edit(int id, IFormCollection collection)
+        //    {
+        //        try
+        //        {
+        //            // TODO: Add update logic here
 
-    //    // POST: Test/Delete/5
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public ActionResult Delete(int id, IFormCollection collection)
-    //    {
-    //        try
-    //        {
-    //            // TODO: Add delete logic here
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch
+        //        {
+        //            return View();
+        //        }
+        //    }
 
-    //            return RedirectToAction(nameof(Index));
-    //        }
-    //        catch
-    //        {
-    //            return View();
-    //        }
-    //    }
+        //    // GET: Test/Delete/5
+        //    public ActionResult Delete(int id)
+        //    {
+        //        return View();
+        //    }
+
+        //    // POST: Test/Delete/5
+        //    [HttpPost]
+        //    [ValidateAntiForgeryToken]
+        //    public ActionResult Delete(int id, IFormCollection collection)
+        //    {
+        //        try
+        //        {
+        //            // TODO: Add delete logic here
+
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch
+        //        {
+        //            return View();
+        //        }
+        //    }
     }
 }
