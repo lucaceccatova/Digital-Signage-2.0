@@ -1,4 +1,4 @@
-import { Component, OnInit ,OnDestroy, Output} from '@angular/core';
+import { Component, OnInit ,OnDestroy, Output, Input} from '@angular/core';
 
 import { Router } from '@angular/router';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
@@ -22,8 +22,10 @@ import { start } from 'repl';
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
-export class SliderComponent implements OnInit,OnDestroy
+export class SliderComponent implements OnInit,OnDestroy,Input
 {
+  
+  
   url:string="/assets/loadeddata.json"
   //url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
@@ -31,16 +33,17 @@ export class SliderComponent implements OnInit,OnDestroy
   //startingSlide is the index of the media displayed in slider
   startingSlide=0;
   //id, server directive for showing a specific slide 
-  id:number;
+  serviceInt:number;
   newDirective:boolean;
   //observable for newDirective
-  public interrupt:Observable<boolean>;
   indexInterrup:number=0;
 
 constructor(private http:GetMediaService,private dir:ServerListnerService)
 {
   
 }
+@Input()
+listID:number;
 ngOnInit()
 {
   this.getDataMock();
@@ -93,10 +96,11 @@ slideEngine()
   {
     setTimeout(() => {
       if(this.dir.directves.length>this.indexInterrup)
-      { this.id=null;
+      {
         this.startingSlide=this.dir.directves[this.dir.directves.length-1]
         this.newDirective=false;
         this.indexInterrup=this.dir.directves.length;
+
       }
       else if(this.elements.length>this.startingSlide+1)
       {

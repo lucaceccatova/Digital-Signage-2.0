@@ -2,14 +2,21 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SliderComponent } from './slider.component';
+import { ListViewComponent } from './ListView/list-view.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SliderComponent,
+    component: ListViewComponent,
     data: {
-      title: 'Slider'
+      title: 'list'
     }
+    
+  }
+  ,
+  {
+    path:'media',
+    component: SliderComponent
   }
 ];
 

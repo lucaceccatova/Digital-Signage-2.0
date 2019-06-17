@@ -65,6 +65,7 @@ import { ChartsModule } from 'ng2-charts';
     LoginComponent,
     RegisterComponent,
     
+    
   ],
   providers: [{
     provide: LocationStrategy,
