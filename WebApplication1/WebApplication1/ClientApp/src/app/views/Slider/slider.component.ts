@@ -17,6 +17,7 @@ import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 import { stringify } from '@angular/compiler/src/util';
 import { start } from 'repl';
+import { Variable } from '@angular/compiler/src/render3/r3_ast';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -26,7 +27,7 @@ export class SliderComponent implements OnInit,OnDestroy
 {
   
   
-  url:string="/assets/loadeddata.json"
+  url:string="/assets/loadeddata.json";
   //url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
@@ -37,6 +38,11 @@ export class SliderComponent implements OnInit,OnDestroy
   newDirective:boolean;
   //observable for newDirective
   indexInterrup:number=0;
+  //set timeout 
+  setTimeoutInterceptor;
+  //
+  private connection : HubConnection;
+  public directves:number[]=[];
 
 constructor(private http:GetMediaService,private dir:ServerListnerService)
 {
@@ -47,7 +53,7 @@ listID:number;
 ngOnInit()
 {
   this.getDataMock();
- 
+  this.signalRConnection();  
   
  
 }
@@ -68,33 +74,10 @@ ngOnDestroy()
     })  
     );
  }
- 
- /*DebugConnection()
- {
-   console.log("Ciao");
-  //this.connection= new HubConnectionBuilder().withUrl('http://localhost:4200/chat').build();
-this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
-.configureLogging(signalR.LogLevel.Information)
-.build();
-  this.connection
-  .start()
-  .then(()=>console.log("connection started"))
-  .catch(err=>console.log("Errore di connessione"));
 
-
-  //
-
-  this.connection.on("sendId",(numero:number)=>
-  {
-    this.id=numero;
-    this.newDirective=true;
-
-  });
-  
- }*/
 slideEngine()
   {
-    setTimeout(() => {
+    this.setTimeoutInterceptor=setTimeout(() => {
       if(this.dir.directves.length>this.indexInterrup)
       {
         this.startingSlide=this.dir.directves[this.dir.directves.length-1]
@@ -114,10 +97,28 @@ slideEngine()
     }, this.elements[this.startingSlide].timer*1000);
   }
 
+  signalRConnection(){
+  this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
+  .configureLogging(signalR.LogLevel.Information)
+  .build();
+    this.connection
+    .start()
+    .then(()=>console.log("connection started"))
+    .catch(err=>console.log("Errore di connessione"));
+  }
+  signalRDirectiveListener(){
+    this.connection
+    .invoke('SendMessage', 2)
+    .catch(err => console.error(err));
+  
 
-  sliderListner()
-  {
-    var cons = this.dir.getDirective()  
+    this.connection.on("ReceiveMessage", (n)=>
+    {
+      this.startingSlide=n;
+      clearTimeout(this.setTimeoutInterceptor);
+      this.slideEngine();
+    });
+
   }
 }
 
