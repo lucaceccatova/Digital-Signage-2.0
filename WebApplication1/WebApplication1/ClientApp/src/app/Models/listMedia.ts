@@ -1,5 +1,5 @@
 export class listMedia{
-    ID:number;
+    id:number;
     name:string;
     description:string;
     path:string;

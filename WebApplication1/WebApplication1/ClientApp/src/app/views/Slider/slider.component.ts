@@ -16,6 +16,9 @@ import * as signalR from '@aspnet/signalr';
 import { stringify } from '@angular/compiler/src/util';
 import { start } from 'repl';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
+import {ActivatedRoute} from '@angular/router';
+import { Routes } from '@angular/router';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   encapsulation:ViewEncapsulation.None,
@@ -41,21 +44,22 @@ export class SliderComponent implements OnInit,OnDestroy
   setTimeoutInterceptor;
   //signalR connection object
   private connection : HubConnection;
-
-constructor(private http:GetMediaService,private dir:ServerListnerService)
+  MyId:number;
+constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router)
 {
   
 }
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
 
-@Input()
-listID:number;
-
+  
 ngOnInit()
 {
   this.getDataMock();
-  this.signalRConnection();  
+  this.signalRConnection(); 
+  this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
+    
+  console.log(this.MyId);
 }
 
 //to keep application lightweight also after long session
@@ -125,5 +129,7 @@ slideEngine()
       }
     });
   }
+  
+
 }
 

@@ -15,7 +15,7 @@ const routes: Routes = [
   }
   ,
   {
-    path:'media',
+    path:'media/:id',
     component: SliderComponent
   }
 ];

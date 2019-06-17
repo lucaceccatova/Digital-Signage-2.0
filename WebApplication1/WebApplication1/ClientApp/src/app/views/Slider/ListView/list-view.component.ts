@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { listMedia } from '../../../Models/listMedia';
 import { ListService } from '../../../Services/ListService/list-service.service';
-
+import {ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
