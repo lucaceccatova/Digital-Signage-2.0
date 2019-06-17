@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL
 {
-    class ListaMedia
+    public class ListaMedia
     {
         public int ID { get; set; }
         public string description { get; set; }

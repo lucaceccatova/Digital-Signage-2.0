@@ -157,7 +157,7 @@ namespace DAL
             }
         }
 
-         public List<Media> GetLista()
+         public List<ListaMedia> GetLista()
             {
                 var todoList = new List<ListaMedia>();
 

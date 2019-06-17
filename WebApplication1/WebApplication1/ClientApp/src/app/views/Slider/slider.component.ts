@@ -22,7 +22,7 @@ import { start } from 'repl';
   templateUrl: 'slider.component.html',
   styleUrls:['./slider.scss']
 })
-export class SliderComponent implements OnInit,OnDestroy,Input
+export class SliderComponent implements OnInit,OnDestroy
 {
   
   

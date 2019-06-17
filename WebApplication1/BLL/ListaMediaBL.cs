@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL
 {
-    class ListaMediaBL
+    public class ListaMediaBL
     {
         public int ID { get; set; }
         public string description { get; set; }
