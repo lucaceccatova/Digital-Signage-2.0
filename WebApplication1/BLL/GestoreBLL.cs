@@ -46,6 +46,7 @@ namespace BLL
                     med.ID = x.ID;
                     med.description = x.description;
                     med.path = x.path;
+                    med.name = x.name;
                     
                     medias.Add(med);
                 }
@@ -83,6 +84,19 @@ namespace BLL
             {
                 return medias;
             }
+        }
+
+        public static bool AddMedia(MediaBL m)
+        {
+            var media = new Media();
+            media.name = m.name;
+            media.description = m.description;
+            media.timer = m.timer;
+            media.path = m.path;
+            media.value = (DAL.type)m.value;
+            media.create_date = m.create_date;
+            media.listaID = m.ListaID;
+            return new DB_Access(@"Server=localhost\SQLEXPRESS02;Database=MediaDB;Trusted_Connection=True;").AddMedia(media);
         }
     }
 }

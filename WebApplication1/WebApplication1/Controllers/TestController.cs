@@ -35,6 +35,13 @@ namespace WebApplication1.Controllers
             return GestoreBLL.GetLista();
         }
 
+        [Route("api/test/addmedia")]
+        [HttpPost]
+        public void AddMedia([FromBody]MediaBL m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
+        {
+            GestoreBLL.AddMedia(m);
+        }
+
         //    // GET: Test/Details/5
         //    public ActionResult Details(int id)
         //    {

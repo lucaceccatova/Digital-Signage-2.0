@@ -48,7 +48,7 @@ namespace DAL
                                 todo.create_date = (DateTime)reader["DataCreazione"];
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
-                                todo.listaID = (int)reader["ListaID"];
+                                todo.listaID = (int)reader["lista_ID"];
                                 if (reader["Tipo"].ToString().ToLower() == "vid")
                                 {
                                     todo.value = type.vid;
@@ -97,7 +97,7 @@ namespace DAL
                     //sqlCommand.CommandType = CommandType.StoredProcedure;
                     //sqlCommand.CommandText = "GetTodos";
                     //text -- query interna
-                    sqlCommand.CommandText = "select * from media where ListaID="+id;
+                    sqlCommand.CommandText = "select * from media where lista_ID="+id;
                     sqlCommand.Connection = connection;
 
                     try
@@ -120,7 +120,7 @@ namespace DAL
                                 todo.create_date = (DateTime)reader["DataCreazione"];
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
-                                todo.listaID = (int)reader["ListaID"];
+                                todo.listaID = (int)reader["lista_ID"];
                                 if (reader["Tipo"].ToString().ToLower() == "vid")
                                 {
                                     todo.value = type.vid;
@@ -169,7 +169,7 @@ namespace DAL
                         //sqlCommand.CommandType = CommandType.StoredProcedure;
                         //sqlCommand.CommandText = "GetTodos";
                         //text -- query interna
-                        sqlCommand.CommandText = "select * from ListaID";
+                        sqlCommand.CommandText = "select * from listaMedia";
                         sqlCommand.Connection = connection;
 
                         try
@@ -186,10 +186,12 @@ namespace DAL
                                 while (reader.Read())
                                 {
                                     var todo = new ListaMedia();
-                                    todo.ID = (int)reader["ID_lista"];
-                                    todo.path = reader["Foto"].ToString();
+                                    todo.ID = (int)reader["ID"];
+                                    todo.name = reader["Nome"].ToString();
                                     todo.description = reader["Descrizione"].ToString();
-                                    todoList.Add(todo);
+                                    todo.path = reader["Percorso"].ToString();
+
+                                todoList.Add(todo);
                                 }
                             }
 
@@ -214,6 +216,39 @@ namespace DAL
                     return todoList;
                 }
          }
+
+        public bool AddMedia(Media med)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                //connection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    //sqlCommand.CommandType = CommandType.StoredProcedure;
+                    //sqlCommand.CommandText = "GetTodos";
+                    //text -- query interna
+                    var query = "INSERT INTO dbo.media (Nome, Descrizione, DataCreazione, Tipo, lista_ID, Timer,Percorso) " +
+                   "VALUES (@med.name, @med.description, @med.create_date, @med.value, @med.listaID, @med.timer, @med.path) ";
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }        
+        }
         
     }
 }
