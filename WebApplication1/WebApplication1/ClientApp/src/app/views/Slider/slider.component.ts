@@ -9,7 +9,7 @@ import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core'
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
-import { compileBaseDefFromMetadata } from '@angular/compiler';
+import { compileBaseDefFromMetadata, templateJitUrl } from '@angular/compiler';
 import {CarouselsComponent} from '../../views/base/carousels.component';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
@@ -29,8 +29,8 @@ import { TouchSequence } from 'selenium-webdriver';
 export class SliderComponent implements OnInit,OnDestroy
 {
  
-  url:string="/assets/loadeddata.json";
-  //url:string="https://localhost:44303/api/test/getdati"
+  //url:string="/assets/loadeddata.json";
+  url:string="https://localhost:44303/api/test/getlistaById"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -45,6 +45,7 @@ export class SliderComponent implements OnInit,OnDestroy
   //signalR connection object
   private connection : HubConnection;
   MyId:number;
+  temp;
 constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router)
 {
   
@@ -55,11 +56,10 @@ constructor(private http:GetMediaService,private dir:ServerListnerService,privat
   
 ngOnInit()
 {
+  this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
   this.getDataMock();
   this.signalRConnection(); 
-  this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
     
-  console.log(this.MyId);
 }
 
 //to keep application lightweight also after long session
@@ -73,7 +73,9 @@ ngOnDestroy()
   //get json from BE and deserialize it into an array of element
  getDataMock()
  {
-  this.unsubscribes.push(this.http.get(this.url).subscribe(data=>
+   console.log(this.MyId);
+  this.temp=this.url+'/'+this.MyId.toString();
+   this.unsubscribes.push(this.http.get(this.temp).subscribe(data =>
     {
       this.elements=data;
     })  
@@ -107,18 +109,11 @@ slideEngine()
     .start()
     .then(()=>console.log("connection started"))
     .catch(err=>console.log("Errore di connessione"));
-  }
 
-  //method that listen to signalR messages from backend and verify them
-  signalRDirectiveListener(){
-    //provvisory: invoke signalr method 
-    this.connection
-    .invoke('SendMessage', 2)
-    .catch(err => console.error(err));
-    //what happens whe ReceiveMessage signalR function is invoked
+
     this.connection.on("ReceiveMessage", (n)=>
     {
-      if(n<=this.elements.length&&n>=0)
+      if(n<this.elements.length&&n>=0)
       {
         this.startingSlide=n;
         clearTimeout(this.setTimeoutInterceptor);
@@ -128,6 +123,16 @@ slideEngine()
         console.log("Direttiva errata da backend");
       }
     });
+  }
+
+  //method that listen to signalR messages from backend and verify them
+  signalRDirectiveListener(){
+    //provvisory: invoke signalr method 
+    this.connection
+    .invoke('SendMessage', 2)
+    .catch(err => console.error(err));
+    //what happens whe ReceiveMessage signalR function is invoked
+   
   }
   
 
