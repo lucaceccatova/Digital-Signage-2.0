@@ -47,7 +47,6 @@ namespace BLL
                     med.description = x.description;
                     med.path = x.path;
                     med.name = x.name;
-                    
                     medias.Add(med);
                 }
                 return medias;
