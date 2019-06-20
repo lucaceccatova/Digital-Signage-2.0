@@ -1,16 +1,16 @@
 <!--Self made slider with ng classes controlled by sliderEngine()-->
 
-<div *ngFor="let media of elements;let i = index" class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
-  <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1">
-  <video controls *ngIf="media.value==0">
-    <source src={{media.path}} type="video/mp4">
-  </video>
-  {{startingSlide}}
+<div id="mySliderBox">
+  <div *ngFor="let media of elements;let i = index" class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
+    <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1" >
+    <video controls *ngIf="media.value==0">
+      <source src={{media.path}} type="video/mp4">
+    </video>
+  </div>
 </div>
-<h1>Debug {{MyId}}</h1>
 <!--Provvisory Debug Button, need to start sliding item after
 the json is loaded and deserialized-->
-<button (click)="slideEngine()" class="btn btn-primary"> start sldie</button>
+<!--<button (click)="slideEngine()" class="btn btn-primary"> start sldie</button>-->
 <button (click)=" signalRDirectiveListener()" class="btn btn-primary"> start sldie</button>
 
 

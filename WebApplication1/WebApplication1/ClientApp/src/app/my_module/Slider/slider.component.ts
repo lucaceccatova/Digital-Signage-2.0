@@ -15,7 +15,6 @@ import { start } from 'repl';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   encapsulation:ViewEncapsulation.None,
@@ -26,8 +25,8 @@ import { TouchSequence } from 'selenium-webdriver';
 export class SliderComponent implements OnInit,OnDestroy
 {
  
-  //url:string="/assets/loadeddata.json";
-  url:string="https://localhost:44303/api/test/getlistaById"
+  url:string="/assets/loadeddata.json";
+  //url:string="https://localhost:44303/api/test/getlistaById"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -72,9 +71,11 @@ ngOnDestroy()
  {
    console.log(this.MyId);
   this.temp=this.url+'/'+this.MyId.toString();
-   this.unsubscribes.push(this.http.get(this.temp).subscribe(data =>
+   this.unsubscribes.push(this.http.get(this.url).subscribe(data =>
     {
       this.elements=data;
+      this.slideEngine();
+
     })  
     );
  }
