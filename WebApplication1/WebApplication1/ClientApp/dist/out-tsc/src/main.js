@@ -5,9 +5,6 @@ import { environment } from './environments/environment';
 if (environment.production) {
     enableProdMode();
 }
-platformBrowserDynamic().bootstrapModule(AppModule, {
-    useJit: true,
-    preserveWhitespaces: true
-})
-    .catch(function (err) { return console.log(err); });
+platformBrowserDynamic().bootstrapModule(AppModule)
+    .catch(err => console.error(err));
 //# sourceMappingURL=main.js.map

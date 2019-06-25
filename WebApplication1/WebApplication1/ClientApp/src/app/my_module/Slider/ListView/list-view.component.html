@@ -1,0 +1,9 @@
+
+<div id="wrapper">
+  <div *ngFor="let list of MyList" class="listItem">
+    
+     <a [routerLink]="[ 'media/',list.id]">
+    <img src={{list.path}} >
+    </a>
+    </div>
+  </div>

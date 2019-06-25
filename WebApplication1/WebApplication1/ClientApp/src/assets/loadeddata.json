@@ -1,7 +1,7 @@
-[{"id":3,"name":"Pianura","description":"Paesaggio di pianura","value":1,"timer":2,"create_date":"2019-06-05T00:00:00","path":"assets/img/foto.jpg"},
-{"id":4,"name":"Montagna","description":"Immagine del Monte Bianco dal satellite","value":1,"timer":1,"create_date":"2019-07-06T00:00:00","path":"assets/img/altrafoto.jpg"}
+[{"id":1,"name":"Pianura","description":"Paesaggio di pianura","value":1,"timer":5,"create_date":"2019-06-05T00:00:00","path":"assets/img/foto.jpg","listaID":1},
+{"id":2,"name":"Montagna","description":"Immagine del Monte Bianco dal satellite","value":1,"timer":2,"create_date":"2019-07-06T00:00:00","path":"assets/img/altrafoto.jpg","listaID":1}
 ,{
-    "id":5,"name":"Città","description":"Una bella città","value":1,"timer":1,"create_date":"2019-07-06T00:00:00","path":"assets/img/altraaltrafoto.jpg"
+    "id":3,"name":"Città","description":"Una bella città","value":1,"timer":5,"create_date":"2019-07-06T00:00:00","path":"assets/img/altraaltrafoto.jpg","listaID":1
 },{
-    "id":6,"name":"Video","description":"Una bella città","value":0,"timer":1,"create_date":"2019-07-06T00:00:00","path":"assets/img/mov_bbb.mp4"
+    "id":4,"name":"Video","description":"Una bella città","value":0,"timer":10,"create_date":"2019-07-06T00:00:00","path":"assets/img/mov_bbb.mp4","listaID":1
 }]
