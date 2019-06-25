@@ -97,5 +97,17 @@ namespace BLL
             media.listaID = m.ListaID;
             return new DB_Access(@"Server=localhost\SQLEXPRESS02;Database=MediaDB;Trusted_Connection=True;").AddMedia(media);
         }
+
+        public static bool EliminaSlide(int id)
+        {
+            return new DB_Access(@"Server = localhost\SQLEXPRESS02; Database = MediaDB; Trusted_Connection = True;").EliminaMedia(id);
+        }
+
+        public static bool EliminaLista(int id)
+        {
+            return new DB_Access(@"Server = localhost\SQLEXPRESS02; Database = MediaDB; Trusted_Connection = True;").EliminaLista(id);
+        }
     }
+
+
 }

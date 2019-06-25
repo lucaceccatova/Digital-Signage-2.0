@@ -228,8 +228,54 @@ namespace DAL
                     //sqlCommand.CommandType = CommandType.StoredProcedure;
                     //sqlCommand.CommandText = "GetTodos";
                     //text -- query interna
-                    var query = "INSERT INTO dbo.media (Nome, Descrizione, DataCreazione, Tipo, lista_ID, Timer,Percorso) " +
-                   "VALUES (@med.name, @med.description, @med.create_date, @med.value, @med.listaID, @med.timer, @med.path) ";
+                    var query = "INSERT INTO dbo.media (Nome, Descrizione, DataCreazione, Tipo, lista_ID, Timer,Percorso) VALUES (@medname, @meddescription, @medcreate_date, @medvalue, @medlistaID, @medtimer, @medpath) ";
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.Parameters.AddWithValue("@medname",med.name);
+                        cmd.Parameters.AddWithValue("@meddescription", med.description);
+                        cmd.Parameters.AddWithValue("@medcreate_date", med.create_date);
+                        if (med.value == type.img )
+                        {
+                            cmd.Parameters.AddWithValue("@medvalue", "img");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@medvalue", "vid");
+                        }
+                        
+                        cmd.Parameters.AddWithValue("@medlistaID", med.listaID);
+                        cmd.Parameters.AddWithValue("@medtimer", med.timer);
+                        cmd.Parameters.AddWithValue("@medpath", med.path);
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }        
+        }
+
+        public bool EliminaMedia(int n)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                //connection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    //sqlCommand.CommandType = CommandType.StoredProcedure;
+                    //sqlCommand.CommandText = "GetTodos";
+                    //text -- query interna
+                    var query = "DELETE FROM dbo.media WHERE ID =" + n + "; ";
 
                     SqlCommand cmd = new SqlCommand(query, connection);
                     connection.Open();
@@ -247,9 +293,55 @@ namespace DAL
                         connection.Close();
                     }
                 }
-            }        
+            }
         }
-        
+
+        public bool EliminaLista(int n)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                //connection.Open();
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    //sqlCommand.CommandType = CommandType.StoredProcedure;
+                    //sqlCommand.CommandText = "GetTodos";
+                    //text -- query interna
+                    var query = "DELETE FROM dbo.media WHERE lista_ID=" + n + ";";
+                    var query2 = "Delete from dbo.listaMedia where ID=" + n + ";";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlCommand cmd2 = new SqlCommand(query2, connection);
+                    connection.Open();
+                    try
+                    {
+                        var control = false;
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                            control = true;
+                        }
+                        catch(Exception)
+                        {
+                            control = false;
+                        }
+                        if (control == true)
+                        {
+                            cmd2.ExecuteNonQuery();
+                        }
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
     }
 }
 

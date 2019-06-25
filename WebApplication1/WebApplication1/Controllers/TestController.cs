@@ -41,7 +41,21 @@ namespace WebApplication1.Controllers
         {
             GestoreBLL.AddMedia(m);
         }
+        [Route("api/test/eliminaSlide/{id}")]
+        [HttpGet]
+        public void EliminaSlide(int id)
+        {
+            GestoreBLL.EliminaSlide(id);
+        }
 
+        [Route("api/test/eliminaLista/{id}")]
+        [HttpGet]
+        public void EliminaLista(int id)
+        {
+            GestoreBLL.EliminaLista(id);
+        }
+
+        //[Route("")]
         //    // GET: Test/Details/5
         //    public ActionResult Details(int id)
         //    {
