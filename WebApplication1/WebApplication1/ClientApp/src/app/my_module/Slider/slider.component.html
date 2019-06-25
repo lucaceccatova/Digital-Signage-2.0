@@ -1,7 +1,8 @@
 <!--Self made slider with ng classes controlled by sliderEngine()-->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <div id="mySliderBox">
-  <div *ngFor="let media of elements;let i = index" class="mySlides" [ngClass]="{'mySlidesVisible': startingSlide==i}">
+  <div *ngFor="let media of elements;let i = index" class="mySlides" id="{{'media'+ i}}" [ngClass]="{'mySlidesVisible': startingSlide==i}">
     <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1" >
     <video controls *ngIf="media.value==0">
       <source src={{media.path}} type="video/mp4">

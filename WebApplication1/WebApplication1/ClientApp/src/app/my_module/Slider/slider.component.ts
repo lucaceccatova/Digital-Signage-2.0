@@ -15,6 +15,7 @@ import { start } from 'repl';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
+import * as $  from 'jquery';
 
 @Component({
   encapsulation:ViewEncapsulation.None,
@@ -30,12 +31,12 @@ export class SliderComponent implements OnInit,OnDestroy
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
-  startingSlide=0;
+  public startingSlide=0;
   //id, server directive for showing a specific slide 
   serviceInt:number;
   newDirective:boolean;
   //observable for newDirective
-  indexInterrup:number=0;
+  indexInterrup:number=1;
   //set timeout 
   setTimeoutInterceptor;
   //signalR connection object
@@ -88,11 +89,17 @@ slideEngine()
       //idea: switch slides gallery when one end
        if(this.elements.length>this.startingSlide+1)
       {
-        this.startingSlide++;
+        $("#media"+this.startingSlide).fadeOut(300,function(){
+          this.startingSlide++;
+          $("#media"+this.startingSlide).fadeIn(300);
+        }.bind(this))
       }
       else
       {
-        this.startingSlide=0;
+        $("#media"+this.startingSlide).fadeOut(300,function(){
+          this.startingSlide=0;
+          $("#media"+this.startingSlide).fadeIn(300);
+        }.bind(this))
       }
       this.slideEngine();
     }, this.elements[this.startingSlide].timer*1000);
