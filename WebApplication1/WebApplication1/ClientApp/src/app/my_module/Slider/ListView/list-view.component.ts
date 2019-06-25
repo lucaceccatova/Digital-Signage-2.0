@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ListViewComponent implements OnInit {
   MyList :listMedia[];
-  url:string="/assets/loadeddata.list.json";
+  url:string="https://localhost:44303/api/test/getlista";
   constructor(private list:ListService) { }
 
   ngOnInit() {
