@@ -13,6 +13,7 @@ using Alexa.NET.Request.Type;
 using Alexa.NET;
 using WebApplication1.Models;
 using BLL;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AlexaSkills
 {
@@ -42,10 +43,21 @@ namespace AlexaSkills
                 if (intentRequest.Intent.Name == "SlideIntent")
                 {
                     string output = $"Vado alla slide richiesta";
-                    BLL.IDalexa.id = 3;
-                    VoiceHub.xnum(3);
+                    //BLL.IDalexa.id = 3;
+                    //VoiceHub x = new VoiceHub();
+                    //x.SendMessage(2);
+                    var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                    //("https://localhost:44303/");
+                    // var myhub = connection.CreateHubProxy("voice");
 
+                    await connection.StartAsync();
+                    await connection.InvokeAsync("SendMessage",1);
+                   // await myhub.Invoke("sendMessage", 300);
+
+                    
                     response = ResponseBuilder.Tell(output);
+
+                    //call to webapplication1 to invoke VoiceHub.cs
                 }
             }
             return new OkObjectResult(response);

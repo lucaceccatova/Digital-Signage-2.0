@@ -5,23 +5,15 @@ using BLL;
 namespace WebApplication1.Models
 {
     
-    public class VoiceHub : Hub
-    {
+    public  class VoiceHub : Hub
+{
 
 
-        public  static int ID = 0;
-        public  async Task SendMessage(int id)
+        public static int ID { get; set; }
+        
+        public async Task SendMessage(int id)
         {
-                await Clients.All.SendAsync("ReceiveMessage",ID);
-           
+           await Clients.All.SendAsync("ReceiveMessage",id);   
         }
-        public static void xnum(int n)
-        {
-            ID = n;
-        }
-       
-
-
-
     }
 }
