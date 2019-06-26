@@ -15,7 +15,7 @@ import { start } from 'repl';
 import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
-
+import * as $ from 'jquery';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -25,8 +25,8 @@ import { Routes } from '@angular/router';
 export class SliderComponent implements OnInit,OnDestroy
 {
  
-  //url:string="/assets/loadeddata.json";
-  url:string="https://localhost:44303/api/test/getlistaById"
+  url:string="/assets/loadeddata.json";
+ // url:string="https://localhost:44303/api/test/getlistaById"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -42,12 +42,12 @@ export class SliderComponent implements OnInit,OnDestroy
   private connection : HubConnection;
   MyId:number;
   temp;
+  // this is the id of the gallery that will be displayed,
+  //http get will have a int param
 constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router)
 {
   
 }
-  // this is the id of the gallery that will be displayed,
-  //http get will have a int param
 
   
 ngOnInit()
@@ -58,6 +58,7 @@ ngOnInit()
     
 }
 
+
 //to keep application lightweight also after long session
 ngOnDestroy()
 {
@@ -66,12 +67,13 @@ ngOnDestroy()
   });
 }
 
+
   //get json from BE and deserialize it into an array of element
  getDataMock()
  {
    console.log(this.MyId);
   this.temp=this.url+'/'+this.MyId.toString();
-   this.unsubscribes.push(this.http.get(this.temp).subscribe(data =>
+   this.unsubscribes.push(this.http.get(this.url).subscribe(data =>
     {
       this.elements=data;
       this.slideEngine();
@@ -89,6 +91,9 @@ slideEngine()
        if(this.elements.length>this.startingSlide+1)
       {
         this.startingSlide++;
+        //to start video when is displayed in the slider
+        if(this.elements[this.startingSlide].value==0)
+            this.playVideoFromId("vid"+this.startingSlide);    
       }
       else
       {
@@ -97,6 +102,7 @@ slideEngine()
       this.slideEngine();
     }, this.elements[this.startingSlide].timer*1000);
   }
+
 
   //function that estabilish a connection withe backend service
   signalRConnection(){
@@ -123,14 +129,21 @@ slideEngine()
     });
   }
 
+
   //method that listen to signalR messages from backend and verify them
   signalRDirectiveListener(){
     //provvisory: invoke signalr method 
     this.connection
     .invoke('SendMessage', 2)
     .catch(err => console.error(err));
-    //what happens whe ReceiveMessage signalR function is invoked
-   
+    //what happens whe ReceiveMessage signalR function is invoked 
+  }
+
+
+  playVideoFromId(id:string)
+  {
+    let video=document.getElementById(id);
+    video.play();
   }
   
 
