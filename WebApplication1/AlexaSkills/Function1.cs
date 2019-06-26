@@ -33,33 +33,52 @@ namespace AlexaSkills
 
             if (requestType == typeof(LaunchRequest))
             {
-                response = ResponseBuilder.Tell("Welcome to AppConsult!");
+                response = ResponseBuilder.Tell("Benvenuto in ");
                 response.Response.ShouldEndSession = false;
             }
             else if (requestType == typeof(IntentRequest))
             {
                 var intentRequest = skillRequest.Request as IntentRequest;
 
-                if (intentRequest.Intent.Name == "SlideIntent")
+                switch (intentRequest.Intent.Name)
                 {
-                    string output = $"Vado alla slide richiesta";
-                    //BLL.IDalexa.id = 3;
-                    //VoiceHub x = new VoiceHub();
-                    //x.SendMessage(2);
-                    var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                    //("https://localhost:44303/");
-                    // var myhub = connection.CreateHubProxy("voice");
+                    case "SlideIntent":
+                        string output = $"Vado alla slide richiesta";                   
+                        var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                        await connection.StartAsync();
+                        await connection.InvokeAsync("SendMessage",1);
+                        response = ResponseBuilder.Tell(output);
+                        response.Response.ShouldEndSession = false;
+                        
+                        break;
+                    case "AMAZON.StopIntent":
+                        string temp = $"Chiudo la skill {requestType.Name}";
+                        response = ResponseBuilder.Tell(temp);
+                        response.Response.ShouldEndSession = true;
+                        break;
+                }
 
-                    await connection.StartAsync();
-                    await connection.InvokeAsync("SendMessage",1);
-                   // await myhub.Invoke("sendMessage", 300);
+            //    if (intentRequest.Intent.Name == "SlideIntent")
+            //    {
+            //        string output = $"Vado alla slide richiesta";
+            //        //BLL.IDalexa.id = 3;
+            //        //VoiceHub x = new VoiceHub();
+            //        //x.SendMessage(2);
+            //        var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+            //        //("https://localhost:44303/");
+            //        // var myhub = connection.CreateHubProxy("voice");
+
+            //        await connection.StartAsync();
+            //        await connection.InvokeAsync("SendMessage",1);
+            //       // await myhub.Invoke("sendMessage", 300);
 
                     
-                    response = ResponseBuilder.Tell(output);
+            //        response = ResponseBuilder.Tell(output);
 
-                    //call to webapplication1 to invoke VoiceHub.cs
-                }
+            //        //call to webapplication1 to invoke VoiceHub.cs
+            //    }
             }
+
             return new OkObjectResult(response);
 
         }
