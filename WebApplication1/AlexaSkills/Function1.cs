@@ -13,6 +13,8 @@ using Alexa.NET.Request.Type;
 using Alexa.NET;
 using WebApplication1.Models;
 using BLL;
+using Microsoft.AspNet.SignalR.Client;
+
 
 namespace AlexaSkills
 {
@@ -43,9 +45,10 @@ namespace AlexaSkills
                 {
                     string output = $"Vado alla slide richiesta";
                     BLL.IDalexa.id = 3;
-                    VoiceHub.xnum(3);
-
-                    response = ResponseBuilder.Tell(output);
+                    var connection = new HubConnection("https://localhost:44303/voice");
+                    connection.Headers.Add("ReceiveMessage", "2");
+                    await connection.Start();
+                    
                 }
             }
             return new OkObjectResult(response);
