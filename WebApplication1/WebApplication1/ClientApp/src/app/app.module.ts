@@ -6,8 +6,7 @@ import { myRouter } from './router/router.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
+    AppComponent,    
   ],
   imports: [
     BrowserModule,

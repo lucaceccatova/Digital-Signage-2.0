@@ -1,0 +1,10 @@
+<div id="wrapper">
+<div *ngFor="let media of elements;let i=index" class="listItem" id="vidBox{{i}}" >
+     <a (click)="sendData(i)">
+        <video [muted]="'muted'" autoplay="autoplay" >
+          <source src={{media.path}}>
+        </video>
+        <div class="infoBox">{{media.name}}</div>
+    </a>
+  </div>
+</div>

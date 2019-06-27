@@ -143,9 +143,7 @@ slideEngine()
   playVideoFromId(id:string)
   {
     let video=document.getElementById(id);
-    video.play();
+   // video.play();
   }
-  
-
 }
 
