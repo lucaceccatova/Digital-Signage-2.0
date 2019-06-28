@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BLL;
+using DAL;
 
 namespace WebApplication1.Controllers
 {
@@ -15,7 +16,7 @@ namespace WebApplication1.Controllers
 
         [Route("api/test/getdati")]
         [HttpGet]
-        public List<MediaBL> GetMedia()
+        public List<Media> GetMedia()
         {
 
             return GestoreBLL.GetMedia();
@@ -23,21 +24,21 @@ namespace WebApplication1.Controllers
 
         [Route("api/test/getlistaById/{id}")]
         [HttpGet]
-        public List<MediaBL> GetListaById(int id)
+        public List<Media> GetListaById(int id)
         {
             return GestoreBLL.GetListById(id);
         }
 
         [Route("api/test/getlista")]
         [HttpGet]
-        public List<ListaMediaBL> GetLista()
+        public List<ListaMedia> GetLista()
         {
             return GestoreBLL.GetLista();
         }
 
         [Route("api/test/addmedia")]
         [HttpPost]
-        public void AddMedia([FromBody]MediaBL m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
+        public void AddMedia([FromBody]Media m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
         {
             GestoreBLL.AddMedia(m);
         }
