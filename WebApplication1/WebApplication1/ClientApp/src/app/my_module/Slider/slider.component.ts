@@ -16,6 +16,7 @@ import { Variable } from '@angular/compiler/src/render3/r3_ast';
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import * as $ from 'jquery';
+import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -44,7 +45,7 @@ export class SliderComponent implements OnInit,OnDestroy
   temp;
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
-constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router)
+constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService)
 {
   
 }
@@ -113,20 +114,19 @@ slideEngine()
     .start()
     .then(()=>console.log("connection started"))
     .catch(err=>console.log("Errore di connessione"));
-
-
-    this.connection.on("ReceiveMessage", (n)=>
+  
+    this.connection.on("showVideoGallery", (data)=>
     {
-      if(n<this.elements.length&&n>=0)
-      {
-        this.startingSlide=n;
-        clearTimeout(this.setTimeoutInterceptor);
-        this.slideEngine();
-      }
-      else{
-        console.log("Direttiva errata da backend");
-      }
+      //call service that send data to video gallery component
+      this.streamElements=data;
+      //ng route to video gallery component
+      this.router.navigateByUrl("/video")
     });
+    this.connection.on("showVideo",data=>
+    {
+      //show one single video
+    });
+  
   }
 
 
@@ -139,13 +139,23 @@ slideEngine()
     //what happens whe ReceiveMessage signalR function is invoked 
   }
 
-
   playVideoFromId(id:string)
   {
     let video=document.getElementById(id);
-    video.play();
+   // video.play();
   }
-  
-
 }
+
+/*if(what=="goSlide")
+      {
+        if(how<this.elements.length&&how>=0)
+        {
+          this.startingSlide=how;
+          clearTimeout(this.setTimeoutInterceptor);
+          this.slideEngine();
+        }
+        else{
+          console.log("Direttiva errata da backend");
+        }
+      }*/
 

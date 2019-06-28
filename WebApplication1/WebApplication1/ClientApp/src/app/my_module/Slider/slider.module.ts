@@ -1,8 +1,5 @@
-
-
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import {SliderComponent} from './slider.component';
 import { sliderRoutingModule } from './slider-routing.module';
 import {GetMediaService} from '../../Services/GetMedia/get-media.service';
@@ -16,21 +13,10 @@ import {ListViewComponent} from "./ListView/list-view.component";
     FormsModule,
     sliderRoutingModule,
     HttpClientModule,
-    CommonModule,
-    
-    
-    
-    
-    
+    CommonModule,   
   ],
   declarations: [ SliderComponent,ListViewComponent ],
   providers:[GetMediaService,ServerListnerService,ListService]
 })
 export class SliderModule { 
-
-  next()
-  {
-    
-  }
-
 }
