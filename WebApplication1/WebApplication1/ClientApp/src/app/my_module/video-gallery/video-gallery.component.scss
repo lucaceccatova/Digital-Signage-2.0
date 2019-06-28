@@ -8,14 +8,19 @@ body {
     position: fixed;  }
   #wrapper
   {
-
       background-color: rgb(39, 37, 37);
       margin:auto;
       display: block;
       height: 100%;
+      width: 100%;
+      text-align: center;
       overflow: hidden;
       position: fixed;
-  
+    h1{
+    
+      color: whitesmoke;
+      font-style: unset;
+    }
      
       .listItem
       {   
@@ -27,7 +32,7 @@ body {
           {
               width: 100%;
               margin: 0;
-              border-radius: 20px;
+              //border-radius: 20px;
           }
       }
   
@@ -50,10 +55,22 @@ body {
       height: 10%;
       top: 90;
       opacity: 0.58;
+      margin-top: 0;
       position: relative; 
       border-radius: 20px;
       box-shadow: 0 10px 6px -6px #888888;  
   }
   
+  #logo
+  {
+    margin-top: 2%;
+  }
+  #headerImg
+  {
+    border-radius: 20px;
+    width: 20%;
+    display: block;
+    margin: auto;
+  }
   
   

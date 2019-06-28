@@ -19,7 +19,11 @@ const MyRoutes:Routes=[
     },
     {
       path:"video",
-      loadChildren:()=> import ("../my_module/video-gallery/video-gallery.module").then(m=>m.VideoGalleryModule)
+      loadChildren:()=> import("../my_module/video-gallery/video-gallery.module").then(m=>m.VideoGalleryModule)
+    },
+    {
+      path:"tire",
+      loadChildren:()=> import("../my_module/tire-selection/tire-selection.module").then(m=>m.tireModule)
     }
   ]
 }

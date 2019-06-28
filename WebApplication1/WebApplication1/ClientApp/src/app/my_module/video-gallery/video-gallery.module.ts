@@ -6,6 +6,7 @@ import { VideoGalleryComponent } from './video-gallery.component';
 import { HttpClientModule } from '@angular/common/http';
 import { fullScreenVideo } from './fullScreenVideo/fullScreenVideo.component';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
+import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 @NgModule({
   declarations: [VideoGalleryComponent,fullScreenVideo],
   imports: [
@@ -15,6 +16,6 @@ import { sharedStringService } from 'src/app/Services/sharedServices/sharedStrin
     
   ],
   exports:[VideoGalleryComponent],
-  providers:[GetMediaService,sharedStringService]
+  providers:[GetMediaService,sharedStringService,shareElementsService]
 })
 export class VideoGalleryModule { }
