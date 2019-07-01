@@ -85,22 +85,25 @@ namespace AlexaSkills
                         }
                         else if (intentRequest.Intent.Slots["VideoNames"].Value != null && carUtteranceInovked == true)
                         {
-                            //RESTITUIRE SINGOLO VIDEO PER ID AUTO e NOME
+                            
                             if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
                                 messaggio = $"Buona visione";
-                                //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("showVideo",GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO
+                                //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                //////await connection.StartAsync();
+                                //////await connection.InvokeAsync("showVideo",GestoreBLL.GetVideoByName(intentRequest.Intent.Slots["VideoNames"].Value)); 
                                 timer = 0;
                             }
                             else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
-                                //BO VA IN ERRORE DA SOLO
+                                
                                 string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";");
                                 if (int.Parse(tmpSplit[0]) == idListCar)
                                 {
                                     messaggio = $"Buona visione CON ID";
+                                    //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                    //////await connection.StartAsync();
+                                    //////await connection.InvokeAsync("showVideo", GestoreBLL.GetVideoByIdName(int.Parse(tmpSplit[1]), intentRequest.Intent.Slots["VideoNames"].Value));
                                     timer = 0;
                                 }
                                 else
@@ -108,9 +111,7 @@ namespace AlexaSkills
                                     messaggio = $"Il video che hai richiesto non è presente, dimmi il nome di un video valido";
                                     timer = 0;
                                 }
-                                //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("showVideo", GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO dato id auto
+                                
                             }
                             else
                             {
@@ -126,15 +127,14 @@ namespace AlexaSkills
                         break;
                     case "AMAZON.StopIntent":
                         messaggio = $"Disattivo Pirelli Voice Control";
+                        timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = true;
                         break;
                     
                     case "ZZZ":
                         messaggio = $"Non ho capito, puoi ripetere perfavore ?";
-                        //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                        ////await connection.StartAsync();
-                        ////await connection.InvokeAsync("SendMessage",1);
+                        timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
