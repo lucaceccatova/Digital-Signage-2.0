@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {ServerListnerService} from '../../Services/Listner/server-listner.service';
 import {ListViewComponent} from "./ListView/list-view.component";
+import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -16,7 +18,7 @@ import {ListViewComponent} from "./ListView/list-view.component";
     CommonModule,   
   ],
   declarations: [ SliderComponent,ListViewComponent ],
-  providers:[GetMediaService,ServerListnerService,ListService]
+  providers:[GetMediaService,ServerListnerService,ListService,shareElementsService]
 })
 export class SliderModule { 
 }

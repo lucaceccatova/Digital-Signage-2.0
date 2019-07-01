@@ -17,6 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import * as $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
+
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
