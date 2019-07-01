@@ -116,7 +116,14 @@ namespace BLL
             List<Media> listavideo = new List<Media>();
             listavideo = new DB_Access(connectionDB).GetVideos();
             return listavideo;
-        } 
+        }
+        public static List<Media> GetVideosByCategory(int id)
+        {
+            List<Media> listavideo = new List<Media>();
+            listavideo = new DB_Access(connectionDB).GetVideosById(id);
+            return listavideo;
+
+        }
     }
 
 

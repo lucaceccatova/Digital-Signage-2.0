@@ -25,6 +25,7 @@ namespace AlexaSkills
 
         public static bool carUtteranceInovked;
         public static int idListCar;
+        public static int timer;
 
         [FunctionName("Alexa")]
         public static async Task<IActionResult> Run(
@@ -52,31 +53,33 @@ namespace AlexaSkills
                     case "ShowVideoIntent":
                         if (intentRequest.Intent.Slots["auto"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
                         {
-                            messaggio = $"Va bene, adesso ti mostro tutti i video ";
-                            
-                            var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            //await connection.StartAsync();
-                            //await connection.InvokeAsync("SendMessage",GestoreBLL.GetAllVideos());
+                            messaggio = $"Dimmi il nome del video che vuoi guardare";
+                            timer = 5000;
+                            //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            //////await connection.StartAsync();
+                            //////await connection.InvokeAsync("SendMessage", GestoreBLL.GetAllVideos());
                             carUtteranceInovked = true;
                             idListCar = 0;
                         }
                         else if(intentRequest.Intent.Slots["auto"].Value!=null)
                         {
-                            //response = ResponseBuilder.Tell("Video");
+                            
                             if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
                                 messaggio = $"Non ho video da mostrarti per le auto {intentRequest.Intent.Slots["auto"].Value}, prova dirmi il nome di un'altra automobile";
                                 carUtteranceInovked = false;
+                                timer = 0;
                             }
                             else
                             {
-                                messaggio = $"ok adesso ti mostro i video" + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id;
-                                //RESTITUIRE VIDEO PER ID AUTO
-                                //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("SendMessage",GestoreBLL.GetListById(1));
-                                carUtteranceInovked = true;
+                                messaggio = $"Dimmi il nome del video che vuoi guardare \nID CATEGORIA : " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id;
                                 idListCar = int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id);
+                                //RESTITUIRE VIDEO PER ID AUTO
+                                //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                //////await connection.StartAsync();
+                                //////await connection.InvokeAsync("SendMessage", GestoreBLL.GetVideosByCategory(idListCar));
+                                carUtteranceInovked = true;
+                                timer = 5000;
                             }
 
                         }
@@ -89,12 +92,22 @@ namespace AlexaSkills
                                 //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 //await connection.StartAsync();
                                 //await connection.InvokeAsync("showVideo",GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO
+                                timer = 0;
                             }
                             else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
                                 //BO VA IN ERRORE DA SOLO
-
-                                messaggio = $"Buona visione CON ID";
+                                string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";");
+                                if (int.Parse(tmpSplit[0]) == idListCar)
+                                {
+                                    messaggio = $"Buona visione CON ID";
+                                    timer = 0;
+                                }
+                                else
+                                {
+                                    messaggio = $"Il video che hai richiesto non è presente, dimmi il nome di un video valido";
+                                    timer = 0;
+                                }
                                 //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 //await connection.StartAsync();
                                 //await connection.InvokeAsync("showVideo", GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO dato id auto
@@ -102,6 +115,7 @@ namespace AlexaSkills
                             else
                             {
                                 messaggio = $"Non ho capito purtroppo, dimmi il nome del video che vuoi guardare";
+                                timer = 0;
                             }
                             //PRENDE PER (MOSTRA TUTTI I VIDEO) ANCHE QUANDO INSERISCO UN MOSTRA MASERATI SU CICUITO
                             
@@ -126,7 +140,7 @@ namespace AlexaSkills
                         break;
                 }
             }
-
+            System.Threading.Thread.Sleep(timer);
             return new OkObjectResult(response);
 
         }
