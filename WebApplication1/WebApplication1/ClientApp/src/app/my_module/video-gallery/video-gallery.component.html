@@ -1,0 +1,13 @@
+<div id="wrapper">
+  <div id="logo">
+    <img id="headerImg" src="../../../assets/img/AppImage/PirelliBackground.png">
+  </div>
+<div *ngFor="let media of pages[0].sixElements;let i=index" class="listItem" id="vidBox{{i}}" >
+     <a (click)="sendData(i)">
+        <video [muted]="'muted'" autoplay="autoplay" loop >
+          <source src={{media.path}}>
+        </video>
+        <div class="infoBox">{{media.name}}</div>
+    </a>
+  </div>
+</div>

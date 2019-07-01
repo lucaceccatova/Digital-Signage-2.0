@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule,Routes} from '@angular/router';
-import {} from "../my_module/Slider/slider-routing.module";
 import { AppComponent } from '../app.component';
 const MyRoutes:Routes=[
   {
@@ -17,6 +16,14 @@ const MyRoutes:Routes=[
       path:"slider",
       loadChildren:() => import("../my_module/Slider/slider.module").then(m=>m.SliderModule)
 
+    },
+    {
+      path:"video",
+      loadChildren:()=> import("../my_module/video-gallery/video-gallery.module").then(m=>m.VideoGalleryModule)
+    },
+    {
+      path:"tire",
+      loadChildren:()=> import("../my_module/tire-selection/tire-selection.module").then(m=>m.tireModule)
     }
   ]
 }
