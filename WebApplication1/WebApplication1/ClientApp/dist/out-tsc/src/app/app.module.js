@@ -8,7 +8,7 @@ let AppModule = class AppModule {
 AppModule = tslib_1.__decorate([
     NgModule({
         declarations: [
-            AppComponent,
+            AppComponent
         ],
         imports: [
             BrowserModule,
