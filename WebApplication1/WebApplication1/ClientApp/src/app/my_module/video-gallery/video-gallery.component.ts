@@ -54,6 +54,7 @@ divideInMorePages()
         videoPage.sixElements.push(this.elements[i]);
         i++;
       }
+      else k=58;
     }
     this.pages.push(videoPage);
     videoPage=null;
@@ -68,9 +69,6 @@ divideInMorePages()
     this.stream.time=this.elements[i].timer;
     this.router.navigateByUrl("/video/media");
   }
-
-
-
 
   loadVideo(url:string)
   {
