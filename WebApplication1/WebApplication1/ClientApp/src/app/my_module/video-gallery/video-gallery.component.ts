@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import {videoPage} from 'src/app/Models/videoPage';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 @Component({
   selector: 'app-video-gallery',
   templateUrl: './video-gallery.component.html',
@@ -22,7 +23,9 @@ export class VideoGalleryComponent implements OnInit {
   elements:element[]=[];
   unsubscribes: Subscription[]=[];
   pages:videoPage[]=[];
-  constructor(private getVideo:GetMediaService, private stream:sharedStringService,private router:Router,private streamElements:shareElementsService) { }
+  constructor(private getVideo:GetMediaService, private stream:sharedStringService,
+    private router:Router,private streamElements:shareElementsService,
+    private connectionService:SignalRService) { }
 
 
   ngOnInit() {
@@ -44,7 +47,7 @@ ngOnDestroy(): void {
 }
 signalRListner()
 {
-  this.streamElements.connection.on('showVideo',(data)=>
+  this.connectionService.connection.on('showVideo',(data)=>
   {
     this.sendData(data);
   });

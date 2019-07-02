@@ -12,7 +12,7 @@ AppModule = tslib_1.__decorate([
         ],
         imports: [
             BrowserModule,
-            myRouter
+            myRouter,
         ],
         providers: [],
         bootstrap: [AppComponent]
