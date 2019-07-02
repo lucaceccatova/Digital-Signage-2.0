@@ -31,6 +31,8 @@ export class VideoGalleryComponent implements OnInit {
     
     //this.elements=this.streamElements.elements;
     //this.divideInMorePages();
+
+    this.signalRListner();
     
   }  
 ngOnDestroy(): void {
@@ -40,7 +42,13 @@ ngOnDestroy(): void {
     element.unsubscribe();
   });
 }
-
+signalRListner()
+{
+  this.streamElements.connection.on('showVideo',(data)=>
+  {
+    this.sendData(data);
+  });
+}
 divideInMorePages()
 {
   let i:number=0,k:number;
@@ -63,10 +71,9 @@ divideInMorePages()
 }
   //service that pass the path to fsVideo component
   //without expose the Url in the Url 
-  sendData(i:number)
+  sendData(i:element)
   {
-    this.stream.data=this.elements[i].path;
-    this.stream.time=this.elements[i].timer;
+    this.stream.singleVideo=i;
     this.router.navigateByUrl("/video/media");
   }
 

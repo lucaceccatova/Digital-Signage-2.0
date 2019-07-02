@@ -26,7 +26,6 @@ import { shareElementsService } from 'src/app/Services/shareElementsServie/share
 
 export class SliderComponent implements OnInit,OnDestroy
 {
- 
   url:string="/assets/loadeddata.json";
  // url:string="https://localhost:44303/api/test/getlistaById"
   public elements:element[];
@@ -120,6 +119,7 @@ slideEngine()
     {
       //call service that send data to video gallery component
       this.streamElements.elements=data;
+      this.streamElements.connection=this.connection;
       //ng route to video gallery component
       this.router.navigateByUrl("/video")
     });
