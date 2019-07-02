@@ -90,10 +90,9 @@ namespace AlexaSkills
                             if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
                                 messaggio = $"Buona visione";
-                                //////connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //////await connection.StartAsync();
-                                //////await connection.InvokeAsync("showVideo",GestoreBLL.GetVideoByName(intentRequest.Intent.Slots["VideoNames"].Value)); 
-                                timer = 0;
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
                             }
                             else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
@@ -102,10 +101,10 @@ namespace AlexaSkills
                                 if (int.Parse(tmpSplit[0]) == idListCar)
                                 {
                                     messaggio = $"Buona visione CON ID";
-                                    //////connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                    //////await connection.StartAsync();
-                                    //////await connection.InvokeAsync("showVideo", GestoreBLL.GetVideoByIdName(int.Parse(tmpSplit[1]), intentRequest.Intent.Slots["VideoNames"].Value));
-                                    timer = 0;
+                                    connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                    ////await connection.StartAsync();
+                                    ////await connection.InvokeAsync("showVideo", GestoreBLL.GetVideoByIdName(int.Parse(tmpSplit[1]), intentRequest.Intent.Slots["VideoNames"].Value));
+                                    ////timer = 0;
                                 }
                                 else
                                 {
