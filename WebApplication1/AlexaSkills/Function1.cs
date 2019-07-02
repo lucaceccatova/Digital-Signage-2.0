@@ -19,13 +19,12 @@ namespace AlexaSkills
 {
     public static class Function1
     {
-        public static string messaggio;
+        private static string messaggio;
+        private static bool carUtteranceInovked;
+        private static int idListCar;
+        private static int timer;
+        private static HubConnection connection;
 
-        //public static string tempIntent;
-
-        public static bool carUtteranceInovked;
-        public static int idListCar;
-        public static int timer;
 
         [FunctionName("Alexa")]
         public static async Task<IActionResult> Run(
@@ -43,6 +42,8 @@ namespace AlexaSkills
             {
                 response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
                 response.Response.ShouldEndSession = false;
+                carUtteranceInovked = false;
+                timer = 0;
             }
             else if (requestType == typeof(IntentRequest))
             {
@@ -51,33 +52,33 @@ namespace AlexaSkills
                 switch (intentRequest.Intent.Name)
                 {
                     case "ShowVideoIntent":
-                        if (intentRequest.Intent.Slots["auto"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
+                        if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
                         {
                             messaggio = $"Dimmi il nome del video che vuoi guardare";
                             timer = 5000;
-                            //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            //////await connection.StartAsync();
-                            //////await connection.InvokeAsync("SendMessage", GestoreBLL.GetAllVideos());
+                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            await connection.StartAsync();
+                            await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
                             carUtteranceInovked = true;
                             idListCar = 0;
                         }
-                        else if(intentRequest.Intent.Slots["auto"].Value!=null)
+                        else if(intentRequest.Intent.Slots["categoria"].Value!=null)
                         {
                             
-                            if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
+                            if (intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
-                                messaggio = $"Non ho video da mostrarti per le auto {intentRequest.Intent.Slots["auto"].Value}, prova dirmi il nome di un'altra automobile";
+                                messaggio = $"Non ho video da mostrarti per le auto {intentRequest.Intent.Slots["categoria"].Value}, prova dirmi il nome di un'altra automobile";
                                 carUtteranceInovked = false;
                                 timer = 0;
                             }
                             else
                             {
-                                messaggio = $"Dimmi il nome del video che vuoi guardare \nID CATEGORIA : " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id;
-                                idListCar = int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id);
-                                //RESTITUIRE VIDEO PER ID AUTO
-                                //////var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //////await connection.StartAsync();
-                                //////await connection.InvokeAsync("SendMessage", GestoreBLL.GetVideosByCategory(idListCar));
+                                messaggio = $"Dimmi il nome del video che vuoi guardare \nID CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id;
+                                idListCar = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
+                                //RESTITUIRE VIDEO PER CATEGORIA
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetVideosByCategory(idListCar));
                                 carUtteranceInovked = true;
                                 timer = 5000;
                             }
@@ -85,22 +86,25 @@ namespace AlexaSkills
                         }
                         else if (intentRequest.Intent.Slots["VideoNames"].Value != null && carUtteranceInovked == true)
                         {
-                            //RESTITUIRE SINGOLO VIDEO PER ID AUTO e NOME
+                            
                             if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
                                 messaggio = $"Buona visione";
-                                //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("showVideo",GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO
+                                //////connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                //////await connection.StartAsync();
+                                //////await connection.InvokeAsync("showVideo",GestoreBLL.GetVideoByName(intentRequest.Intent.Slots["VideoNames"].Value)); 
                                 timer = 0;
                             }
                             else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
-                                //BO VA IN ERRORE DA SOLO
+                                
                                 string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";");
                                 if (int.Parse(tmpSplit[0]) == idListCar)
                                 {
                                     messaggio = $"Buona visione CON ID";
+                                    //////connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                    //////await connection.StartAsync();
+                                    //////await connection.InvokeAsync("showVideo", GestoreBLL.GetVideoByIdName(int.Parse(tmpSplit[1]), intentRequest.Intent.Slots["VideoNames"].Value));
                                     timer = 0;
                                 }
                                 else
@@ -108,9 +112,7 @@ namespace AlexaSkills
                                     messaggio = $"Il video che hai richiesto non è presente, dimmi il nome di un video valido";
                                     timer = 0;
                                 }
-                                //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("showVideo", GestoreBLL.GetVideo()); //CREARE METEODO CHE RESTITUSCE UN SINGOLO VIDEO dato id auto
+                                
                             }
                             else
                             {
@@ -124,18 +126,48 @@ namespace AlexaSkills
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
+                    case "ReturnToSlideIntent": //NEL CASO VIENE DETTO NO VA IN ERRORE, FARE UN CASE DI DEFAULT PER GESTIRE QUESTI ERRORI
+                        if (carUtteranceInovked != false)
+                        {
+                            
+                            
+                            if (intentRequest.Intent.ConfirmationStatus != "DENIED"){
+                                messaggio = $"Va bene, ritorno allo slider";                           
+                                carUtteranceInovked = false;
+                            }
+                            else
+                            {
+                                messaggio = $"Va bene";
+                            }
+                            
+                            //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            //await connection.StartAsync();
+                            //await connection.InvokeAsync("returnToSlide",true);
+                        }
+                        else
+                        {
+                            messaggio = $"Lo slider è gia sul display";     
+                        }
+                        timer = 0;
+                        response = ResponseBuilder.Tell(messaggio);
+                        response.Response.ShouldEndSession = false;
+                        
+                        break;
                     case "AMAZON.StopIntent":
                         messaggio = $"Disattivo Pirelli Voice Control";
+                        timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = true;
                         break;
                     
                     case "ZZZ":
                         messaggio = $"Non ho capito, puoi ripetere perfavore ?";
-                        //var connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                        ////await connection.StartAsync();
-                        ////await connection.InvokeAsync("SendMessage",1);
+                        timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
+                        response.Response.ShouldEndSession = false;
+                        break;
+                    default:
+                        response = ResponseBuilder.Empty();
                         response.Response.ShouldEndSession = false;
                         break;
                 }
