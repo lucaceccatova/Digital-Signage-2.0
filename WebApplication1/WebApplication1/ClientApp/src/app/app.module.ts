@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { myRouter } from './router/router.module';
-import { TireSelectionComponent } from './my_module/tire-selection/tire-selection.component';
+import { shareElementsService } from './Services/shareElementsServie/shareElement.Service';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,7 @@ import { TireSelectionComponent } from './my_module/tire-selection/tire-selectio
     ],
   imports: [
     BrowserModule,
-    myRouter
+    myRouter,
   ],
   providers: [],
   bootstrap: [AppComponent]

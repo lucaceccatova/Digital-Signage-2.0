@@ -56,8 +56,7 @@ ngOnInit()
 {
   this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
   this.getDataMock();
-  this.signalRConnection(); 
-    
+  this.signalRConnection();    
 }
 
 
@@ -79,6 +78,7 @@ ngOnDestroy()
     {
       this.elements=data;
       this.slideEngine();
+     
 
     })  
     );
@@ -119,7 +119,7 @@ slideEngine()
     this.connection.on("showVideoGallery", (data)=>
     {
       //call service that send data to video gallery component
-      this.streamElements=data;
+      this.streamElements.elements=data;
       //ng route to video gallery component
       this.router.navigateByUrl("/video")
     });

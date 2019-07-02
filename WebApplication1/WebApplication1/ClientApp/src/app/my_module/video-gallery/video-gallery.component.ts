@@ -6,10 +6,10 @@ import * as $ from 'jquery';
 import { OutgoingMessage } from 'http';
 import { EventEmitter } from 'events';
 import { Directive } from '@angular/core';
-import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
 import { Router } from '@angular/router';
-import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 import {videoPage} from 'src/app/Models/videoPage';
+import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
+import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
 @Component({
   selector: 'app-video-gallery',
   templateUrl: './video-gallery.component.html',
@@ -28,7 +28,7 @@ export class VideoGalleryComponent implements OnInit {
   ngOnInit() {
     //mockup without signalR
     this.loadVideo(this.url);
-
+    
     //this.elements=this.streamElements.elements;
     //this.divideInMorePages();
     

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {}
+    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+        "projectUniqueName": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+        "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-        "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
+        "outputPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
