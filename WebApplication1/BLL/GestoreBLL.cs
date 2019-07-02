@@ -124,6 +124,12 @@ namespace BLL
             return listavideo;
 
         }
+        public static Media GetVideosByName(string name)
+        {
+            Media media = new Media();
+            media = new DB_Access(connectionDB).GetVideoByName(name);
+            return media;
+        }
     }
 
 
