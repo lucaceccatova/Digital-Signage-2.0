@@ -17,6 +17,7 @@ import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import * as $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 
 @Component({
   encapsulation:ViewEncapsulation.None,
@@ -40,12 +41,12 @@ export class SliderComponent implements OnInit,OnDestroy
   //set timeout 
   setTimeoutInterceptor;
   //signalR connection object
-  private connection : HubConnection;
   MyId:number;
   temp;
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
-constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService)
+constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService,
+  private connectionService:SignalRService)
 {
   
 }
@@ -107,23 +108,23 @@ slideEngine()
 
   //function that estabilish a connection withe backend service
   signalRConnection(){
-  this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
+  this.connectionService.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
   .configureLogging(signalR.LogLevel.Information)
   .build();
-    this.connection
+  this.connectionService.connection
     .start()
     .then(()=>console.log("connection started"))
     .catch(err=>console.log("Errore di connessione"));
   
-    this.connection.on("showVideoGallery", (data)=>
+    this.connectionService.connection.on("showVideoGallery", (data)=>
     {
       //call service that send data to video gallery component
       this.streamElements.elements=data;
-      this.streamElements.connection=this.connection;
+    
       //ng route to video gallery component
       this.router.navigateByUrl("/video")
     });
-    this.connection.on("showVideo",data=>
+    this.connectionService.connection.on("showVideo",data=>
     {
       //show one single video
     });
@@ -134,7 +135,7 @@ slideEngine()
   //method that listen to signalR messages from backend and verify them
   signalRDirectiveListener(){
     //provvisory: invoke signalr method 
-    this.connection
+    this.connectionService.connection
     .invoke('SendMessage', 2)
     .catch(err => console.error(err));
     //what happens whe ReceiveMessage signalR function is invoked 
