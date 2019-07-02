@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { element } from 'src/app/Models/Element';
 
 @Injectable()
 export class sharedStringService {
-    public data:string;
-    public time:number;
+    singleVideo:element;
 }

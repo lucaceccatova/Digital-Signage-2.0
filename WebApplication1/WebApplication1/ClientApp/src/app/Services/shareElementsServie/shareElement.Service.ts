@@ -8,4 +8,5 @@ import { element } from 'src/app/Models/Element';
 )
 export class shareElementsService {
 elements:element[]=[];
+connection;
 }
