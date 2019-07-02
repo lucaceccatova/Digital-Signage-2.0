@@ -124,25 +124,6 @@ namespace BLL
             return listavideo;
 
         }
-        public static Media GetVideoById(int id)
-        {
-            Media listavideo = new Media();
-            listavideo = new DB_Access(connectionDB).GetVideoById(id);
-            return listavideo;
-        }
-        public static Media GetVideoByIdName(int id,string name)
-        {
-            Media listavideo = new Media();
-            listavideo = new DB_Access(connectionDB).GetVideoByNameId(name,id);
-            return listavideo;
-        }
-
-        public static Media GetVideoByName(string name)
-        {
-            Media listavideo = new Media();
-            listavideo = new DB_Access(connectionDB).GetVideoByName(name);
-            return listavideo;
-        }
     }
 
 

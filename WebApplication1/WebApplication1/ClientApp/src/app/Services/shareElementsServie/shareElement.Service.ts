@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { element } from 'src/app/Models/Element';
 
-@Injectable()
+@Injectable(
+    {
+        providedIn:'root',
+    }
+)
 export class shareElementsService {
-elements:element[];
+elements:element[]=[];
 }
