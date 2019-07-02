@@ -25,7 +25,9 @@ export class VideoGalleryComponent implements OnInit {
   pages:videoPage[]=[];
   constructor(private getVideo:GetMediaService, private stream:sharedStringService,
     private router:Router,private streamElements:shareElementsService,
-    private connectionService:SignalRService) { }
+    private connectionService:SignalRService) { 
+      
+    }
 
 
   ngOnInit() {
@@ -34,10 +36,15 @@ export class VideoGalleryComponent implements OnInit {
     
     //this.elements=this.streamElements.elements;
     //this.divideInMorePages();
-
-    this.signalRListner();
     
-  }  
+    this.signalRListner();
+
+    //timeoutthat return to slider after 3 minutes
+
+   
+
+}
+
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
@@ -45,12 +52,25 @@ ngOnDestroy(): void {
     element.unsubscribe();
   });
 }
+//signalR directives
 signalRListner()
 {
   this.connectionService.connection.on('showVideo',(data)=>
   {
     this.sendData(data);
   });
+  this.connectionService.connection.on('showVideoGallery',(data)=>
+  {
+    this.elements=this.streamElements.elements=data;
+    this.router.navigateByUrl('/video');
+  });
+  this.connectionService.connection.on('goToSlide',(data=>
+    {
+      if(data==true)
+      {
+        this.router.navigateByUrl("/slider");
+      }
+    }));
 }
 divideInMorePages()
 {
@@ -70,8 +90,8 @@ divideInMorePages()
     this.pages.push(videoPage);
     videoPage=null;
   }
-
 }
+
   //service that pass the path to fsVideo component
   //without expose the Url in the Url 
   sendData(i:element)
@@ -88,5 +108,4 @@ divideInMorePages()
       this.divideInMorePages();
     }));
   }
-
 }
