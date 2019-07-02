@@ -120,8 +120,8 @@ namespace AlexaSkills
                                 timer = 0;
                             }
                             //PRENDE PER (MOSTRA TUTTI I VIDEO) ANCHE QUANDO INSERISCO UN MOSTRA MASERATI SU CICUITO
-                            
-                            
+
+
                         }
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
