@@ -40,11 +40,15 @@ export class VideoGalleryComponent implements OnInit {
     this.signalRListner();
 
     //timeoutthat return to slider after 3 minutes
-
    
+}
+returnBackTimer()
+{
+  setTimeout(() => {
+    this.router.navigateByUrl('/slider');
+  }, 2000);
 
 }
-
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
@@ -61,14 +65,15 @@ signalRListner()
   });
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
-    this.elements=this.streamElements.elements=data;
+    this.elements=data;
     this.router.navigateByUrl('/video');
   });
   this.connectionService.connection.on('goToSlide',(data=>
     {
       if(data==true)
       {
-        this.router.navigateByUrl("/slider");
+        
+        this.router.navigateByUrl("/slider/media/1");
       }
     }));
 }
