@@ -23,6 +23,9 @@ export class VideoGalleryComponent implements OnInit {
   elements:element[]=[];
   unsubscribes: Subscription[]=[];
   pages:videoPage[]=[];
+//bool to reload the page
+  reload=true;
+
   constructor(private getVideo:GetMediaService, private stream:sharedStringService,
     private router:Router,private streamElements:shareElementsService,
     private connectionService:SignalRService) { 
@@ -66,6 +69,7 @@ signalRListner()
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
     this.elements=data;
+    this.reloadNgFor();
     this.router.navigateByUrl('/video');
   });
   this.connectionService.connection.on('goToSlide',(data=>
@@ -112,5 +116,12 @@ divideInMorePages()
       this.elements=data;
       this.divideInMorePages();
     }));
+  }
+  reloadNgFor()
+  {
+    this.reload=false;
+    setTimeout(() => {
+      this.reload=true;
+    }, 500);
   }
 }
