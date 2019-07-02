@@ -67,7 +67,7 @@ namespace AlexaSkills
                             
                             if (intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
-                                messaggio = $"Non ho video da mostrarti per le auto {intentRequest.Intent.Slots["categoria"].Value}, prova dirmi il nome di un'altra automobile";
+                                messaggio = $"Non ho video da mostrarti per la categoria {intentRequest.Intent.Slots["categoria"].Value}, prova dirmi il nome di un'altra tipologia di video";
                                 carUtteranceInovked = false;
                                 timer = 0;
                             }
