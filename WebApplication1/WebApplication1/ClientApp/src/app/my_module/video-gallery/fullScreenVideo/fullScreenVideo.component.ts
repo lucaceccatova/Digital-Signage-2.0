@@ -17,6 +17,5 @@ export class fullScreenVideo
         setTimeout(() => {
            this.router.navigateByUrl("/video"); 
         }, this.singleVideo.timer*1000);
-
     }
 }
