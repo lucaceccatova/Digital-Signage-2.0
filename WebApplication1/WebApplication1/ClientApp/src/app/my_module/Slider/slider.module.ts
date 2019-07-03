@@ -6,7 +6,6 @@ import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import {ListService} from '../../Services/ListService/list-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
-import {ServerListnerService} from '../../Services/Listner/server-listner.service';
 import {ListViewComponent} from "./ListView/list-view.component";
 
 @NgModule({
@@ -17,7 +16,7 @@ import {ListViewComponent} from "./ListView/list-view.component";
     CommonModule,  
   ],
   declarations: [ SliderComponent,ListViewComponent ],
-  providers:[GetMediaService,ServerListnerService,ListService]
+  providers:[GetMediaService,ListService]
 })
 export class SliderModule { 
 }

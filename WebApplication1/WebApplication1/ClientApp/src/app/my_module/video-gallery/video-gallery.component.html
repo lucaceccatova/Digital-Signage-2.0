@@ -1,9 +1,9 @@
 <div id="wrapper">
-    <button (click)="returnBackTimer()">Return BAck</button>
+    <button (click)="returnBackTimer()" *ngIf="reload">Return BAck</button>
   <div id="logo">
     <img id="headerImg" src="../../../assets/img/AppImage/PirelliBackground.png">
   </div>
-<div *ngFor="let media of pages[0].sixElements;let i=index" *ngIf="reload" class="listItem" id="vidBox{{i}}" >
+<div *ngFor="let media of pages[0].sixElements;let i=index"  class="listItem" id="vidBox{{i}}" >
      <a (click)="sendData(media)">
         <video [muted]="'muted'" autoplay="autoplay" loop >
           <source src={{media.path}}>

@@ -1199,11 +1199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
+      "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
+      "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-      "outputPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\obj\\",
+      "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -1222,8 +1222,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
-              "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
+            "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+              "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
             }
           }
         }
