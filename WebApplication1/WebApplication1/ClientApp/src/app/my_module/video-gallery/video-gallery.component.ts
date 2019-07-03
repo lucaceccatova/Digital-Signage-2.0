@@ -68,9 +68,10 @@ signalRListner()
   });
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
+    this.pages=[];
     this.elements=data;
+    this.divideInMorePages();
     this.reloadNgFor();
-    this.router.navigateByUrl('/video');
   });
   this.connectionService.connection.on('goToSlide',(data=>
     {
