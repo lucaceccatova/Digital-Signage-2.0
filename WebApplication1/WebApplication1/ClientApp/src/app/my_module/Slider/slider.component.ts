@@ -1,7 +1,6 @@
 import { Component, OnInit ,OnDestroy, Output, Input} from '@angular/core';
 import { Router } from '@angular/router';
 import {GetMediaService}from '../../Services/GetMedia/get-media.service';
-import {ServerListnerService} from '../../Services/Listner/server-listner.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core'
@@ -45,7 +44,7 @@ export class SliderComponent implements OnInit,OnDestroy
   temp;
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
-constructor(private http:GetMediaService,private dir:ServerListnerService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService,
+constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService,
   private connectionService:SignalRService)
 {
   
@@ -107,15 +106,8 @@ slideEngine()
 
 
   //function that estabilish a connection withe backend service
-  signalRConnection(){
-  this.connectionService.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
-  .configureLogging(signalR.LogLevel.Information)
-  .build();
-  this.connectionService.connection
-    .start()
-    .then(()=>console.log("connection started"))
-    .catch(err=>console.log("Errore di connessione"));
-  
+  signalRConnection(){  
+    this.connectionService.connect();
     this.connectionService.connection.on("showVideoGallery", (data)=>
     {
       //call service that send data to video gallery component

@@ -9,7 +9,11 @@ export class SignalRService {
   connection:HubConnection;
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+   
+    }
+  connect()
+  {
     this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
     .configureLogging(signalR.LogLevel.Information)
     .build();
@@ -18,6 +22,5 @@ export class SignalRService {
       .then(()=>console.log("connection started"))
       .catch(err=>console.log("Errore di connessione"));
       //initialize connection
-    }
-  
+  }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
+    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj": {
+    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
+        "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
+        "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj",
         "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-        "outputPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\obj\\",
+        "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
-                "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
+              "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj"
               }
             }
           }
@@ -60,14 +60,14 @@
         }
       }
     },
-    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
+    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
+        "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\DAL.csproj",
         "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-        "outputPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
+        "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -116,14 +116,14 @@
         }
       }
     },
-    "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
+    "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
+        "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\WebApplication1.csproj",
         "packagesPath": "C:\\Users\\luca.ceccato\\.nuget\\packages\\",
-        "outputPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\obj\\",
+        "outputPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -142,8 +142,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj": {
-                "projectPath": "c:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj"
+              "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj": {
+                "projectPath": "C:\\REPO\\Digital-Signage-2.0\\WebApplication1\\BLL\\BLL.csproj"
               }
             }
           }
