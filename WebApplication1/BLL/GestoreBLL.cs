@@ -137,6 +137,13 @@ namespace BLL
             auto = new DB_Access(connectionDB).GetCarsAndTires(id);
             return auto;
         }
+
+        public static Tire GetTireById(int id)
+        {
+            Tire ruota = new Tire();
+            ruota = new DB_Access(connectionDB).GetTire(id);
+            return ruota;
+        }
     }
 
 

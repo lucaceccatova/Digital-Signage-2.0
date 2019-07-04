@@ -737,6 +737,58 @@ namespace DAL
             }
         } 
 
+        public Tire GetTire(int id)
+        {
+            Tire tireCar = new Tire();
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from tire where id=" + id + "";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+                        
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+
+                               
+                                tireCar.id = (int)reader["id"];
+                                tireCar.model = reader["model"].ToString();
+                                //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
+                                tireCar.tireType = reader["tireType"].ToString();
+                                tireCar.tirePath = reader["tirePath"].ToString();
+                                tireCar.size = float.Parse(reader["size"].ToString());
+                                tireCar.price = float.Parse(reader["price"].ToString());
+                                tireCar.FK_car = (int)reader["FK_car"];
+
+
+                            }
+                            
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return tireCar;
+            }
+        } 
+
     }
 }
 

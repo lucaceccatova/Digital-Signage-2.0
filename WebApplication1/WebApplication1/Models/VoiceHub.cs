@@ -27,5 +27,9 @@ namespace WebApplication1.Models
         {
             await Clients.All.SendAsync("showCarTires", auto);
         }
+        public async Task sendTire(Tire ruota)
+        {
+            await Clients.All.SendAsync("reciveTire", ruota);
+        }
     }
 }
