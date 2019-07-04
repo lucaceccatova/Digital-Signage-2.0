@@ -58,9 +58,9 @@ namespace AlexaSkills
                         {
                             messaggio = $"Dimmi il nome del video che vuoi guardare";
                             timer = 5000;
-                            //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            //await connection.StartAsync();
-                            //await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
+                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            await connection.StartAsync();
+                            await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
                             categoryUtteranceInovked = true;
                             idListCar = 0;
                         }
@@ -93,9 +93,9 @@ namespace AlexaSkills
                             {
                                 messaggio = $"Buona visione";
                                 timer = 0;
-                                //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
                             }
                             else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
                             {
@@ -104,9 +104,9 @@ namespace AlexaSkills
                                 if (int.Parse(tmpSplit[0]) == idListCar)
                                 {
                                     messaggio = $"Buona visione CON ID";
-                                    //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                    //await connection.StartAsync();
-                                    //await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
+                                    connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                    await connection.StartAsync();
+                                    await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
                                     timer = 0;
                                 }
                                 else
@@ -152,18 +152,18 @@ namespace AlexaSkills
                             
                             if (intentRequest.Intent.ConfirmationStatus != "DENIED"){
                                 messaggio = $"Va bene, ritorno allo slider";
-                                //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("returnToSlide",true);
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("returnToSlide",true);
                                 categoryUtteranceInovked = false;
                             }
                             else
                             {
 
                                 messaggio = $"Va bene";
-                                //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
-                                //await connection.InvokeAsync("returnToSlide", false);
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("returnToSlide", false);
                                 categoryUtteranceInovked = true;
 
                             }

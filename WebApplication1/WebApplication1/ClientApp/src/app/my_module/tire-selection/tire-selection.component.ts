@@ -15,14 +15,15 @@ export class TireSelectionComponent implements OnInit {
 
   ngOnInit() {
    //to mockup
-    this.http.get<car>(this.url).subscribe(data=>
-      {
-        this.car=data;
+    //this.http.get<car>(this.url).subscribe(data=>
+    //  {
+    //    this.car=data;
         
-      })
+    //  })
 
       //todb
-      //this.car=this.UnivShare.sharedObject;
+      this.car=this.UnivShare.sharedObject;
+      console.log(this.car);
   }
 
 }

@@ -120,9 +120,9 @@ slideEngine()
     {
       //show one single video
     });
-    this.connectionService.connection.on("showCarTiers",data=>
+    this.connectionService.connection.on("showCarTires",data=>
     {
-      this.UniversalShare=data;
+      this.UniversalShare.sharedObject=data;
       this.router.navigateByUrl("/tire");
     })
   
