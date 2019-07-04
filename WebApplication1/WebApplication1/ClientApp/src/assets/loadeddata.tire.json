@@ -3,40 +3,40 @@
         "InvokeName":"Zonda",
         "brand":"Pagani",
         "path":"assets/img/pagani.png",
-        "avaibleTire":[
+        "tires":[
             {
                 "model":"P zero",
-                "type":"sport",
+                "tireType":"sport",
                 "price":500,
-                "path":"assets/img/tire.jpg",
+                "tirePath":"assets/img/pzero.yellow.png",
                 "size":21
             },
             {
                 "model":"P zero",
-                "type":"sport",
+                "tireType":"sport",
                 "price":500,
-                "path":"assets/img/tire.jpg",
+                "tirePath":"assets/img/tire.png",
                 "size":21
             },
             {
                 "model":"P zero",
-                "type":"sport",
+                "tireType":"sport",
                 "price":500,
-                "path":"assets/img/tire.jpg",
+                "tirePath":"assets/img/tire.png",
                 "size":21
             },
             {
                 "model":"P zero",
-                "type":"sport",
+                "tireType":"sport",
                 "price":500,
-                "path":"assets/img/tire.jpg",
+                "tirePath":"assets/img/tire.png",
                 "size":21
             },
             {
                 "model":"P zero",
-                "type":"sport",
+                "tireType":"sport",
                 "price":500,
-                "path":"assets/img/tire.jpg",
+                "tirePath":"assets/img/pzero.red.png",
                 "size":21
             }
         ]

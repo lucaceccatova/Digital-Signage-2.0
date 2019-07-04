@@ -4,6 +4,6 @@ export class car
     InvokeName:string;
     brand:string;
     path:string;
-    avaibleTire:tire[];
+    tires:tire[];
     
 }

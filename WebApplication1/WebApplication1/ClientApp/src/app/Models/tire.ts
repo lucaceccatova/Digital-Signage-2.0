@@ -1,8 +1,8 @@
 export class tire
  {
      model:string;
-     type:string;
+     tireType:string;
      price:number;
-     path:string;
+     tirePath:string;
      size:number;
  }
