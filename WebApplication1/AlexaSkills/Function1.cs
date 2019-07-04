@@ -44,6 +44,7 @@ namespace AlexaSkills
                 response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
                 response.Response.ShouldEndSession = false;
                 categoryUtteranceInovked = false;
+                carUtteranceInvoked = false;
                 timer = 0;
             }
             else if (requestType == typeof(IntentRequest))
@@ -57,7 +58,7 @@ namespace AlexaSkills
                         if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
                         {
                             messaggio = $"Dimmi il nome del video che vuoi guardare";
-                            timer = 5000;
+                            timer = 3000;
                             connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                             await connection.StartAsync();
                             await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
@@ -75,14 +76,14 @@ namespace AlexaSkills
                             }
                             else
                             {
-                                messaggio = $"Dimmi il nome del video che vuoi guardare \nID CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id;
+                                messaggio = $"Dimmi il nome del video che vuoi guardare \n CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Name;
                                 idListCar = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
                                 //RESTITUIRE VIDEO PER CATEGORIA
                                 connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 await connection.StartAsync();
                                 await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetVideosByCategory(idListCar));
                                 categoryUtteranceInovked = true;
-                                timer = 5000;
+                                timer = 3000;
                             }
 
                         }
@@ -103,7 +104,7 @@ namespace AlexaSkills
                                 string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";");
                                 if (int.Parse(tmpSplit[0]) == idListCar)
                                 {
-                                    messaggio = $"Buona visione CON ID";
+                                    messaggio = $"Buona visione";
                                     connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                     await connection.StartAsync();
                                     await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
@@ -111,7 +112,7 @@ namespace AlexaSkills
                                 }
                                 else
                                 {
-                                    messaggio = $"Il video che hai richiesto non è presente, dimmi il nome di un video valido";
+                                    messaggio = $"Il video che hai richiesto non è presente, mi dici un'altro nome";
                                     timer = 0;
                                 }
                                 
@@ -132,6 +133,7 @@ namespace AlexaSkills
                         if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length <= 1)
                         {
                             messaggio = $"Accedo all'Area Custom your car. \n Automobile: " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
+                            carUtteranceInvoked = true;
                             //PASSARE CON SIGNALR la macchina selezionata con tutte le sue gomme
                             connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                             await connection.StartAsync();
@@ -145,8 +147,23 @@ namespace AlexaSkills
                         response.Response.ShouldEndSession = false;
 
                         break;
+                    case "CustomizeTireIntent":
+                        if (carUtteranceInvoked != false)
+                        {
+                            messaggio = $"ho ricevuto un tier";
+                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            await connection.StartAsync();
+                            await connection.InvokeAsync("sendTire", GestoreBLL.GetTireById(int.Parse(intentRequest.Intent.Slots["ruote"].Resolution.Authorities[0].Values[0].Value.Id)));
+                        }
+                        else
+                        {
+                            messaggio = $"Non ho capito scusa";
+                        }
+                        response = ResponseBuilder.Tell(messaggio);
+                        response.Response.ShouldEndSession = false;
+                        break;
                     case "ReturnToSlideIntent":
-                        if (categoryUtteranceInovked != false)
+                        if (categoryUtteranceInovked != false || carUtteranceInvoked!=false)
                         {
                             
                             
@@ -156,6 +173,7 @@ namespace AlexaSkills
                                 await connection.StartAsync();
                                 await connection.InvokeAsync("returnToSlide",true);
                                 categoryUtteranceInovked = false;
+                                carUtteranceInvoked = false;
                             }
                             else
                             {
@@ -165,6 +183,7 @@ namespace AlexaSkills
                                 await connection.StartAsync();
                                 await connection.InvokeAsync("returnToSlide", false);
                                 categoryUtteranceInovked = true;
+                                carUtteranceInvoked = true;
 
                             }
                           
