@@ -23,5 +23,9 @@ namespace WebApplication1.Models
         {
             await Clients.All.SendAsync("goToSlide",b);
         }
+        public async Task sendCarTires(Car auto)
+        {
+            await Clients.All.SendAsync("showCarTires", auto);
+        }
     }
 }

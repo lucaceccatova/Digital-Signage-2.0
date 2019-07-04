@@ -662,6 +662,81 @@ namespace DAL
             }
         }
 
+        public Car GetCarsAndTires(int id)
+        {
+            var todo = new Car();
+            
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from car where id=" + id + "";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+
+                                todo.id = (int)reader["id"];
+                                todo.InvokeName = reader["name"].ToString();
+                                todo.brand = reader["brand"].ToString();
+                                todo.path = reader["mediaPath"].ToString();
+                                //todo.value = (tipo)reader["Tipo"];
+
+
+                            }
+                            reader.Close();
+                        }
+                        if (todo != null)
+                        {
+                            List<Tire> tmpTire = new List<Tire>();
+                            sqlCommand.CommandText = "select * from tire where FK_car=" + id + "";
+                            reader = sqlCommand.ExecuteReader();
+                            if (reader.HasRows)
+                            {
+                                //CONTROLLA 
+                                while (reader.Read())
+                                {
+                                    var tireCar = new Tire();
+                                    tireCar.id = (int)reader["id"];
+                                    tireCar.model = reader["model"].ToString();
+                                    //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
+                                    tireCar.tireType = reader["tireType"].ToString();
+                                    tireCar.tirePath = reader["tirePath"].ToString();
+                                    tireCar.size =float.Parse(reader["size"].ToString());
+                                    tireCar.price = float.Parse(reader["price"].ToString());
+                                    tireCar.FK_car = (int)reader["FK_car"];
+                                    tmpTire.Add(tireCar);
+
+                                }
+                                
+                            }
+                            todo.tires = tmpTire;
+                            reader.Close();
+                            connection.Close();
+                        }
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return todo;
+            }
+        } 
+
     }
 }
 

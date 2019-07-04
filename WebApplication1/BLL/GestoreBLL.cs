@@ -130,6 +130,13 @@ namespace BLL
             media = new DB_Access(connectionDB).GetVideoByName(name);
             return media;
         }
+
+        public static Car GetCarAndTires(int id)
+        {
+            Car auto = new Car();
+            auto = new DB_Access(connectionDB).GetCarsAndTires(id);
+            return auto;
+        }
     }
 
 
