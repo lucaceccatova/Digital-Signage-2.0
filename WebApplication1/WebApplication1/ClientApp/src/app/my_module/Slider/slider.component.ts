@@ -17,7 +17,7 @@ import { Routes } from '@angular/router';
 import * as $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
-
+import { ShareService } from 'src/app/Services/UniversalShare/universalShareService';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -45,7 +45,7 @@ export class SliderComponent implements OnInit,OnDestroy
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
 constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService,
-  private connectionService:SignalRService)
+  private connectionService:SignalRService,private UniversalShare:ShareService)
 {
   
 }
@@ -120,6 +120,11 @@ slideEngine()
     {
       //show one single video
     });
+    this.connectionService.connection.on("showCarTiers",data=>
+    {
+      this.UniversalShare=data;
+      this.router.navigateByUrl("/tire");
+    })
   
   }
 

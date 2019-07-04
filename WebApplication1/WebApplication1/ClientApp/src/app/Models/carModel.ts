@@ -1,9 +1,9 @@
 import {tire} from './tire'
 export class car
 {
-    name:string;
+    InvokeName:string;
     brand:string;
-    img:string;
+    path:string;
     avaibleTire:tire[];
     
 }
