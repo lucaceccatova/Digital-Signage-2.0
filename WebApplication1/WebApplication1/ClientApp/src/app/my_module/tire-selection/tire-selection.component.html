@@ -1,15 +1,21 @@
 <div id="wrapper"> 
-
   <div id="placeHolderContent">
     <div id="content">
-
+      <img id="carImg" src="{{car.path}}">
     </div>
   </div>
-
   <div id="placeHolderSideBar">
     <div id="sideBar">
-      
+      <div class="tireElement" *ngFor="let tire of car.avaibleTire; let i=index">
+          <img src="{{tire.path}}">
+          <div class="textTire">
+            <p>
+              <b>Model: </b> {{tire.model}}  <b> Size: </b> {{tire.size}}
+                <br>
+                <b>Type: </b>{{tire.type}}         <b>Price: </b>{{tire.price}}
+              </p>
+          </div>
+      </div>
     </div>
   </div>
-
 </div>

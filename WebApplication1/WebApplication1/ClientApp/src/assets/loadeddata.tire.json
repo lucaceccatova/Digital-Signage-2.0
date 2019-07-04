@@ -1,9 +1,23 @@
 
     {
-        "name":"Zonda",
+        "InvokeName":"Zonda",
         "brand":"Pagani",
         "path":"assets/img/pagani.png",
         "avaibleTire":[
+            {
+                "model":"P zero",
+                "type":"sport",
+                "price":500,
+                "path":"assets/img/tire.jpg",
+                "size":21
+            },
+            {
+                "model":"P zero",
+                "type":"sport",
+                "price":500,
+                "path":"assets/img/tire.jpg",
+                "size":21
+            },
             {
                 "model":"P zero",
                 "type":"sport",
