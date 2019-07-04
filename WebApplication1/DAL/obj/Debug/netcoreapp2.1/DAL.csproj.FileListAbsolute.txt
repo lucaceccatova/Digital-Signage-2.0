@@ -23,3 +23,4 @@ C:\REPO\Digital-Signage-2.0\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.Asse
 C:\REPO\Digital-Signage-2.0\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.AssemblyInfo.cs
 C:\REPO\Digital-Signage-2.0\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.dll
 C:\REPO\Digital-Signage-2.0\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.pdb
+C:\Users\leon.rahman\Desktop\Progetto1\Digital-Signage-2.0\WebApplication1\DAL\obj\Debug\netcoreapp2.1\DAL.csprojAssemblyReference.cache
