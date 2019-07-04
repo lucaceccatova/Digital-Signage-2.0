@@ -133,9 +133,9 @@ namespace AlexaSkills
                         {
                             messaggio = $"Accedo all'Area Custom your car. \n Automobile: " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
                             //PASSARE CON SIGNALR la macchina selezionata con tutte le sue gomme
-                            //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            //await connection.StartAsync();
-                            //await connection.InvokeAsync("sendCarTires", GestoreBLL.GetCarAndTires(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            await connection.StartAsync();
+                            await connection.InvokeAsync("sendCarTires", GestoreBLL.GetCarAndTires(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
                         }
                         else
                         {
