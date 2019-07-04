@@ -24,7 +24,7 @@ export class TireSelectionComponent implements OnInit {
       {
         this.car=data;
         this.selectedTire=this.car.tires[0];
-        this.connectionService.connection.on("sendTire",data=>
+        this.connectionService.connection.on("receiveTire",data=>
         {
           this.pitStop(data);
         })
