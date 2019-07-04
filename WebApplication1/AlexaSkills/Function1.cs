@@ -145,7 +145,7 @@ namespace AlexaSkills
                                 connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 await connection.StartAsync();
                                 await connection.InvokeAsync("returnToSlide", false);
-                                carUtteranceInovked = false;
+                                carUtteranceInovked = true;
 
                             }
                             
