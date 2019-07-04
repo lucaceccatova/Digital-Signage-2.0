@@ -147,7 +147,7 @@ namespace AlexaSkills
                         response.Response.ShouldEndSession = false;
 
                         break;
-                    case "CustomizeTireIntent":
+                    case "CustomizeTireIntent": //SISTEMARE LE VALIDATION
                         if (carUtteranceInvoked != false)
                         {
                             messaggio = $"ho ricevuto un tier";
