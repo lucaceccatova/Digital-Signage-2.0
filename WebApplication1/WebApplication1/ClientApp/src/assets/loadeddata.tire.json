@@ -19,22 +19,22 @@
                 "size":21
             },
             {
-                "model":"P zero",
-                "tireType":"sport",
+                "model":"P zero white",
+                "tireType":"Da passeggio",
                 "price":500,
-                "tirePath":"assets/img/tire.png",
+                "tirePath":"assets/img/pzero.white.png",
                 "size":21
             },
             {
-                "model":"P zero",
-                "tireType":"sport",
-                "price":500,
-                "tirePath":"assets/img/tire.png",
+                "model":"P zero Italia",
+                "tireType":"s. sport",
+                "price":990,
+                "tirePath":"assets/img/pzero.italia.png",
                 "size":21
             },
             {
-                "model":"P zero",
-                "tireType":"sport",
+                "model":"P zero Diablo",
+                "tireType":"Diablo",
                 "price":500,
                 "tirePath":"assets/img/pzero.red.png",
                 "size":21
