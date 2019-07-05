@@ -685,7 +685,7 @@ namespace DAL
                             {
 
                                 todo.id = (int)reader["id"];
-                                todo.InvokeName = reader["name"].ToString();
+                                todo.invokeName = reader["name"].ToString();
                                 todo.brand = reader["brand"].ToString();
                                 todo.path = reader["mediaPath"].ToString();
                                 //todo.value = (tipo)reader["Tipo"];

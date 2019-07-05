@@ -35,11 +35,10 @@ export class VideoGalleryComponent implements OnInit {
 
   ngOnInit() {
     //mockup without signalR
-    this.loadVideo(this.url);
+   // this.loadVideo(this.url);
     
-    //this.elements=this.streamElements.elements;
-    //this.divideInMorePages();
-    
+    this.elements=this.streamElements.elements;
+    this.divideInMorePages();
     this.signalRListner();
 
     //timeoutthat return to slider after 3 minutes

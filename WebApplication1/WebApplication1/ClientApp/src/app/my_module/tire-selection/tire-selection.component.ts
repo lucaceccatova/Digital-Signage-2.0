@@ -20,19 +20,20 @@ export class TireSelectionComponent implements OnInit {
 
   ngOnInit() {
    //to mockup
-    this.http.get<car>(this.url).subscribe(data=>
+   /* this.http.get<car>(this.url).subscribe(data=>
       {
         this.car=data;
         this.selectedTire=this.car.tires[0];
-        this.connectionService.connection.on("receiveTire",data=>
-        {
-          this.pitStop(data);
-        })
-      });
+        */
 
       
       //todb
-     // this.car=this.UnivShare.sharedObject;
+    this.car = this.UnivShare.sharedObject;
+    this.selectedTire = this.car.tires[0];
+    console.log(this.car);
+    this.connectionService.connection.on("reciveTire", data => {
+      this.pitStop(data);
+    });
   }
   pitStop(i:tire)
   {

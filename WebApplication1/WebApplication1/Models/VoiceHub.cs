@@ -29,7 +29,7 @@ namespace WebApplication1.Models
         }
         public async Task sendTire(Tire ruota)
         {
-            await Clients.All.SendAsync("reciveTire", ruota);
+            await Clients.All.SendAsync("receiveTire", ruota);
         }
     }
 }
