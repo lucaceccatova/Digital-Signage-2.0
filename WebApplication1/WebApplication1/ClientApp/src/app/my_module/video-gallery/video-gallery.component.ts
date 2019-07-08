@@ -35,15 +35,19 @@ export class VideoGalleryComponent implements OnInit {
 
   ngOnInit() {
     //mockup without signalR
-   // this.loadVideo(this.url);
-    
+    this.loadVideo(this.url);
+    /*
     this.elements=this.streamElements.elements;
-    this.divideInMorePages();
+    this.divideInMorePages();*/
+    
+    //contains function invoked by signalr
     this.signalRListner();
 
     //timeoutthat return to slider after 3 minutes
    
 }
+
+//timer that navigate after x seconds of inactivity
 returnBackTimer()
 {
   setTimeout(() => {
@@ -51,6 +55,7 @@ returnBackTimer()
   }, 2000);
 
 }
+
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
   //Add 'implements OnDestroy' to the class.
@@ -58,13 +63,18 @@ ngOnDestroy(): void {
     element.unsubscribe();
   });
 }
+
+
 //signalR directives
 signalRListner()
 {
+  //to play one video fullscreen
   this.connectionService.connection.on('showVideo',(data)=>
   {
     this.sendData(data);
   });
+
+  //change wich videos are displayed on the gallery 
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
     this.pages=[];
@@ -72,6 +82,7 @@ signalRListner()
     this.divideInMorePages();
     this.reloadNgFor();
   });
+  //return back to slider if invoked
   this.connectionService.connection.on('goToSlide',(data=>
     {
       if(data==true)
@@ -81,6 +92,8 @@ signalRListner()
       }
     }));
 }
+
+//to divide a json that contains more than 6 videos in object with six or less video
 divideInMorePages()
 {
   let i:number=0,k:number;
@@ -94,7 +107,7 @@ divideInMorePages()
         videoPage.sixElements.push(this.elements[i]);
         i++;
       }
-      else k=58;
+      else break;
     }
     this.pages.push(videoPage);
     videoPage=null;
@@ -109,6 +122,7 @@ divideInMorePages()
     this.router.navigateByUrl("/video/media");
   }
 
+  //mockup function that take data from web api
   loadVideo(url:string)
   {
    this.unsubscribes.push(this.getVideo.get(url).subscribe(data=>
@@ -117,6 +131,8 @@ divideInMorePages()
       this.divideInMorePages();
     }));
   }
+
+  //refresh ngfor :(
   reloadNgFor()
   {
     this.reload=false;

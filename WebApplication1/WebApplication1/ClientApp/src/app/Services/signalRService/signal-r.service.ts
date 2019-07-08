@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // means that only one instance of this service will be initialized for all modules
 })
 export class SignalRService {
 
@@ -23,4 +23,6 @@ export class SignalRService {
       .catch(err=>console.log("Errore di connessione"));
       //initialize connection
   }
+
+  //may move all Invoke functions in this service for better mantainance of code
 }

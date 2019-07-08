@@ -1,5 +1,5 @@
 <div id="wrapper"> 
-  <div id="placeHolderContent">
+  <div id="placeHolderContent"><!--Left side of the web page-->
     <div id="header">
       <b>
         <h1>
@@ -9,15 +9,15 @@
 
       </b>
     </div>
-    <div id="content">
+    <div id="content"><!--Transparent Div that contains car and tires images-->
       <img id="carImg" src="{{car.path}}">
       <img src="{{selectedTire.tirePath}}" id="antWheel" class="rotating">
       <img src="{{selectedTire.tirePath}}" id="postWheel"class="rotating">
 
     </div>
   </div>
-  <div id="placeHolderSideBar">
-    <div id="sideBar">
+  <div id="placeHolderSideBar"><!--Right side of the web page (Grey BG)-->
+    <div id="sideBar"> <!--div that contains all avaible tire-->
       <h2>AVAIBLE TIRES</h2>
       <div class="tireElement" *ngFor="let tire of car.tires; let i=index" (click)="pitStop(tire)">
           <img src="{{tire.tirePath}}">

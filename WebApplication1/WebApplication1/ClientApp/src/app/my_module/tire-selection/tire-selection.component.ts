@@ -19,22 +19,22 @@ export class TireSelectionComponent implements OnInit {
     private connectionService:SignalRService) { }
 
   ngOnInit() {
-   //to mockup
-   /* this.http.get<car>(this.url).subscribe(data=>
+   //to mockup get data from json 
+    this.http.get<car>(this.url).subscribe(data=>
       {
         this.car=data;
         this.selectedTire=this.car.tires[0];
-        */
-
-      
-      //todb
-    this.car = this.UnivShare.sharedObject;
+      }); 
+      //todb get data from service that has been initialized by previous component
+   /* this.car = this.UnivShare.sharedObject;
     this.selectedTire = this.car.tires[0];
     console.log(this.car);
     this.connectionService.connection.on("reciveTire", data => {
       this.pitStop(data);
-    });
+    });*/
   }
+
+  //change img for tires
   pitStop(i:tire)
   {
     this.selectedTire=i;

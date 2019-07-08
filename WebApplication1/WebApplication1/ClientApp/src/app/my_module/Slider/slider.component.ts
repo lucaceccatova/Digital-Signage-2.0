@@ -1,9 +1,9 @@
 import { Component, OnInit ,OnDestroy, Output, Input} from '@angular/core';
 import { Router } from '@angular/router';
-import {GetMediaService}from '../../Services/GetMedia/get-media.service';
+import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
-import { ViewEncapsulation } from '@angular/core'
+import { ViewEncapsulation } from '@angular/core';
 import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
 import { compileBaseDefFromMetadata, templateJitUrl } from '@angular/compiler';
@@ -22,8 +22,8 @@ import { ShareService } from 'src/app/Services/UniversalShare/universalShareServ
 
 export class SliderComponent implements OnInit,OnDestroy
 {
-  //url:string="/assets/loadeddata.json";
- url:string="https://localhost:44303/api/test/getlistaById"
+  url:string="/assets/loadeddata.json";
+//url:string="https://localhost:44303/api/test/getlistaById"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -69,13 +69,11 @@ ngOnDestroy()
  {
    console.log(this.MyId);
   this.temp=this.url+'/'+this.MyId.toString();
-   this.unsubscribes.push(this.http.get(this.temp).subscribe(data =>
-    {
-      this.elements=data;
-      this.slideEngine();
-     
-
-    })  
+   this.unsubscribes.push(this.http.get(this.url).subscribe(data =>
+      {
+        this.elements=data;
+        this.slideEngine();
+      })  
     );
  }
 
@@ -87,14 +85,24 @@ slideEngine()
       //idea: switch slides gallery when one end
        if(this.elements.length>this.startingSlide+1)
       {
-        this.startingSlide++;
+        $("#mySliderBox").fadeOut(500);
+        setTimeout(() => {
+          this.startingSlide++;
+        }, 500);
+       
+        $("#mySliderBox").fadeIn(500);
         //to start video when is displayed in the slider
         if(this.elements[this.startingSlide].value==0)
             this.playVideoFromId("vid"+this.startingSlide);    
       }
       else
       {
-        this.startingSlide=0;
+        $("#mySliderBox").fadeOut(500);
+        setTimeout(() => {
+          this.startingSlide=0;
+        }, 500);
+       
+        $("#mySliderBox").fadeIn(500);
       }
       this.slideEngine();
     }, this.elements[this.startingSlide].timer*1000);
@@ -121,7 +129,6 @@ slideEngine()
       this.UniversalShare.sharedObject=data;
       this.router.navigateByUrl("/tire");
     })
-  
   }
 
 
@@ -137,20 +144,8 @@ slideEngine()
   playVideoFromId(id:string)
   {
     let video=document.getElementById(id);
+    //uncomment after vs start
    // video.play();
   }
 }
-
-/*if(what=="goSlide")
-      {
-        if(how<this.elements.length&&how>=0)
-        {
-          this.startingSlide=how;
-          clearTimeout(this.setTimeoutInterceptor);
-          this.slideEngine();
-        }
-        else{
-          console.log("Direttiva errata da backend");
-        }
-      }*/
 
