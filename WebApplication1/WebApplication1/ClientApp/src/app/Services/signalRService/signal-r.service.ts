@@ -31,5 +31,9 @@ export class SignalRService {
     this.connection.off(methodName);
   }
 
+  defaultMethod()
+  {
+    this.connection.onclose(()=>this.connect());
+  }
   //may move all Invoke functions in this service for better mantainance of code
 }
