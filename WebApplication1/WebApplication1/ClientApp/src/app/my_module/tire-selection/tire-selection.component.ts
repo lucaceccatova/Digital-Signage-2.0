@@ -31,7 +31,7 @@ export class TireSelectionComponent implements OnInit {
     this.car = this.UnivShare.sharedObject;
     this.selectedTire = this.car.tires[0];
     console.log(this.car);
-    this.connectionService.connection.on("reciveTire", data => {
+    this.connectionService.connection.on("receiveTire", data => {
       this.pitStop(data);
     });
   }
