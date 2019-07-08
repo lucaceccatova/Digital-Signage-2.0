@@ -121,7 +121,7 @@ namespace AlexaSkills
                                 }
                                 else
                                 {
-                                    messaggio = $"Il video che hai richiesto non è presente, mi dici un'altro nome";
+                                    messaggio = $"Il video che hai richiesto non è presente qui, Tutti i nomi dei video disponibili sono riportati sullo schermo";
                                     timer = 0;
                                 }
                                 
@@ -137,7 +137,7 @@ namespace AlexaSkills
                         }
                         else
                         {
-                            messaggio = $"I video non sono disponibili nell'area CUSTOM YOUR CAR";
+                            messaggio = $"Mi spiace ma in quest'area non è possibile mostrare il filmato che hai richiesto. Per poter accedere nella sezione video basta che mi chiedi:'Alexa, voglio vedere i video'";
                         }
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
