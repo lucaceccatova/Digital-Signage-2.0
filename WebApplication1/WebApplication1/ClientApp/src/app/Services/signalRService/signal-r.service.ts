@@ -23,6 +23,10 @@ export class SignalRService {
       .catch(err=>console.log("Errore di connessione"));
       //initialize connection
   }
+  disconnect(methodName :string)
+  {
+    this.connection.off(methodName);
+  }
 
   //may move all Invoke functions in this service for better mantainance of code
 }

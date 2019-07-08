@@ -4,10 +4,7 @@ import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import {element} from '../../Models/Element';
 import { observable, Subscription, from, Observable, config } from 'rxjs';
 import { ViewEncapsulation } from '@angular/core';
-import { getLocaleDateFormat } from '@angular/common';
 import {CommonModule} from "@angular/common";
-import { compileBaseDefFromMetadata, templateJitUrl } from '@angular/compiler';
-import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import * as $ from 'jquery';
@@ -85,6 +82,7 @@ slideEngine()
       //idea: switch slides gallery when one end
        if(this.elements.length>this.startingSlide+1)
       {
+        $("#mySliderBox").fadeOut(500);
         $("#mySliderBox").fadeOut(500);
         setTimeout(() => {
           this.startingSlide++;

@@ -53,7 +53,6 @@ returnBackTimer()
   setTimeout(() => {
     this.router.navigateByUrl('/slider');
   }, 2000);
-
 }
 
 ngOnDestroy(): void {
