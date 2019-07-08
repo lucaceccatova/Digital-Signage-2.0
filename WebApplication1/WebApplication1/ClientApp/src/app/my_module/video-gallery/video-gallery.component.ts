@@ -82,14 +82,7 @@ signalRListner()
     this.reloadNgFor();
   });
   //return back to slider if invoked
-  this.connectionService.connection.on('goToSlide',(data=>
-    {
-      if(data==true)
-      {
-        
-        this.router.navigateByUrl("/slider/media/1");
-      }
-    }));
+
 }
 
 //to divide a json that contains more than 6 videos in object with six or less video
