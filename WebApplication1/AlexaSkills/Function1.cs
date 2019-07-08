@@ -51,12 +51,16 @@ namespace AlexaSkills
             {
                 var intentRequest = skillRequest.Request as IntentRequest;
                 
+                //categoryUtteranceInovked = false;
+
                 switch (intentRequest.Intent.Name)
                 {
                     //RIGUARDRE I METODI CHE RICHIAMANO IL GESTORE BL PER FILTRARE PER ID E NOME 
                     case "ShowVideoIntent":
+                        
                         if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
                         {
+                            carUtteranceInvoked = false;
                             messaggio = $"Dimmi il nome del video che vuoi guardare";
                             timer = 3000;
                             //if (carUtteranceInvoked == false)
@@ -79,6 +83,7 @@ namespace AlexaSkills
                             }
                             else
                             {
+                                carUtteranceInvoked = false;
                                 messaggio = $"Dimmi il nome del video che vuoi guardare \n CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Name;
                                 idListCar = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
                                 //RESTITUIRE VIDEO PER CATEGORIA
@@ -91,7 +96,7 @@ namespace AlexaSkills
                            
 
                         }
-                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && categoryUtteranceInovked == true )//&& carUtteranceInvoked == false
+                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && categoryUtteranceInovked == true && carUtteranceInvoked == false)//&& carUtteranceInvoked == false
                         {
                             
                             if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
@@ -130,10 +135,10 @@ namespace AlexaSkills
 
 
                         }
-                        //else
-                        //{
-                        //    messaggio = $"I video non sono disponibili nell'area CUSTOM YOUR CAR";
-                        //}
+                        else
+                        {
+                            messaggio = $"I video non sono disponibili nell'area CUSTOM YOUR CAR";
+                        }
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;

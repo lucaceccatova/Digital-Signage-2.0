@@ -35,10 +35,10 @@ export class VideoGalleryComponent implements OnInit {
 
   ngOnInit() {
     //mockup without signalR
-    this.loadVideo(this.url);
-    /*
+   // this.loadVideo(this.url);
+    
     this.elements=this.streamElements.elements;
-    this.divideInMorePages();*/
+    this.divideInMorePages();
     
     //contains function invoked by signalr
     this.signalRListner();
