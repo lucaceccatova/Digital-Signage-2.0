@@ -17,6 +17,7 @@ export class SignalRService {
     this.connection=new HubConnectionBuilder().withUrl('https://localhost:44303/voice')
     .configureLogging(signalR.LogLevel.Information)
     .build();
+    //start connection
       this.connection
       .start()
       .then(()=>console.log("connection started"))
