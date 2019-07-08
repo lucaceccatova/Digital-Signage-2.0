@@ -116,6 +116,7 @@ slideEngine()
       this.streamElements.elements=data;
     
       //ng route to video gallery component
+      this.stopEngine();
       this.router.navigateByUrl("/video")
     });
     this.connectionService.connection.on("showVideo",data=>
@@ -125,16 +126,23 @@ slideEngine()
     this.connectionService.connection.on("showCarTires",data=>
     {
       this.UniversalShare.sharedObject=data;
+      this.stopEngine();
       this.router.navigateByUrl("/tire");
     });
     this.connectionService.connection.on('goToSlide',(data=>
       {
         if(data==true)
         {
-          
+          this.stopEngine();
           this.router.navigateByUrl("/slider/media/1");
         }
       }));
+  }
+
+  //to stop slider when leaving the component
+  stopEngine()
+  {
+    clearTimeout(this.setTimeoutInterceptor);
   }
 
 

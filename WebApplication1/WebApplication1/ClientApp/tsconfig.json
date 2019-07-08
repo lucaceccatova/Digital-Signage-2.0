@@ -6,7 +6,6 @@
     "sourceMap": true,
     "declaration": false,
     "module": "esnext",
-    "no-duplicate-string": [true, 5],
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
