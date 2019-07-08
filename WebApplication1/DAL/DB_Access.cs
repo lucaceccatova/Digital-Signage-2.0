@@ -710,7 +710,7 @@ namespace DAL
                                     //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
                                     tireCar.tireType = reader["tireType"].ToString();
                                     tireCar.tirePath = reader["tirePath"].ToString();
-                                    tireCar.size =float.Parse(reader["size"].ToString());
+                                    tireCar.size = float.Parse(reader["size"].ToString());
                                     tireCar.price = float.Parse(reader["price"].ToString());
                                     tireCar.FK_car = (int)reader["FK_car"];
                                     tmpTire.Add(tireCar);

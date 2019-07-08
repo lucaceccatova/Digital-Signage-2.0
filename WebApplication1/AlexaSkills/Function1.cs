@@ -59,9 +59,12 @@ namespace AlexaSkills
                         {
                             messaggio = $"Dimmi il nome del video che vuoi guardare";
                             timer = 3000;
-                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            await connection.StartAsync();
-                            await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
+                            //if (carUtteranceInvoked == false)
+                            //{
+                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.StartAsync();
+                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
+                            //}
                             categoryUtteranceInovked = true;
                             idListCar = 0;
                         }
@@ -85,9 +88,10 @@ namespace AlexaSkills
                                 categoryUtteranceInovked = true;
                                 timer = 3000;
                             }
+                           
 
                         }
-                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && categoryUtteranceInovked == true)
+                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && categoryUtteranceInovked == true )//&& carUtteranceInvoked == false
                         {
                             
                             if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
@@ -126,6 +130,10 @@ namespace AlexaSkills
 
 
                         }
+                        //else
+                        //{
+                        //    messaggio = $"I video non sono disponibili nell'area CUSTOM YOUR CAR";
+                        //}
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
