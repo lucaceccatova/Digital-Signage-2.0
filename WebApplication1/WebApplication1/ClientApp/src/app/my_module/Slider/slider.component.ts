@@ -7,7 +7,7 @@ import { ViewEncapsulation } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { ShareService } from 'src/app/Services/UniversalShare/universalShareService';
@@ -126,7 +126,15 @@ slideEngine()
     {
       this.UniversalShare.sharedObject=data;
       this.router.navigateByUrl("/tire");
-    })
+    });
+    this.connectionService.connection.on('goToSlide',(data=>
+      {
+        if(data==true)
+        {
+          
+          this.router.navigateByUrl("/slider/media/1");
+        }
+      }));
   }
 
 
