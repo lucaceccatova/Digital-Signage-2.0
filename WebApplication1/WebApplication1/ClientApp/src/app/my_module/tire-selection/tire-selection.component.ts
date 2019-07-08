@@ -34,6 +34,7 @@ export class TireSelectionComponent implements OnInit {
     this.connectionService.connection.on("receiveTire", data => {
       this.pitStop(data);
     });
+    this.connectionService.disconnect("showVideo");
   }
   pitStop(i:tire)
   {
