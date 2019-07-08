@@ -46,8 +46,11 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
   
 ngOnInit()
 {
+  //obsolete, read param from URL for gallery ID
   this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
+  //take data by a HTTP get request to url saved in url string 
   this.getDataMock();
+  //
   this.signalRConnection();    
 }
 
@@ -82,12 +85,12 @@ slideEngine()
       //idea: switch slides gallery when one end
        if(this.elements.length>this.startingSlide+1)
       {
-        $("#mySliderBox").fadeOut(500);
+        //fadeOut all the box then change img inside slider
         $("#mySliderBox").fadeOut(500);
         setTimeout(() => {
           this.startingSlide++;
         }, 500);
-       
+        //fadeIn the bo with new img
         $("#mySliderBox").fadeIn(500);
         //to start video when is displayed in the slider
         if(this.elements[this.startingSlide].value==0)
@@ -109,7 +112,6 @@ slideEngine()
 
   //function that estabilish a connection withe backend service
   signalRConnection(){  
-    this.connectionService.connect();
     this.connectionService.connection.on("showVideoGallery", (data)=>
     {
       //call service that send data to video gallery component

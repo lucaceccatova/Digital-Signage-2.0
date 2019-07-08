@@ -10,6 +10,8 @@ export class SignalRService {
   constructor() { }
 
   ngOnInit() {
+    this.connect();
+
    
     }
   connect()
