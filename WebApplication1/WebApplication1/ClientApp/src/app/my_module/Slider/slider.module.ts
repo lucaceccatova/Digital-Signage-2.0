@@ -6,7 +6,7 @@ import {GetMediaService} from '../../Services/GetMedia/get-media.service';
 import {ListService} from '../../Services/ListService/list-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
-import {ListViewComponent} from "./ListView/list-view.component";
+import {ListViewComponent} from "./ListView(obsolete)/list-view.component";
 
 @NgModule({
   imports: [
