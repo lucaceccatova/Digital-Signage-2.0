@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
+import { Router } from '@angular/router';
+
+
 @Injectable({
   providedIn: 'root' // means that only one instance of this service will be initialized for all modules
 })
+
 export class SignalRService {
-
   connection:HubConnection;
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private router:Router) { 
     this.connect();
 
-   
+  }
+  ngOnInit() {
     }
   connect()
   {
@@ -34,6 +36,14 @@ export class SignalRService {
   defaultMethod()
   {
     this.connection.onclose(()=>this.connect());
+    this.connection.on('goToSlide',(data=>
+      {
+        if(data==true)
+        {
+          
+          this.router.navigateByUrl("/slider");
+        }
+      }));
   }
   //may move all Invoke functions in this service for better mantainance of code
 }

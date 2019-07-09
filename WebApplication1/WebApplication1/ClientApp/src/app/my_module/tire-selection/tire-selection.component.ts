@@ -4,6 +4,7 @@ import { car } from '../../Models/carModel';
 import { ShareService } from 'src/app/Services/UniversalShare/universalShareService';
 import { tire } from 'src/app/Models/tire';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-tire-selection',
@@ -20,25 +21,34 @@ export class TireSelectionComponent implements OnInit {
 
   ngOnInit() {
    //to mockup
-   /* this.http.get<car>(this.url).subscribe(data=>
+    this.http.get<car>(this.url).subscribe(data=>
       {
         this.car=data;
         this.selectedTire=this.car.tires[0];
-        */
+      });
 
-      
       //todb
+      /*
     this.car = this.UnivShare.sharedObject;
     this.selectedTire = this.car.tires[0];
     console.log(this.car);
+    */
     this.connectionService.connection.on("receiveTire", data => {
       this.pitStop(data);
     });
+
     this.connectionService.disconnect("showVideo");
-  }
-  pitStop(i:tire)
-  {
-    this.selectedTire=i;
+    
   }
 
+  pitStop(i:tire)
+  {
+    
+    $(".rotating").fadeOut(500);
+    setTimeout(() => {
+      this.selectedTire=i;
+
+    }, 500);
+    $(".rotating").fadeIn(500);
+  }
 }

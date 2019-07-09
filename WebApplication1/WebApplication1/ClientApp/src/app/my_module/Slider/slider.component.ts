@@ -20,7 +20,7 @@ import { ShareService } from 'src/app/Services/UniversalShare/universalShareServ
 export class SliderComponent implements OnInit,OnDestroy
 {
   url:string="/assets/loadeddata.json";
-//url:string="https://localhost:44303/api/test/getlistaById"
+//url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -131,14 +131,7 @@ slideEngine()
       this.stopEngine();
       this.router.navigateByUrl("/tire");
     });
-    this.connectionService.connection.on('goToSlide',(data=>
-      {
-        if(data==true)
-        {
-          this.stopEngine();
-          this.router.navigateByUrl("/slider/media/1");
-        }
-      }));
+    
   }
 
   //to stop slider when leaving the component
@@ -156,7 +149,7 @@ slideEngine()
     .catch(err => console.error(err));
     //what happens whe ReceiveMessage signalR function is invoked 
   }
-
+  
   playVideoFromId(id:string)
   {
     let video=document.getElementById(id);

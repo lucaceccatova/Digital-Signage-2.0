@@ -3,10 +3,8 @@ import { FormsModule } from '@angular/forms';
 import {SliderComponent} from './slider.component';
 import { sliderRoutingModule } from './slider-routing.module';
 import {GetMediaService} from '../../Services/GetMedia/get-media.service';
-import {ListService} from '../../Services/ListService/list-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import {CommonModule} from '@angular/common';
-import {ListViewComponent} from "./ListView(obsolete)/list-view.component";
 
 @NgModule({
   imports: [
@@ -15,8 +13,8 @@ import {ListViewComponent} from "./ListView(obsolete)/list-view.component";
     HttpClientModule,
     CommonModule,  
   ],
-  declarations: [ SliderComponent,ListViewComponent ],
-  providers:[GetMediaService,ListService]
+  declarations: [ SliderComponent ],
+  providers:[GetMediaService]
 })
 export class SliderModule { 
 }
