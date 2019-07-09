@@ -29,32 +29,40 @@ namespace WebApplication1.Controllers
             return GestoreBLL.GetListById(id);
         }
 
-        [Route("api/test/getlista")]
-        [HttpGet]
-        public List<ListaMedia> GetLista()
-        {
-            return GestoreBLL.GetLista();
-        }
+//-------------------------------------------------------------------------------------------------------//
+        //[Route("api/test/getlista")]
+        //[HttpGet]
+        //public List<ListaMedia> GetLista()
+        //{
+        //    return GestoreBLL.GetLista();
+        //}
 
-        [Route("api/test/addmedia")]
-        [HttpPost]
-        public void AddMedia([FromBody]Media m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
-        {
-            GestoreBLL.AddMedia(m);
-        }
-        [Route("api/test/eliminaSlide/{id}")]
-        [HttpGet]
-        public void EliminaSlide(int id)
-        {
-            GestoreBLL.EliminaSlide(id);
-        }
+        //[Route("api/test/addmedia")]
+        //[HttpPost]
+        //public void AddMedia([FromBody]Media m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
+        //{
+        //    GestoreBLL.AddMedia(m);
+        //}
+        //[Route("api/test/eliminaSlide/{id}")]
+        //[HttpGet]
+        //public void EliminaSlide(int id)
+        //{
+        //    GestoreBLL.EliminaSlide(id);
+        //}
 
-        [Route("api/test/eliminaLista/{id}")]
-        [HttpGet]
-        public void EliminaLista(int id)
-        {
-            GestoreBLL.EliminaLista(id);
-        }
+        //[Route("api/test/eliminaLista/{id}")]
+        //[HttpGet]
+        //public void EliminaLista(int id)
+        //{
+        //    GestoreBLL.EliminaLista(id);
+        //}
+//--------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+
+
 
         //[Route("")]
         //    // GET: Test/Details/5

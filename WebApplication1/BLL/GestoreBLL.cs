@@ -35,29 +35,29 @@ namespace BLL
             }
         }
 
-        public static List<ListaMedia> GetLista()
-        {
-            var medias = new List<ListaMedia>();
-            try
-            {
-                medias = new DB_Access(connectionDB).GetLista(); //MANCA GESTIONE ERRORI
+        //public static List<ListaMedia> GetLista()
+        //{
+        //    var medias = new List<ListaMedia>();
+        //    try
+        //    {
+        //        medias = new DB_Access(connectionDB).GetLista(); //MANCA GESTIONE ERRORI
 
-                //foreach (ListaMedia x in mediasDB)
-                //{
-                //    var med = new ListaMediaBL();
-                //    med.ID = x.ID;
-                //    med.description = x.description;
-                //    med.path = x.path;
-                //    med.name = x.name;
-                //    medias.Add(med);
-                //}
-                return medias;
-            }
-            catch (Exception)
-            {
-                return medias;
-            }
-        }
+        //        //foreach (ListaMedia x in mediasDB)
+        //        //{
+        //        //    var med = new ListaMediaBL();
+        //        //    med.ID = x.ID;
+        //        //    med.description = x.description;
+        //        //    med.path = x.path;
+        //        //    med.name = x.name;
+        //        //    medias.Add(med);
+        //        //}
+        //        return medias;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return medias;
+        //    }
+        //}
 
         public static List<Media> GetListById(int id)
         {
@@ -87,29 +87,29 @@ namespace BLL
             }
         }
 
-        public static bool AddMedia(Media m)
-        {
-            //var media = new Media();
-            //media.name = m.name;
-            //media.description = m.description;
-            //media.timer = m.timer;
-            //media.path = m.path;
-            //media.value = (DAL.type)m.value;
-            //media.create_date = m.create_date;
-            //media.listaID = m.ListaID;
+        //public static bool AddMedia(Media m)
+        //{
+        //    //var media = new Media();
+        //    //media.name = m.name;
+        //    //media.description = m.description;
+        //    //media.timer = m.timer;
+        //    //media.path = m.path;
+        //    //media.value = (DAL.type)m.value;
+        //    //media.create_date = m.create_date;
+        //    //media.listaID = m.ListaID;
 
-            return new DB_Access(connectionDB).AddMedia(m);
-        }
+        //    return new DB_Access(connectionDB).AddMedia(m);
+        //}
 
-        public static bool EliminaSlide(int id)
-        {
-            return new DB_Access(connectionDB).EliminaMedia(id);
-        }
+        //public static bool EliminaSlide(int id)
+        //{
+        //    return new DB_Access(connectionDB).EliminaMedia(id);
+        //}
 
-        public static bool EliminaLista(int id)
-        {
-            return new DB_Access(connectionDB).EliminaLista(id);
-        }
+        //public static bool EliminaLista(int id)
+        //{
+        //    return new DB_Access(connectionDB).EliminaLista(id);
+        //}
 
         public static List<Media> GetAllVideos()
         {
