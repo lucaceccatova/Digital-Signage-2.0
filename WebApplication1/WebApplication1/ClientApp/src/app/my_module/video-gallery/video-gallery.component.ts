@@ -35,14 +35,18 @@ export class VideoGalleryComponent implements OnInit {
 
   ngOnInit() {
     //mockup without signalR
-   // this.loadVideo(this.url);
-    this.elements=this.streamElements.elements;
-    this.divideInMorePages();
+    this.loadVideo(this.url);
+    //db
+    //this.elements=this.streamElements.elements;
+    //this.divideInMorePages();
     //contains function invoked by signalr
     this.signalRListner();
     //timeoutthat return to slider after 3 minutes 
 }
-
+MyTrack(index,item)
+{
+  return item.id;
+}
 //timer that navigate after x seconds of inactivity
 returnBackTimer()
 {
