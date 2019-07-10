@@ -11,19 +11,22 @@
     "id":4,"name":"be Yourself","description":"Una bella città","value":0,"timer":60,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/ascensore.mp4","listaID":1
 },
 {
-    "id":4,"name":"BMW","description":"Una bella città","value":0,"timer":34,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/bmw.mp4","listaID":1
+    "id":4,"name":"BMW","description":"Una bella città","value":0,"timer":34,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/wheel.mov","listaID":1
 },{
     "id":4,"name":"Pirelli Girl","description":"Una bella città","value":0,"timer":15,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/pirelliGirl.mp4","listaID":1
 },
 {
     "id":4,"name":"Pirelli","description":"Una bella città","value":0,"timer":65,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/autoMix.mp4","listaID":1
 },{
-    "id":4,"name":"F1 performance","description":"F1 performance","value":0,"timer":207,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/f1.mp4","listaID":1
+    "id":4,"name":"F1 performance","description":"F1 performance","value":0,"timer":207,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/wheel.mov","listaID":1
 },{
     "id":4,"name":"Motor Show","description":"Una bella città","value":0,"timer":20,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/zarro.mp4","listaID":1
 },{
     "id":4,"name":"be Yourself","description":"Una bella città","value":0,"timer":60,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/ascensore.mp4","listaID":1
 },
 {
-    "id":4,"name":"BMW","description":"Una bella città","value":0,"timer":34,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/bmw.mp4","listaID":1
+    "id":4,"name":"BMW","description":"Una bella città","value":0,"timer":34,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/wheel.mov","listaID":1
+},
+{
+    "id":4,"name":"BMW","description":"Una bella città","value":0,"timer":34,"create_date":"2019-07-06T00:00:00","path":"assets/Movie/wheel.mov","listaID":1
 }]

@@ -79,9 +79,45 @@ body {
     //border-radius: 20px;
     width: 17%;
     display: inline-block;
-    
     margin: auto;
   }
-  
+  .videoPage
+  {
+    position: absolute;
+    height: 70%;
+    width: 100%;
+    left: 100%;
+  }
+  .first
+  {
+    left: 0;
+  }
+  .dot {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    float: left;    
+    margin: 5px;
+  }
+  .centerDot
+  {
+    position: absolute; left: 50%;
+    bottom: 30px;
+    #dot{
+      position: relative;
+      left: -50%;
+      width: 100%;
+    }
+    
+  }
+.selected
+{
+  background-color: rgb(126, 126, 126);
+  border:solid thin#bbb;
+  box-shadow: 2px 1px 6px #ffd901;
+
+
+}
   
   
