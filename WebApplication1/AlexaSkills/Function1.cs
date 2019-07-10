@@ -117,7 +117,15 @@ namespace AlexaSkills
                                 timer = 0;
                                 //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 //await connection.StartAsync();
-                                await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value)); //-- Send to the front-end the video
+
+                                if (int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 6)
+                                {
+                                    await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
+                                }
+                                else
+                                {
+                                    messaggio = $"il video numero " + int.Parse(intentRequest.Intent.Slots["numero"].Value) + " non è disponibile ";
+                                }
                             }
                             else if (!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))//-- Enter here when we user selected a category and then give us a correct video name
                             {
