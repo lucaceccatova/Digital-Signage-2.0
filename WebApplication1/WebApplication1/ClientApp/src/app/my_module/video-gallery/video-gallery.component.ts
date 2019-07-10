@@ -2,9 +2,7 @@ import { Component, OnInit, AfterViewInit, Output, Injectable } from '@angular/c
 import { GetMediaService } from 'src/app/Services/GetMedia/get-media.service';
 import { element } from 'src/app/Models/Element';
 import { Subscription } from 'rxjs';
-import * as $ from 'jquery';
-import { OutgoingMessage } from 'http';
-import { EventEmitter } from 'events';
+import $ from 'jquery';
 import { Directive } from '@angular/core';
 import { Router } from '@angular/router';
 import {videoPage} from 'src/app/Models/videoPage';
@@ -41,13 +39,9 @@ export class VideoGalleryComponent implements OnInit {
     //this.elements=this.streamElements.elements;
     //this.divideInMorePages();
     //contains function invoked by signalr
-    this.signalRListner();
-    //timeoutthat return to slider after 3 minutes 
+   // this.signalRListner();
 }
-MyTrack(index,item)
-{
-  return item.id;
-}
+
 //timer that navigate after x seconds of inactivity
 returnBackTimer()
 {
@@ -71,9 +65,10 @@ signalRListner()
   //to play one video fullscreen
   this.connectionService.connection.on('showVideo',(data)=>
   {
-    this.sendData(this.pages[this.indexPage].sixElements[data]);
+    this.sendData(this.pages[this.indexPage].sixElements[data-1]);
   });
 
+  
   //change wich videos are displayed on the gallery 
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
@@ -84,6 +79,16 @@ signalRListner()
   });
   //return back to slider if invoked
 
+  this.connectionService.connection.on('receivePage',data=>
+  {
+    if(data=="next")
+    {
+      this.nextPage();
+    }
+    else{
+      this.prevPage();
+    }
+  });
 }
 
 //to divide a json that contains more than 6 videos in object with six or less video
@@ -91,20 +96,22 @@ divideInMorePages()
 {
   let i:number=0,k:number;
   let videoPage:videoPage={sixElements:[]};
-  while(i<this.elements.length-1)
+  while(i<this.elements.length)
   {
     for(k=0;k<6;k++)
     {
       if(this.elements[i]!=null)
       {
+        
         videoPage.sixElements.push(this.elements[i]);
         i++;
       }
       else break;
     }
     this.pages.push(videoPage);
-    videoPage=null;
+    videoPage:videoPage={sixElements:[]};
   }
+  console.log(this.pages);
 }
 
   //service that pass the path to fsVideo component
@@ -121,6 +128,7 @@ divideInMorePages()
    this.unsubscribes.push(this.getVideo.get(url).subscribe(data=>
     {
       this.elements=data;
+      console.log(data);
       this.divideInMorePages();
     }));
   }
@@ -133,4 +141,60 @@ divideInMorePages()
       this.reload=true;
     }, 500);
   }
+  nextPage()
+  {
+     if(this.indexPage<this.pages.length-1)
+    {
+      $("#page"+(this.indexPage)).animate({left:'-100%'},750);
+      setTimeout(() => {
+        this.indexPage++;
+      $("#page"+this.indexPage).animate({left: '0'},750);
+      $("#page"+(this.indexPage-1)).animate({left:'100%'},0);
+
+    }, 750);
+
+    }
+
+    else{
+      $("#page"+this.indexPage).animate({left:'-100%'},750);
+      setTimeout(() => {
+      $("#page"+this.indexPage).animate({left:'100%'},0);
+        this.indexPage=0;
+      $("#page"+this.indexPage).animate({left: '0'},750);
+      }, 750);
+    }
+
+  }
+  prevPage()
+  {
+     if(this.indexPage!=0)
+    {
+      $("#page"+this.indexPage).animate({left:'100%'},750);
+      setTimeout(() => {
+        this.indexPage--;
+      $("#page"+this.indexPage).animate({left: '-100%'},0);
+      $("#page"+(this.indexPage)).animate({left:'0'},750);
+
+
+    }, 750);
+
+    }
+
+    else{
+      $("#page"+(this.indexPage)).animate({left:'100%'},750);
+      setTimeout(() => {
+        this.indexPage=this.pages.length-1;
+      $("#page"+this.indexPage).animate({left:'-100%'},0);
+      $("#page"+this.indexPage).animate({left: '0'},750);
+      }, 750);
+    }
+
+  }
+  selected<bool>(index:number)
+    {
+      if(this.indexPage==index)
+        return true;
+        else
+        return false; 
+    }
 }

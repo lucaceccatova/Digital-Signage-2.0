@@ -1,16 +1,22 @@
 <div id="wrapper">
+  <button (click)="nextPage()" style="position: absolute">{{indexPage }}</button>
   <div id="logo">
     <img id="headerImg" src="../../../assets/img/AppImage/PirelliBackground.png">
   </div>
-  <div>
-    <div *ngFor="let media of pages[indexPage].sixElements;let i=index;"  class="listItem" >
-         <a (click)="sendData(media)">
-            <video [muted]="'muted'" autoplay="autoplay" loop >
-              <source src={{media.path}}>
-            </video>
-            <div class="infoBox">{{i+1}}) {{media.name}}
-            </div>
-        </a>
-      </div>
-</div>
-</div>
+    <div class="videoPage" *ngFor="let page of pages; let i=index,let first=first" id="page{{i}}" [ngClass]="{'first': first}" >
+        <div *ngFor="let media of page.sixElements" class="listItem">
+             <a (click)="sendData(media)">
+                <video [muted]="'muted'" autoplay="autoplay" loop >
+                  <source src={{media.path}}>
+                </video>
+                <div class="infoBox">{{i+1}}) {{media.name}}
+                </div>
+            </a>
+          </div>
+    </div>
+    <div class="centerDot">
+        <div id="dot">
+          <span class="dot" *ngFor="let item of pages;let i=index" [ngClass]="{'selected': selected(i)}"></span>
+        </div>
+    </div>
+  </div>
