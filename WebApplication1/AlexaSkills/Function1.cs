@@ -225,7 +225,7 @@ namespace AlexaSkills
                     case "NextPageIntent":
                         if (videosUtteranceInovked != false)
                         {
-                            //await connection.InvokeAsync("sendPage", "next");
+                            await connection.InvokeAsync("sendPage", "next");
                             messaggio = $"next";
                         }
                         else
@@ -235,10 +235,10 @@ namespace AlexaSkills
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
-                    case "PreviousPageIntent":
+                    case "PreviuosPageIntent":
                         if (videosUtteranceInovked != false)
                         {
-                            // await connection.InvokeAsync("sendPage", "previus");
+                            await connection.InvokeAsync("sendPage", "previus");
                             messaggio = $"previous";
                         }
                         else
