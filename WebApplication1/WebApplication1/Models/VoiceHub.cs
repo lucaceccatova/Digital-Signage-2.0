@@ -11,14 +11,14 @@ namespace WebApplication1.Models
 {
         public async Task sendAllVideo(List<Media> m)
         {
-           await Clients.All.SendAsync("showVideoGallery",m);   
+           //await Clients.All.SendAsync("showVideoGallery",m);   
+           await Clients.All.SendAsync("showVideoGallery", m);
+                 
         }
-
         public async Task sendVideo(Media m)
         {
             await Clients.All.SendAsync("showVideo", m);
         }
-
         public async Task returnToSlide(bool b)
         {
             await Clients.All.SendAsync("goToSlide",b);

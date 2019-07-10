@@ -19,12 +19,12 @@ namespace AlexaSkills
 {
     public static class Function1
     {
-        private static string messaggio;
-        private static bool categoryUtteranceInovked;
-        private static bool carUtteranceInvoked;
-        private static int idListCar;
-        private static int timer;
-        private static HubConnection connection;
+        private static string messaggio; //-- it will contains the response that alexa will give to the user
+        private static bool videosUtteranceInovked; //-- True => If ShowVideoIntent is invoked; False => If ShowVideoIntent is NOT invoked;
+        private static bool carUtteranceInvoked; //-- True => If CustomizeCarIntent is invoked; False => If CustomizeCarIntent is NOT invoked;
+        private static int idCategory; //-- Contains the video's Category ID. It is set to 0 when it's shown on the screen 'all videos', and when we choose to see other categories it changes. 
+        private static int timer; //-- used for sending the message to Alexa with a delay for making the interaction a little bit better. [ IT IS AN OPNTIONAL FEATURE ] 
+        private static HubConnection connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build(); //-- Creating SignalR hub connection variable
 
 
         [FunctionName("Alexa")]
@@ -32,22 +32,24 @@ namespace AlexaSkills
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            //-- Deserializing the json that alexa sent to us
             string json = await req.ReadAsStringAsync();
             var skillRequest = JsonConvert.DeserializeObject<SkillRequest>(json);
-
             var requestType = skillRequest.GetRequestType();
-            
+
             SkillResponse response = null;
 
-            if (requestType == typeof(LaunchRequest))
+            
+            if (requestType == typeof(LaunchRequest)) //-- Enter in this if when we tell to Alexa to open our skill: "Controllo Vocale"
             {
                 response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
                 response.Response.ShouldEndSession = false;
-                categoryUtteranceInovked = false;
+                videosUtteranceInovked = false;
                 carUtteranceInvoked = false;
+                await connection.StartAsync(); //-- Starting our SignalR connnection only one time at the opening of our skill. It will be closed only when user will invoke the "AMAZON.StopIntent"
                 timer = 0;
             }
-            else if (requestType == typeof(IntentRequest))
+            else if (requestType == typeof(IntentRequest)) //-- Enter here if user invoked an Intent
             {
                 var intentRequest = skillRequest.Request as IntentRequest;
                 
@@ -56,175 +58,174 @@ namespace AlexaSkills
                 switch (intentRequest.Intent.Name)
                 {
                     //RIGUARDRE I METODI CHE RICHIAMANO IL GESTORE BL PER FILTRARE PER ID E NOME 
-                    case "ShowVideoIntent":
-                        
-                        if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null)
-                        {
-                            carUtteranceInvoked = false;
-                            messaggio = $"Dimmi il nome del video che vuoi guardare";
-                            timer = 3000;
-                            //if (carUtteranceInvoked == false)
-                            //{
-                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                await connection.StartAsync();
-                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos());
-                            //}
-                            categoryUtteranceInovked = true;
-                            idListCar = 0;
-                        }
-                        else if(intentRequest.Intent.Slots["categoria"].Value!=null)
+                    case "ShowVideoIntent":                         
+                        if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null) //-- Enter in this if when the user want to see 'All videos' section
                         {
                             
-                            if (intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
+                            messaggio = $"Dimmi il nome del video che vuoi guardare";
+                            timer = 2000;
+                            //if (carUtteranceInvoked == false)
+                            //{
+                               // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
+                            //}
+                            carUtteranceInvoked = false;
+                            videosUtteranceInovked = true;
+                            idCategory = 0;
+                        }
+                        else if(intentRequest.Intent.Slots["categoria"].Value!=null) //-- Enter in this block when the user probably want to se videos filtered by a category
+                        {
+                            
+                            if (intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")) //-- if user tell a wrong || not avaible category, Alexa will ask to the user to insert an correct one  
                             {
                                 messaggio = $"Non ho video da mostrarti per la categoria {intentRequest.Intent.Slots["categoria"].Value}, prova dirmi il nome di un'altra tipologia di video";
-                                categoryUtteranceInovked = false;
+                                videosUtteranceInovked = false;
                                 timer = 0;
                             }
-                            else
+                            else //-- Sending to the Front-End with SingnalR videos thoose are part of the category selected
                             {
                                 carUtteranceInvoked = false;
                                 messaggio = $"Dimmi il nome del video che vuoi guardare \n CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Name;
-                                idListCar = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
+                                idCategory = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
                                 //RESTITUIRE VIDEO PER CATEGORIA
-                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                await connection.StartAsync();
-                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetVideosByCategory(idListCar));
-                                categoryUtteranceInovked = true;
-                                timer = 3000;
+                               //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                //await connection.StartAsync();
+                                await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetVideosByCategory(idCategory));
+                                videosUtteranceInovked = true;
+                                timer = 2000;
                             }
                            
 
                         }
-                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && categoryUtteranceInovked == true && carUtteranceInvoked == false)//&& carUtteranceInvoked == false
+                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && videosUtteranceInovked == true && carUtteranceInvoked == false)// ----- Enter here only when user can tell to alexa to play a video 
                         {
                             
-                            if (idListCar == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
+                            if (idCategory == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
                             {
                                 messaggio = $"Buona visione";
                                 timer = 0;
-                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                await connection.StartAsync();
-                                await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
+                                //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                //await connection.StartAsync();
+                                await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value)); //-- Send to the front-end the video
                             }
-                            else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))
+                            else if(!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))//-- Enter here when we user selected a category and then give us a correct video name
                             {
                                 
-                                string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";");
-                                if (int.Parse(tmpSplit[0]) == idListCar)
+                                string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this value of the 'VideoNames' slot to have the both ID
+                                if (int.Parse(tmpSplit[0]) == idCategory) //-- when the video that the user selected has the same category ID of the category that the user choosed before it will enter here and send to the front-end the video 
                                 {
                                     messaggio = $"Buona visione";
-                                    connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                    await connection.StartAsync();
+                                   // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                                   // await connection.StartAsync();
                                     await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
                                     timer = 0;
                                 }
-                                else
+                                else //-- enter here because user give us a video that isn't part of the category that the user choosed before
                                 {
                                     messaggio = $"Il video che hai richiesto non è presente qui, Tutti i nomi dei video disponibili sono riportati sullo schermo";
                                     timer = 0;
                                 }
                                 
                             }
-                            else
+                            else //-- Enter here when the video name that is given is incorrect
                             {
                                 messaggio = $"Non ho capito purtroppo, dimmi il nome del video che vuoi guardare";
                                 timer = 0;
                             }
-                            //PRENDE PER (MOSTRA TUTTI I VIDEO) ANCHE QUANDO INSERISCO UN MOSTRA MASERATI SU CICUITO
+                            
 
 
                         }
                         else
                         {
-                            messaggio = $"Mi spiace ma in quest'area non è possibile mostrare il filmato che hai richiesto. Per poter accedere nella sezione video basta che mi chiedi:'Alexa, voglio vedere i video'";
+                            messaggio = $"Mi spiace ma in quest'area non è possibile mostrare il filmato che hai richiesto. Per poter accedere alla sezione video basta che mi chiedi:'Alexa, voglio vedere i video'";
                         }
-                        response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = false;
+                        response = ResponseBuilder.Tell(messaggio); //-- response will contain the message that we want send to Alexa 
+                        response.Response.ShouldEndSession = false; //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
                     case "CustomizeCarIntent":
-                        if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length <= 1)
+                        if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length <= 1) //-- Enter here when user give us only the car's brand but not the model of it
                         {
                             messaggio = $"Accedo all'Area Custom your car. \n Automobile: " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
                             carUtteranceInvoked = true;
                             //PASSARE CON SIGNALR la macchina selezionata con tutte le sue gomme
-                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            await connection.StartAsync();
-                            await connection.InvokeAsync("sendCarTires", GestoreBLL.GetCarAndTires(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                           // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                           // await connection.StartAsync();
+                            await connection.InvokeAsync("sendCarTires", GestoreBLL.GetCarAndTires(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id))); //Send the car selected with his compatible tires
                         }
-                        else
+                        else // asking for entering the model name of the car
                         {
                             messaggio = $"Perfetto, ora mi dici il modello della tua " + intentRequest.Intent.Slots["auto"].Value + " ? grazie";
                         }
                         response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = false;
-
+                        response.Response.ShouldEndSession = false; //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
-                    case "CustomizeTireIntent": //SISTEMARE LE VALIDATION
-                        if (carUtteranceInvoked != false)
+                    case "CustomizeTireIntent": //SISTEMARE LE VALIDATION (ALCUNE COSE SONO STATE FATTE NELLA SKILL CONSOLE) 
+                        if (carUtteranceInvoked != false) //Enter here only if front-end is in the "Custom you car" area (mean that CustomizeCarIntent has to be invoked before)
                         {
-                            messaggio = $"ho ricevuto un tier";
-                            connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            await connection.StartAsync();
-                            await connection.InvokeAsync("sendTire", GestoreBLL.GetTireById(int.Parse(intentRequest.Intent.Slots["ruote"].Resolution.Authorities[0].Values[0].Value.Id)));
+                            messaggio = $"Adesso cambio le gomme";
+                           // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                           // await connection.StartAsync();
+                            await connection.InvokeAsync("sendTire", GestoreBLL.GetTireById(int.Parse(intentRequest.Intent.Slots["ruote"].Resolution.Authorities[0].Values[0].Value.Id))); //Sending the tire selected to the front-end
                         }
                         else
                         {
                             messaggio = $"Non ho capito scusa";
                         }
                         response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = false;
+                        response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
-                    case "ReturnToSlideIntent":
-                        if (categoryUtteranceInovked != false || carUtteranceInvoked!=false)
+                    case "ReturnToSlideIntent": 
+                        if (videosUtteranceInovked != false || carUtteranceInvoked != false) //Enter here when we are in other areas (Video gallery, Custom your car) and the user want to return to the slider
                         {
                             
                             
-                            if (intentRequest.Intent.ConfirmationStatus != "DENIED"){
+                            if (intentRequest.Intent.ConfirmationStatus != "DENIED"){ //Enter here If the user confirm to return to slider
                                 messaggio = $"Va bene, ritorno allo slider";
-                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                await connection.StartAsync();
+                               // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                               // await connection.StartAsync();
                                 await connection.InvokeAsync("returnToSlide",true);
-                                categoryUtteranceInovked = false;
+                                videosUtteranceInovked = false;
                                 carUtteranceInvoked = false;
                             }
-                            else
+                            else //User at the confirmation prompt decided to not return to slider
                             {
 
                                 messaggio = $"Va bene";
-                                connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                await connection.StartAsync();
+                              //  connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                              //  await connection.StartAsync();
                                 await connection.InvokeAsync("returnToSlide", false);
-                                categoryUtteranceInovked = true;
+                                videosUtteranceInovked = true;
                                 carUtteranceInvoked = true;
-
                             }
                           
                         }
-                        else
+                        else //If user invokes "ReturnToSlideIntent" from the slider area
                         {
                             messaggio = $"Lo slider è gia sul display";     
                         }
                         timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = false;
-                        
+                        response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
+
                         break;
                     case "AMAZON.StopIntent":
                         messaggio = $"Disattivo Pirelli Voice Control";
                         timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = true;
+                        response.Response.ShouldEndSession = true; //-- ShouldEndSession is set to true because the user want to close the skill
+                        await connection.StopAsync();
                         break;
                     
-                    case "ZZZ":
+                    case "ZZZ": //-- Intent created for word that alexa can't undurstand or utterance that are not allowed in this skill ( In english version exist a built-in intent called AMAZON.Fallback for this feature)
                         messaggio = $"Non ho capito, puoi ripetere perfavore ?";
                         timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
                     default:
-                        response = ResponseBuilder.Empty();
+                        messaggio = $"Non ho capito purtroppo";
+                        response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
                 }
@@ -235,8 +236,8 @@ namespace AlexaSkills
                 response = ResponseBuilder.Tell(messaggio);
                 response.Response.ShouldEndSession = false;
             }
-            System.Threading.Thread.Sleep(timer);
-            return new OkObjectResult(response);
+           System.Threading.Thread.Sleep(timer);
+            return new OkObjectResult(response); //Send the response to alexa
 
         }
     }
