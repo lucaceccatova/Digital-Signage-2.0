@@ -3,10 +3,8 @@
     <div id="header">
       <b>
         <h1>
-          {{car.brand}}  {{car.invokeName}}
-          
+          {{car.brand}}  {{car.invokeName}} 
         </h1>
-
       </b>
     </div>
     <div id="content"><!--Transparent Div that contains car and tires images-->
@@ -20,7 +18,7 @@
     <div id="sideBar"> <!--div that contains all avaible tire-->
       <h2>AVAIBLE TIRES</h2>
       <div class="tireElement" *ngFor="let tire of car.tires; let i=index" (click)="pitStop(tire)">
-          <img src="{{tire.tirePath}}">
+          <img [src]="tire.tirePath">
         
           <div class="textTire">
             <p>

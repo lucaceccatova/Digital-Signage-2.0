@@ -12,6 +12,7 @@ export class SignalRService {
   connection:HubConnection;
   constructor(private router:Router) { 
     this.connect();
+    this.defaultMethod();
 
   }
   ngOnInit() {

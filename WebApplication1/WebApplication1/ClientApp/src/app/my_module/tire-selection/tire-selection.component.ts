@@ -47,8 +47,9 @@ export class TireSelectionComponent implements OnInit {
     $(".rotating").fadeOut(500);
     setTimeout(() => {
       this.selectedTire=i;
-
     }, 500);
-    $(".rotating").fadeIn(500);
+    setTimeout(() => {
+      $(".rotating").fadeIn(500);
+    }, 500);
   }
 }
