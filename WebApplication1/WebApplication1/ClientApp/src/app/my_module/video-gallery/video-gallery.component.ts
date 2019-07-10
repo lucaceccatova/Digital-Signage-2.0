@@ -39,7 +39,7 @@ export class VideoGalleryComponent implements OnInit {
     //this.elements=this.streamElements.elements;
     //this.divideInMorePages();
     //contains function invoked by signalr
-   // this.signalRListner();
+   this.signalRListner();
 }
 
 //timer that navigate after x seconds of inactivity
@@ -65,7 +65,8 @@ signalRListner()
   //to play one video fullscreen
   this.connectionService.connection.on('showVideo',(data)=>
   {
-    this.sendData(this.pages[this.indexPage].sixElements[data-1]);
+    if(data<this.pages[this.indexPage].sixElements.length)
+      this.sendData(this.pages[this.indexPage].sixElements[data-1]);
   });
 
   
@@ -79,7 +80,7 @@ signalRListner()
   });
   //return back to slider if invoked
 
-  this.connectionService.connection.on('receivePage',data=>
+  this.connectionService.connection.on('receivePage',(data)=>
   {
     if(data=="next")
     {
