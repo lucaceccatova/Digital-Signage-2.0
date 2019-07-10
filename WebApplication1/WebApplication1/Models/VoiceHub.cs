@@ -15,7 +15,11 @@ namespace WebApplication1.Models
            await Clients.All.SendAsync("showVideoGallery", m);
                  
         }
-        public async Task sendVideo(Media m)
+        //public async Task sendVideo(Media m)
+        //{
+        //    await Clients.All.SendAsync("showVideo", m);
+        //}
+        public async Task sendVideo(int m)
         {
             await Clients.All.SendAsync("showVideo", m);
         }
@@ -30,6 +34,11 @@ namespace WebApplication1.Models
         public async Task sendTire(Tire ruota)
         {
             await Clients.All.SendAsync("receiveTire", ruota);
+        }
+        
+        public async Task sendPage(string x)
+        {
+            await Clients.All.SendAsync("receivePage", x);
         }
     }
 }
