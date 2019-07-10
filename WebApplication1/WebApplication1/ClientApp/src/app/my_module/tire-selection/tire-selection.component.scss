@@ -69,10 +69,8 @@
     }
     #placeHolderContent
     {
-
         position: absolute;
-        top: 0;
-        
+        top: 0;   
         width: 70%;
         height: 100%;
         display: inline-block;
@@ -95,6 +93,7 @@
                 text-shadow: 2px 2px 4px #000000;
                 color: whitesmoke;
                 font-family: monospace;
+                font-size: 35px;
             }        
         }
         #content
