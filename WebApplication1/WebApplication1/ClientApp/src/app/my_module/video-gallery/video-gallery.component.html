@@ -3,7 +3,7 @@
     <img id="headerImg" src="../../../assets/img/AppImage/PirelliBackground.png">
   </div>
   <div>
-    <div *ngFor="let media of pages[0].sixElements;let i=index;"  class="listItem" >
+    <div *ngFor="let media of pages[indexPage].sixElements;let i=index;"  class="listItem" >
          <a (click)="sendData(media)">
             <video [muted]="'muted'" autoplay="autoplay" loop >
               <source src={{media.path}}>

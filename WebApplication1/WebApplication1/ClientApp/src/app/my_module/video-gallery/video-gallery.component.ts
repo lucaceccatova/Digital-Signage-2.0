@@ -23,6 +23,7 @@ export class VideoGalleryComponent implements OnInit {
   elements:element[]=[];
   unsubscribes: Subscription[]=[];
   pages:videoPage[]=[];
+  indexPage=0;
 //bool to reload the page
   reload=true;
 
@@ -70,7 +71,7 @@ signalRListner()
   //to play one video fullscreen
   this.connectionService.connection.on('showVideo',(data)=>
   {
-    this.sendData(data);
+    this.sendData(this.pages[this.indexPage].sixElements[data]);
   });
 
   //change wich videos are displayed on the gallery 
