@@ -1,15 +1,15 @@
 <div id="wrapper">
   <button (click)="nextPage()" style="position: absolute">{{indexPage }}</button>
   <div id="logo">
-    <img id="headerImg" src="../../../assets/img/AppImage/PirelliBackground.png">
+    <img id="headerImg" src="../../../assets/img/AppImage/pirelli.white.png">
   </div>
     <div class="videoPage" *ngFor="let page of pages; let i=index,let first=first" id="page{{i}}" [ngClass]="{'first': first}" >
-        <div *ngFor="let media of page.sixElements" class="listItem">
+        <div *ngFor="let media of page.sixElements; let k=index" class="listItem">
              <a (click)="sendData(media)">
                 <video [muted]="'muted'" autoplay="autoplay" loop >
                   <source src={{media.path}}>
                 </video>
-                <div class="infoBox">{{i+1}}) {{media.name}}
+                <div class="infoBox">{{k+1}}) {{media.name}}
                 </div>
             </a>
           </div>
