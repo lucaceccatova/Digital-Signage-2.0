@@ -25,7 +25,7 @@ namespace AlexaSkills
         private static int idCategory; //-- Contains the video's Category ID. It is set to 0 when it's shown on the screen 'all videos', and when we choose to see other categories it changes. 
         private static int timer; //-- used for sending the message to Alexa with a delay for making the interaction a little bit better. [ IT IS AN OPNTIONAL FEATURE ] 
         private static HubConnection connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build(); //-- Creating SignalR hub connection variable
-
+        private static int contaVideo;
 
         [FunctionName("Alexa")]
         public static async Task<IActionResult> Run(
@@ -70,16 +70,14 @@ namespace AlexaSkills
                 {
                     //RIGUARDRE I METODI CHE RICHIAMANO IL GESTORE BL PER FILTRARE PER ID E NOME 
                     case "ShowVideoIntent":
-                        if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["VideoNames"].Value == null) //-- Enter in this if when the user want to see 'All videos' section
+                        if (intentRequest.Intent.Slots["categoria"].Value == null && intentRequest.Intent.Slots["numero"].Value == null) //-- Enter in this if when the user want to see 'All videos' section
                         {
 
-                            messaggio = $"Dimmi il nome del video che vuoi guardare";
+                            messaggio = $"Dimmi il numero del video che vuoi guardare";
                             timer = 2000;
-                            //if (carUtteranceInvoked == false)
-                            //{
-                            // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
+                            
                             await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
-                            //}
+                            //contaVideo = GestoreBLL.GetAllVideos().Count;
                             carUtteranceInvoked = false;
                             videosUtteranceInovked = true;
                             idCategory = 0;
@@ -96,8 +94,10 @@ namespace AlexaSkills
                             else //-- Sending to the Front-End with SingnalR videos thoose are part of the category selected
                             {
                                 carUtteranceInvoked = false;
-                                messaggio = $"Dimmi il nome del video che vuoi guardare \n CATEGORIA : " + intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Name;
-                                idCategory = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
+                                messaggio = $"Dimmi il numero del video che vuoi guardare";
+                                
+                               idCategory = int.Parse(intentRequest.Intent.Slots["categoria"].Resolution.Authorities[0].Values[0].Value.Id);
+                                
                                 //RESTITUIRE VIDEO PER CATEGORIA
                                 //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
                                 //await connection.StartAsync();
@@ -108,49 +108,42 @@ namespace AlexaSkills
 
 
                         }
-                        else if (intentRequest.Intent.Slots["VideoNames"].Value != null && videosUtteranceInovked == true && carUtteranceInvoked == false)// ----- Enter here only when user can tell to alexa to play a video 
+                        else if (intentRequest.Intent.Slots["numero"].Value != null && videosUtteranceInovked == true && carUtteranceInvoked == false)// ----- Enter here only when user can tell to alexa to play a video 
                         {
 
-                            if (idCategory == 0 && !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
+                            if (idCategory == 0 /*&& !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")*/) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
                             {
                                 messaggio = $"Buona visione";
                                 timer = 0;
-                                //connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                //await connection.StartAsync();
 
-                                if (int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 6)
-                                {
+                                //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                                     await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
-                                }
-                                else
-                                {
-                                    messaggio = $"il video numero " + int.Parse(intentRequest.Intent.Slots["numero"].Value) + " non è disponibile ";
-                                }
                             }
-                            else if (!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))//-- Enter here when we user selected a category and then give us a correct video name
+                            else/*if (!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))*///-- Enter here when we user selected a category and then give us a correct video name
                             {
 
-                                string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this value of the 'VideoNames' slot to have the both ID
+                                /*string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this value of the 'VideoNames' slot to have the both ID
                                 if (int.Parse(tmpSplit[0]) == idCategory) //-- when the video that the user selected has the same category ID of the category that the user choosed before it will enter here and send to the front-end the video 
-                                {
+                                {*/
+
+                                //BOOLEAN DA SIGNALR FRONTEND PER VERIFICARE SE VIDEO ESISTE O MENO
                                     messaggio = $"Buona visione";
-                                    // connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                                    // await connection.StartAsync();
-                                    await connection.InvokeAsync("sendVideo", GestoreBLL.GetVideosByName(intentRequest.Intent.Slots["VideoNames"].Value));
+                                    await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
                                     timer = 0;
-                                }
-                                else //-- enter here because user give us a video that isn't part of the category that the user choosed before
-                                {
-                                    messaggio = $"Il video che hai richiesto non è presente qui, Tutti i nomi dei video disponibili sono riportati sullo schermo";
-                                    timer = 0;
-                                }
+
+                                //}
+                                //else //-- enter here because user give us a video that isn't part of the category that the user choosed before
+                                //{
+                                //    messaggio = $"Il video che hai richiesto non è presente qui, Tutti i nomi dei video disponibili sono riportati sullo schermo";
+                                //    timer = 0;
+                                //}
 
                             }
-                            else //-- Enter here when the video name that is given is incorrect
-                            {
-                                messaggio = $"Non ho capito purtroppo, dimmi il nome del video che vuoi guardare";
-                                timer = 0;
-                            }
+                            //else //-- Enter here when the video name that is given is incorrect
+                            //{
+                            //    messaggio = $"Non ho capito purtroppo, dimmi il nome del video che vuoi guardare";
+                            //    timer = 0;
+                            //}
 
 
 
@@ -228,8 +221,33 @@ namespace AlexaSkills
                         timer = 0;
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
-
                         break;
+                    case "NextPageIntent":
+                        if (videosUtteranceInovked != false)
+                        {
+                            //await connection.InvokeAsync("sendPage", "next");
+                            messaggio = $"next";
+                        }
+                        else
+                        {
+                            messaggio = $"Operazione non consentita";
+                        }
+                        response = ResponseBuilder.Tell(messaggio);
+                        response.Response.ShouldEndSession = false;
+                        break;
+                    case "PreviousPageIntent":
+                        if (videosUtteranceInovked != false)
+                        {
+                            // await connection.InvokeAsync("sendPage", "previus");
+                            messaggio = $"previous";
+                        }
+                        else
+                        {
+                            messaggio = $"Operazione non consentita";
+                        }
+                        response = ResponseBuilder.Tell(messaggio);
+                        response.Response.ShouldEndSession = false;
+                        break;                        
                     case "AMAZON.StopIntent":
                         messaggio = $"Disattivo Pirelli Voice Control";
                         timer = 0;
