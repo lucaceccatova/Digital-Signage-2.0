@@ -156,5 +156,14 @@ slideEngine()
     //uncomment after vs start
    // video.play();
   }
+  
+  //trying to move logic from dom to typescript
+  visible(index:number)
+  {
+    if(index==this.startingSlide)
+    return true;
+    else 
+      return false;
+  }
 }
 
