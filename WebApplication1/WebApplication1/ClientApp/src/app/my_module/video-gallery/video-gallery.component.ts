@@ -3,7 +3,6 @@ import { GetMediaService } from 'src/app/Services/GetMedia/get-media.service';
 import { element } from 'src/app/Models/Element';
 import { Subscription } from 'rxjs';
 import $ from 'jquery';
-import { Directive } from '@angular/core';
 import { Router } from '@angular/router';
 import {videoPage} from 'src/app/Models/videoPage';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
@@ -28,9 +27,7 @@ export class VideoGalleryComponent implements OnInit {
   constructor(private getVideo:GetMediaService, private stream:sharedStringService,
     private router:Router,private streamElements:shareElementsService,
     private connectionService:SignalRService) { 
-      
     }
-
 
   ngOnInit() {
     //mockup without signalR
@@ -69,7 +66,7 @@ signalRListner()
       this.sendData(this.pages[this.indexPage].sixElements[data-1]);
   });
 
-  
+;
   //change wich videos are displayed on the gallery 
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
@@ -78,8 +75,8 @@ signalRListner()
     this.divideInMorePages();
     this.reloadNgFor();
   });
-  //return back to slider if invoked
 
+  //switch page if invoked by backend. (why not a bool :(  )
   this.connectionService.connection.on('receivePage',(data)=>
   {
     if(data=="next")
@@ -142,6 +139,8 @@ divideInMorePages()
       this.reload=true;
     }, 500);
   }
+
+  //to switch video page to next video page
   nextPage()
   {
      if(this.indexPage<this.pages.length-1)
@@ -155,7 +154,7 @@ divideInMorePages()
     }, 750);
 
     }
-
+    //in case there are no next page video gallery will show first video page
     else{
       $("#page"+this.indexPage).animate({left:'-100%'},750);
       setTimeout(() => {
@@ -166,6 +165,7 @@ divideInMorePages()
     }
 
   }
+  //to switch video page to previous video page
   prevPage()
   {
      if(this.indexPage!=0)
@@ -175,12 +175,10 @@ divideInMorePages()
         this.indexPage--;
       $("#page"+this.indexPage).animate({left: '-100%'},0);
       $("#page"+(this.indexPage)).animate({left:'0'},750);
-
-
-    }, 750);
-
+      }, 750);
     }
 
+    //in case there are no previous pages the slider will show last page
     else{
       $("#page"+(this.indexPage)).animate({left:'100%'},750);
       setTimeout(() => {
@@ -189,8 +187,9 @@ divideInMorePages()
       $("#page"+this.indexPage).animate({left: '0'},750);
       }, 750);
     }
-
   }
+
+  //trying to move logic from dom to typescript for better maintainence
   selected<bool>(index:number)
     {
       if(this.indexPage==index)

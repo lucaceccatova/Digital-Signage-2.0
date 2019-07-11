@@ -14,7 +14,6 @@ import $ from 'jquery';
 export class TireSelectionComponent implements OnInit {
   car:car;
   selectedTire:tire;
-
   url:string='assets/loadeddata.tire.json';
   constructor(private http:HttpClient,private UnivShare:ShareService,
     private connectionService:SignalRService) { }
@@ -36,11 +35,11 @@ export class TireSelectionComponent implements OnInit {
     this.connectionService.connection.on("receiveTire", data => {
       this.pitStop(data);
     });
-
     this.connectionService.disconnect("showVideo");
     
   }
 
+  //change tire with id of tire array
   pitStop(i:tire)
   {
     
