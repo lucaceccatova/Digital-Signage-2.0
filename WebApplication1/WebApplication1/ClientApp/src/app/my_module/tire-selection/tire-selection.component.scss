@@ -6,8 +6,9 @@
     position: relative;
     display: block;
     padding: 0;
-    //background-image: url("../../../assets/img/AppImage/PirelliBackgroundBlack.png");
-    //background-size: 20%;
+
+    
+    //right side of web page
     #placeHolderSideBar
     {
         position: absolute;
@@ -17,6 +18,7 @@
         width: 30%;
         height: 100%;
         margin: 0;
+        //where tires ate placed
         #sideBar
         {
             margin: auto;
@@ -34,6 +36,7 @@
                 font-family: monospace;
             }
         }
+        //each tire div
         .tireElement
         {
             margin-top: 3%;
@@ -47,7 +50,7 @@
             color: whitesmoke;
             float: left;
             box-shadow: 2px 3px 5px black;
-
+            //tire description, data, name and size
             .textTire
             {
                 margin: 2%;
@@ -67,6 +70,7 @@
             }
         }
     }
+    //left side of web page
     #placeHolderContent
     {
         position: absolute;
@@ -96,6 +100,7 @@
                 font-size: 35px;
             }           
         }
+        //wher car is placed inside web app
         #content
         {
             margin: auto;                        
@@ -107,20 +112,23 @@
             //border-radius: 20px;
             position: relative;
             border: solid thin black;
-            #antWheel
-            {
-                position: absolute;
-                width: 14%;
-                top:54%;
-                left: 19%;
-            }
-            #postWheel
-            {
-                position: absolute;
-                width: 15%;
-                top:52%;
-                right: 13.5%;
-            }
+                    //position of wheels shouldn't change when car change because
+                    //in our images tire are placed at the same distance and
+                    //cause our cotainer has relative position
+                    #antWheel
+                    {
+                        position: absolute;
+                        width: 14%;
+                        top:54%;
+                        left: 19%;
+                    }
+                    #postWheel
+                    {
+                        position: absolute;
+                        width: 15%;
+                        top:52%;
+                        right: 13.5%;
+                    }
             #carImg
             {
                 display: block;
@@ -135,11 +143,14 @@
         }
     }
 }
+
+//using webKit to rotate tire
 .rotating
 {
     -webkit-animation: rotation 2s infinite linear;
 
 }
+//description of rotation
 @-webkit-keyframes rotation {
     from {
             -webkit-transform: rotate(0deg);
