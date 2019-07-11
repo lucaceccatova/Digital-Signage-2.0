@@ -82,13 +82,13 @@ slideEngine()
   {
     this.setTimeoutInterceptor=setTimeout(() => {
       //if slides are ended restart from zero
-      //idea: switch slides gallery when one end
-       if(this.elements.length>this.startingSlide+1)
+       if(this.elements.length>(this.startingSlide+1))
       {
         //fadeOut all the box then change img inside slider
         $("#mySliderBox").fadeOut(500);
-        setTimeout(() => {
+       setTimeout(() => {
           this.startingSlide++;
+          this.slideEngine();
         }, 500);
         //fadeIn the bo with new img
         $("#mySliderBox").fadeIn(500);
@@ -101,11 +101,12 @@ slideEngine()
         $("#mySliderBox").fadeOut(500);
         setTimeout(() => {
           this.startingSlide=0;
+          this.slideEngine();
         }, 500);
        
         $("#mySliderBox").fadeIn(500);
       }
-      this.slideEngine();
+      
     }, this.elements[this.startingSlide].timer*1000);
   }
 
@@ -164,6 +165,6 @@ slideEngine()
     return true;
     else 
       return false;
-  }
+  }  
 }
 
