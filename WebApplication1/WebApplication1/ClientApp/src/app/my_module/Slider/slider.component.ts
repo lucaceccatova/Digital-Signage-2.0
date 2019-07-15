@@ -19,8 +19,8 @@ import { ShareService } from 'src/app/Services/UniversalShare/universalShareServ
 
 export class SliderComponent implements OnInit,OnDestroy
 {
-  url:string="/assets/loadeddata.json";
-//url:string="https://localhost:44303/api/test/getdati"
+  //url:string="/assets/loadeddata.json";
+url:string="https://localhost:44303/api/test/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -79,22 +79,26 @@ ngOnDestroy()
 
   //recursive function that display a slide by changing variable starting slide
 slideEngine()
-  {
+{
+  if (this.elements[this.startingSlide].value == 0) {
+    this.playVideoFromId("vid" + this.startingSlide);
+  }
     this.setTimeoutInterceptor=setTimeout(() => {
       //if slides are ended restart from zero
+      
        if(this.elements.length>(this.startingSlide+1))
       {
         //fadeOut all the box then change img inside slider
         $("#mySliderBox").fadeOut(500);
-       setTimeout(() => {
+         setTimeout(() => {
           this.startingSlide++;
           this.slideEngine();
         }, 500);
         //fadeIn the bo with new img
         $("#mySliderBox").fadeIn(500);
         //to start video when is displayed in the slider
-        if(this.elements[this.startingSlide].value==0)
-            this.playVideoFromId("vid"+this.startingSlide);    
+        //if(this.elements[this.startingSlide].value==0)
+        //    this.playVideoFromId("vid"+this.startingSlide);    
       }
       else
       {
@@ -153,9 +157,11 @@ slideEngine()
   
   playVideoFromId(id:string)
   {
-    let video=document.getElementById(id);
+    console.log(id);
+    let vid = <HTMLVideoElement>document.getElementById(id);
+    console.log(vid);
     //uncomment after vs start
-   // video.play();
+    vid.play();
   }
   
   //trying to move logic from dom to typescript

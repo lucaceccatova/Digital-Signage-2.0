@@ -2,15 +2,15 @@
 
 <div id="mySliderBox">
   <div *ngFor="let media of elements;let i = index" class="mySlides" [ngClass]="{'mySlidesVisible': visible(i)}">
-    <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1" >
-      <video *ngIf="media.value==0" id="vid{{i}}">
-        <source src={{media.path}} type="video/mp4">
-      </video>
-      <div id="infoBox">
-          <p>
-            {{media.description}}
-          </p>
-      </div>
+    <img src="{{media.path}}" style="width:100%" *ngIf="media.value==1">
+    <video *ngIf="media.value==0" id="vid{{i}}">
+      <source src={{media.path}} type="video/mp4">
+    </video>
+    <div id="infoBox">
+      <p>
+        {{media.description}}
+      </p>
+    </div>
   </div>
 </div>
 

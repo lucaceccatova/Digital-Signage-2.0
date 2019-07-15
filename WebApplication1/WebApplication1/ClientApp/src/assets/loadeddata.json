@@ -1,7 +1,0 @@
-[{"id":1,"name":"MV Augusta Brutale 800 rr pirelli","description":"MV Augusta Brutale 800 rr pirelli","value":1,"timer":5,"create_date":"2019-06-05T00:00:00","path":"assets/img/pirelli/brutale.jpg","listaID":1},
-{"id":2,"name":"Pirelli","description":"Le nostre ruote","value":1,"timer":2,"create_date":"2019-07-06T00:00:00","path":"assets/img/pirelli/pzerotire.jpg","listaID":1}
-,{
-    "id":3,"name":"lambo","description":"Lamborghini Huracan","value":1,"timer":5,"create_date":"2019-07-06T00:00:00","path":"assets/img/pirelli/lamborghini.jpg","listaID":1
-},{
-    "id":4,"name":"F1","description":"F1 Car","value":1,"timer":10,"create_date":"2019-07-06T00:00:00","path":"assets/img/pirelli/f1.jpg","listaID":1
-}]
