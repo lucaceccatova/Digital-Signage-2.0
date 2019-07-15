@@ -1,0 +1,8 @@
+
+<div class="elementContainer">
+        <a  *ngFor="let element of elements" [routerLink]="[element.path]">
+                <div class="dashboardElements" >
+                {{element.name}}
+                </div>
+        </a>
+</div>

@@ -1,0 +1,29 @@
+.dashboardElements
+{
+    margin: 5%;
+    border-radius: 5px;
+    color: rgb(152, 159, 165);
+    text-align:center;
+    font-size: 20px;
+    font-family: monospace;
+    transition: 0.3s;
+    margin: 15%;
+    
+
+}
+.dashboardElements:hover
+{
+    background-color: rgb(226, 226, 226);
+}
+
+.elementContainer
+{
+   // overflow-y: scroll;
+    height: 90%;
+    a
+    {
+        text-decoration: none !important;
+
+    }
+    
+}

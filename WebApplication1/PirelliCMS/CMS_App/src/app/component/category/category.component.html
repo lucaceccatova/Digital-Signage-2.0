@@ -1,0 +1,24 @@
+<form [formGroup]="formController" class="uploadForm md-form">
+        <h3>Create a new category</h3>
+        <br>
+        <mat-form-field >
+          <input matInput formControlName="Categoryname" placeholder="Name">
+        </mat-form-field>
+      
+        <mat-form-field  >
+          <textarea formControlName="CategoryDescription" placeholder="Description" matInput></textarea>
+        </mat-form-field>
+
+      <br>
+        <mat-form-field>
+            <ngx-mat-file-input name="Category Iamge" (change)="onFileChange($event.target.files)" accept=".png,.jpeg"   placeholder="Category Image" ></ngx-mat-file-input>
+        </mat-form-field>
+        
+        
+        <mat-progress-bar style="margin:3%;" *ngIf="uploading==true" mode="determinate" [(value)]="uploadProgress"></mat-progress-bar>
+
+<button [disabled]="!formController.valid" mat-raised-button >send</button>
+      
+      </form>
+
+

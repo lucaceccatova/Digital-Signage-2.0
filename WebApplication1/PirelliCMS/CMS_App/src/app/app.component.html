@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MyMedia</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <div id="wrapper">
+
+    <div>  
+      <mat-toolbar color = "primary">
+          <img id="dashboardImg" src="/assets/IMG/folder.png" style="width:4%;"> 
+          <span>
+              Pirelli CMS
+            </span>
+       </mat-toolbar>
+    </div>
+      <mat-card id="sideBar">
+
+          <app-dashboard-element></app-dashboard-element>
+      </mat-card>
+      <div id="content">
+        <mat-card>
+        <router-outlet></router-outlet>  
+        </mat-card>
+      </div>
+  </div>
+</body>
+</html>

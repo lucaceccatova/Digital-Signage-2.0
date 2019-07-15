@@ -1,0 +1,52 @@
+    <form [formGroup]="form" class="uploadForm md-form">
+            <h3>Insert new media</h3>
+            <br>
+            <mat-form-field class=" medium">
+              <input matInput formControlName="name" [(ngModel)]="media.name" placeholder="media.name" name="name">
+            </mat-form-field>
+          
+            <mat-form-field  class="medium">
+              <textarea formControlName="description" matInput [(ngModel)]="media.description" placeholder="Description" name="description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="small consecutive">
+                    <input matInput formControlName="timer"  type="number" placeholder="Time" name="timer">
+            </mat-form-field>
+            <mat-form-field class="small consecutive">
+                    <mat-label>Time Unit</mat-label>
+                    <mat-select [(value)]="timeMoltiplier">
+                      <mat-option value='1' >Seconds</mat-option>
+                      <mat-option  value='60'>Minuts</mat-option>
+                      <mat-option  value='3600'>Hours</mat-option>
+                    </mat-select>
+          </mat-form-field>
+          <br>
+            <mat-form-field>
+                <ngx-mat-file-input name="file" (change)="onFileChange($event.target.files)" accept=".png,.jpeg,.mp4" formControlName="mediaFile" placeholder="Media to upload" ></ngx-mat-file-input>
+            </mat-form-field>
+            
+            
+            <mat-progress-bar style="margin:3%;" *ngIf="uploading==true" mode="determinate" [(value)]="uploadProgress"></mat-progress-bar>
+
+          <mat-form-field class="small consecutive">
+              <mat-label>Media Type</mat-label>
+              <mat-select formControlName="format"  [(value)]="media.format">
+                <mat-option value="0">Video</mat-option>
+                <mat-option value="1">Image</mat-option>
+              </mat-select>
+              
+          </mat-form-field> 
+          <mat-form-field>
+              <mat-label>Category</mat-label>
+                <mat-select formControlName="listId"  [(value)]="media.listId">
+                  <!--Get data with api-->
+                  <mat-option *ngFor="let listItem of list"value="{{listItem.id}}">{{listItem.name}}</mat-option>
+                  
+                </mat-select>
+          </mat-form-field> 
+
+
+    <button class="medium" [disabled]="!form.valid" mat-raised-button (click)="send()">send</button>
+          
+          </form>
+
