@@ -30,7 +30,7 @@ import { CategoryComponentView } from './component/category/CategoryView/categor
     CategoryComponent,
     MediaComponent,
     TabsComponent,
-    CategoryComponentView
+    CategoryComponentView   
   ],
   imports: [
     BrowserModule,
