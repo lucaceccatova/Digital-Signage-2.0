@@ -32,7 +32,7 @@ import { categoryDialog } from './component/category/are-you-sure-about-it/are-y
     MediaComponent,
     TabsComponent,
     CategoryComponentView   ,
-    categoryDialog
+    categoryDialog  
   ],
   imports: [
     BrowserModule,

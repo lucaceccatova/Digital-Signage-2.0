@@ -7,6 +7,7 @@ import { FormGroup,FormBuilder,
   FormControl } from '@angular/forms';
 import { GetListService } from 'src/app/services/getListService/get-list.service';
 import { listMedia } from 'src/app/Model/listMedia';
+import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
 
 @Component({
   selector: 'app-upload',
@@ -33,12 +34,11 @@ export class UploadComponent implements OnInit {
  file:File;
 //
 list:listMedia[]=[];
- public response: {dbPath: ''};
  form: FormGroup;
 uploadProgress:number=0; uploading=false;
-  constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetListService) { }
+  constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetListService,
+    private path:PathResponseService) { }
   fileName = '';
-        
   ngOnInit() {  
     this.getList();
     this.form=new FormGroup({
@@ -52,12 +52,6 @@ uploadProgress:number=0; uploading=false;
     'mediaFile':new FormControl( this.fileName, [Validators.required])
   });
 
-}
-public uploadFinished = (event) => {
-  this.response = event;
-  this.media.path=this.response.dbPath;
-
-            console.log(this.media);         
 }
 send() {
   this.media=this.form.value;
@@ -73,8 +67,7 @@ send() {
         }
         else if (data.type === HttpEventType.Response) 
          {
-           console.log(data);
-          this.uploadFinished(data.body); 
+          this.media.path=this.path.responseTranslater(data.body);
          }  
   })
 }
