@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,20 +7,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BLL;
 using DAL;
-using System.IO;
 using System.Net.Http.Headers;
-using System.Text;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Collections.Specialized;
 
 namespace WebApplication1.Controllers
 {
     public class TestController : Controller
     {
-        // GET: Test
 
-
-        [Route("api/test/getdati")]
+        [Route("api/getdati")]
         [HttpGet]
         public List<Media> GetMedia()
         {
@@ -27,59 +22,86 @@ namespace WebApplication1.Controllers
             return GestoreBLL.GetMedia();
         }
 
-        [Route("api/test/getlistaById/{id}")]
+        [Route("api/getcategorybyid/{id}")]
         [HttpGet]
         public List<Media> GetListaById(int id)
         {
-            return GestoreBLL.GetListById(id);
+            return GestoreBLL.GetVideosByCategoryId(id);
         }
 
-        [HttpPost, DisableRequestSizeLimit]
-        [Route("api/upload")]
-        public IActionResult Upload()
+        [Route("api/getCategories")]
+        [HttpGet]
+        public List<ListaMedia> GetLista()
         {
-            try
-            {
-                var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources", "Images");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-                if (file.Length > 0)
-                {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-
-                    return Ok(new { dbPath });
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return GestoreBLL.GetCategories();
         }
+
+        [Route("api/addmedia")]
+        [HttpPost]
+        public void AddMedia([FromBody] Media m)
+        {
+            GestoreBLL.AddMedia(m);
+        }
+
+        [Route("api/addcategory")]
+        [HttpPost]
+        public void AddCategory([FromBody] ListaMedia cat)
+        {
+            GestoreBLL.AddCategory(cat);
+        }
+
+        [Route("api/addcar")]
+        [HttpPost]
+        public void AddCar([FromBody] Car auto)
+        {
+            GestoreBLL.AddCar(auto);
+        }
+
+        [Route("api/addtire")]
+        [HttpPost]
+        public void AddCar([FromBody] Tire ruota)
+        {
+            GestoreBLL.AddTire(ruota);
+        }
+
+        [Route("api/deletemedia/{id}")]
+        [HttpGet]
+        public void DeleteMedia(int id)
+        {
+            GestoreBLL.DeleteMedia(id);
+        }
+
+        [Route("api/deletecategory/{id}")]
+        [HttpGet]
+        public void DeleteCategory(int id)
+        {
+            GestoreBLL.DeleteCategory(id);
+        }
+
+        [Route("api/deletetire/{id}")]
+        [HttpDelete]
+        public void DeleteTire(int id)
+        {
+            GestoreBLL.DeleteTire(id);
+        }
+
+        [Route("api/deletecar/{id}")]
+        [HttpGet]
+        public void DeleteCar(int id)
+        {
+            GestoreBLL.DeleteCar(id);
+        }
+
         //-------------------------------------------------------------------------------------------------------//
-        //[Route("api/test/getlista")]
-        //[HttpGet]
-        //public List<ListaMedia> GetLista()
-        //{
-        //    return GestoreBLL.GetLista();
-        //}
+
 
         //[Route("api/test/addmedia")]
         //[HttpPost]
-        //public void AddMedia([FromBody]Media m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
+        //public void AddMedia([FromBody]byte[] m) // Per il momento ritorna void, si considera anche il ritorno di un bool  
         //{
-        //    GestoreBLL.AddMedia(m);
+        //   //  = m;
+        //  //FileContentResult f = File.WriteAllBytes(@"C: \Users\leon.rahman", m.file);
+        ////    GestoreBLL.AddMedia(m);
         //}
         //[Route("api/test/eliminaSlide/{id}")]
         //[HttpGet]
@@ -90,9 +112,9 @@ namespace WebApplication1.Controllers
 
         //[Route("api/test/eliminaLista/{id}")]
         //[HttpGet]
-        //public void EliminaLista(int id)
+        //public void DeleteCategory(int id)
         //{
-        //    GestoreBLL.EliminaLista(id);
+        //    GestoreBLL.DeleteCategory(id);
         //}
         //--------------------------------------------------------------------------------------------------------------------------------//
 
@@ -177,5 +199,74 @@ namespace WebApplication1.Controllers
         //            return View();
         //        }
         //    }
+
+        //[Route("api/upload")]
+        //[HttpPost]
+        //public IActionResult Upload()
+        //{
+        //    try
+        //    {
+        //        var file = Request.Form.Files[0];
+        //        //var x = Request.Form.Keys.Contains("ok").ToString();
+        //        var folderName = Path.Combine("Resources", "Images");
+        //        var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+        //        if (file.Length > 0)
+        //        {
+        //            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        //            var fullPath = Path.Combine(pathToSave, fileName);
+        //            var dbPath = Path.Combine(folderName, fileName);
+
+        //            using (var stream = new FileStream(fullPath, FileMode.Create))
+        //            {
+        //                file.CopyTo(stream);
+        //            }
+
+        //            return Ok(new { dbPath });
+        //        }
+        //        else
+        //        {
+        //            return BadRequest();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, "Internal server error");
+        //    }
+        //}
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("api/upload")]
+        public IActionResult Upload()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

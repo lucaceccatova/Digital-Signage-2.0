@@ -122,7 +122,7 @@ namespace AlexaSkills
                             else/*if (!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))*///-- Enter here when we user selected a category and then give us a correct video name
                             {
 
-                                /*string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this value of the 'VideoNames' slot to have the both ID
+                                /*string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this format of the 'VideoNames' slot to have the both ID
                                 if (int.Parse(tmpSplit[0]) == idCategory) //-- when the video that the user selected has the same category ID of the category that the user choosed before it will enter here and send to the front-end the video 
                                 {*/
 
