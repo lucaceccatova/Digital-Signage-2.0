@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatToolbarModule, MatIcon} from '@angular/material'
+import {MatToolbarModule, MatTabsModule} from '@angular/material'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DashboardElementComponent } from './component/dashboard-element/dashboard-element.component';
 import { FeatureRoutingModule } from './router-module';
@@ -18,6 +18,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { HomeComponent } from './component/home/home.component';
 import { CategoryComponent } from './component/category/categoryAdd/category.component.add';
 import { UploadComponent } from './component/upload/mediaAdd/upload.component';
+import { MediaComponent } from './component/upload/tabs/media';
+import { TabsComponent } from './component/category/tabs/tabs.component';
+import { CategoryComponentView } from './component/category/CategoryView/category.component.view';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +28,9 @@ import { UploadComponent } from './component/upload/mediaAdd/upload.component';
     UploadComponent,
     HomeComponent,
     CategoryComponent,
+    MediaComponent,
+    TabsComponent,
+    CategoryComponentView   
   ],
   imports: [
     BrowserModule,
@@ -42,7 +48,8 @@ import { UploadComponent } from './component/upload/mediaAdd/upload.component';
     MatProgressBarModule  ,
     MatButtonModule,
     MaterialFileInputModule,
-    MatIconModule    
+    MatIconModule,
+    MatTabsModule,MatIconModule    
   ],
   providers: [],
   bootstrap: [AppComponent]
