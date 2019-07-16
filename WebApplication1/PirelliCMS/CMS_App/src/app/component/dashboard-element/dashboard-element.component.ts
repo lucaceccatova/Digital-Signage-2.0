@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+
 @Component({
   selector: 'app-dashboard-element',
   templateUrl: './dashboard-element.component.html',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardElementComponent implements OnInit {
 
   elements=[
-    {name:"Home", path:"",icon:'fas fa-cloud-upload-alt'},
-    {name:"New media",path:"/upload",icon:'fas fa-cloud-upload-alt'},
-    {name:"New category",path:"/category",icon:''},
+    {name:"HOME", path:"",icon:"home"},
+    {name:"MEDIA",path:"/media",icon:'movie'},
+    {name:"CATEGORY",path:"/category",icon:'view_module'},
 
   ];
   constructor() { }

@@ -1,9 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
-import { NgModule, Component } from '@angular/core';
-import { DashboardElementComponent } from './component/dashboard-element/dashboard-element.component';
-import { UploadComponent } from './component/upload/upload.component';
+import { NgModule } from '@angular/core';
 import { HomeComponent } from './component/home/home.component';
-import { CategoryComponent } from './component/category/category.component';
+import { TabsComponent } from './component/category/tabs/tabs.component';
+import { MediaComponent } from './component/upload/tabs/media';
 
 
 const routes: Routes = [
@@ -11,8 +10,8 @@ const routes: Routes = [
         path:"",
         component:HomeComponent,
     },
-    {path:"upload", component:UploadComponent,},
-    {path:"category",component:CategoryComponent}
+    {path:"media", component:MediaComponent,},
+    {path:"category",component:TabsComponent}
     
 
 ];

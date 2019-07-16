@@ -20,13 +20,13 @@ export class UploadComponent implements OnInit {
   //to identify seconds, minuts or hours
   timeMoltiplier:number=1;
  public media:media={
-   name:"",
-   description:"",
-   timer:null,
+   name:null,
+   description:null,
+   timer:undefined,
    format:null,
    listId:null,
    mediaType:null,
-   path:""
+   path:null
 
  };
  //file to upload
@@ -60,6 +60,7 @@ public uploadFinished = (event) => {
             console.log(this.media);         
 }
 send() {
+  this.media=this.form.value;
   this.timeConverter();
   
   this.http.uploadFile("https://localhost:44303/api/upload",this.file).subscribe(data=>
@@ -87,7 +88,7 @@ send() {
   }
   getList()
   {
-    this.stremList.getList().subscribe(data=>{
+    this.stremList.getList("/assets/Json/loadeddata.list.json").subscribe(data=>{
       this.list=data;
     });
   }

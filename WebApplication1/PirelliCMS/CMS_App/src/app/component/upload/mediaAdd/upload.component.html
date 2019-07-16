@@ -1,12 +1,12 @@
-    <form [formGroup]="form" class="uploadForm md-form">
+    <form [formGroup]="form" class="uploadForm md-form form">
             <h3>Insert new media</h3>
             <br>
             <mat-form-field class=" medium">
-              <input matInput formControlName="name" [(ngModel)]="media.name" placeholder="media.name" name="name">
+              <input matInput formControlName="name" placeholder="Name">
             </mat-form-field>
           
             <mat-form-field  class="medium">
-              <textarea formControlName="description" matInput [(ngModel)]="media.description" placeholder="Description" name="description"></textarea>
+              <textarea formControlName="description" matInput placeholder="Description"></textarea>
             </mat-form-field>
 
             <mat-form-field class="small consecutive">
@@ -47,6 +47,5 @@
 
 
     <button class="medium" [disabled]="!form.valid" mat-raised-button (click)="send()">send</button>
-          
-          </form>
+</form>
 

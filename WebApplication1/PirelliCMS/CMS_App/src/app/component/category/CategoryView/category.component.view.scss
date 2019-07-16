@@ -1,0 +1,28 @@
+.wrapper
+{
+    position: relative;
+    height: 100%;
+   
+    .gallery
+    {
+        position: relative;
+    
+        height: 100%;
+        overflow-y:auto;
+    }
+    .category
+    {
+        float: left;
+        margin: 2%;
+        padding: 0;
+        img{
+            border-radius: 10px;
+            
+        }
+        
+    }
+    .categoryPreview
+    {
+        float: right;
+    }
+}
