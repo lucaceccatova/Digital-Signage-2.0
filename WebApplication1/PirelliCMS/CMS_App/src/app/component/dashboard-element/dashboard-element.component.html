@@ -1,7 +1,10 @@
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <div class="elementContainer">
         <a  *ngFor="let element of elements" [routerLink]="[element.path]">
+                
                 <div class="dashboardElements" >
+                <i class="material-icons">{{element.icon}}</i>
                 {{element.name}}
                 </div>
         </a>

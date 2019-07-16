@@ -6,4 +6,23 @@ html, body
     height: 100%;
     margin: 0;
     overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
+.form
+{
+    margin-left: 20%;
+    margin-top:5%;
+}
+.infoBox
+        {
+            text-align: center;
+            margin-top:-11px;
+            color: rgb(156, 156, 156);
+            padding: 8px;
+            border-radius: 0 0 10px 10px;
+            background-color:whitesmoke;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); 
+
+        }
+
+

@@ -1,0 +1,18 @@
+<div class="categoryDialog">
+        <h2>Are you sure the category is correct?
+        </h2>
+    <img src={{data.file}}>
+    Name: <b>{{data.category.name}}</b>
+    <br>
+    Description: <b>{{data.category.description}}  </b>
+    <div class="button">
+           
+        <button [mat-dialog-close]="true" mat-fab aria-label="Oh yea, right!!" class="true">
+            <mat-icon >done</mat-icon>
+        </button>
+        <button mat-fab [mat-dialog-close]="false" aria-label="Shit!" class="false">
+            <mat-icon >clear</mat-icon>
+        </button>
+    </div>
+</div>
+

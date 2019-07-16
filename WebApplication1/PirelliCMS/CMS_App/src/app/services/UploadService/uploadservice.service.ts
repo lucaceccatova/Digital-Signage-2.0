@@ -10,22 +10,11 @@ export class UploadserviceService {
 
   formdata;
   constructor(private http:HttpClient) { }
-upload(media:File,url:string)
-{
-  console.log(media);
- this.formdata=new FormData();
- this.formdata.append('UploadedFile', media);
-  this.http.post(url,media).subscribe(res=>
-    {
-      console.log(res);
-    });
-}
-uploadFile(url: string, file: Blob){
 
-  var fileToUpload=<File>file[0];
-  let formData = new FormData();
-  formData.append('file', fileToUpload, fileToUpload.name);
-      return this.http.post(url, formData,{reportProgress: true, observe: 'events'});
-
-}
+  uploadFile(url: string, file: Blob){
+    var fileToUpload=<File>file[0];
+    let formData = new FormData();
+    formData.append('file', fileToUpload, fileToUpload.name);
+        return this.http.post(url, formData,{reportProgress: true, observe: 'events'});
+  }
 }

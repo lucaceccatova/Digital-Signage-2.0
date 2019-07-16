@@ -7,11 +7,11 @@ import { listMedia } from 'src/app/Model/listMedia';
 })
 export class GetListService {
 
-  url:string="/assets/Json/loadeddata.list.json";
+  
   constructor(private http:HttpClient) { }
 
-  getList()
+  getList(url:string)
   {
-    return this.http.get<listMedia[]>(this.url);
+    return this.http.get<listMedia[]>(url);
   }
 }
