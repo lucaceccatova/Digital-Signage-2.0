@@ -21,6 +21,7 @@ import { UploadComponent } from './component/upload/mediaAdd/upload.component';
 import { MediaComponent } from './component/upload/tabs/media';
 import { TabsComponent } from './component/category/tabs/tabs.component';
 import { CategoryComponentView } from './component/category/CategoryView/category.component.view';
+import { categoryDialog } from './component/category/are-you-sure-about-it/are-you-sure-about-it.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import { CategoryComponentView } from './component/category/CategoryView/categor
     CategoryComponent,
     MediaComponent,
     TabsComponent,
-    CategoryComponentView   
+    CategoryComponentView   ,
+    categoryDialog
   ],
   imports: [
     BrowserModule,
@@ -52,6 +54,7 @@ import { CategoryComponentView } from './component/category/CategoryView/categor
     MatTabsModule,MatIconModule,MatDialogModule    
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[categoryDialog],
 })
 export class AppModule { }
