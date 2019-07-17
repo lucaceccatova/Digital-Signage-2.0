@@ -57,5 +57,7 @@ export class CategoryComponentView implements OnInit {
         alert("cancellato");
       });
   }
-
+  trackByFn(i: number) { 
+    return i
+  }
 }
