@@ -14,9 +14,9 @@ export interface data
   styleUrls:['are-you-sure-about-it.component.scss']
 })
 export class categoryDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: data ) {console.log(this.data);}
-  send()
+  constructor(@Inject(MAT_DIALOG_DATA) public data: data )
   {
+
   }
 }
 

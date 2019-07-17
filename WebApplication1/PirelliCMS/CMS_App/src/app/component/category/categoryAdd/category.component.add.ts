@@ -7,7 +7,7 @@ import { UploadComponent } from '../../upload/mediaAdd/upload.component';
 import { UploadserviceService } from 'src/app/services/UploadService/uploadservice.service';
 import { HttpEventType } from '@angular/common/http';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
-import { PostService } from 'src/app/services/PostService/post.service';
+import { apiService } from 'src/app/services/PostService/post.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ urlFile="https://localhost:44303/api/upload";urlCategory="https://localhost:4430
   uploading:Boolean=false;uploadProgress=0;
   file:File;filename;
   constructor(private dialog:MatDialog,private http:UploadserviceService,
-    private path:PathResponseService, private post:PostService) { }
+    private path:PathResponseService, private post:apiService) { }
 
 
   ngOnInit() {

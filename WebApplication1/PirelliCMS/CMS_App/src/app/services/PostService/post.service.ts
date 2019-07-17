@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class apiService {
 
   
   constructor(private http:HttpClient) { }
@@ -16,5 +16,9 @@ export class PostService {
         'Content-Type':  'application/json',
       })};
     return this.http.post(url,item,httpOptions);
+  }
+  get_ID(url:string,id:number)
+  {
+    return this.http.get(url+'/'+id);
   }
 }

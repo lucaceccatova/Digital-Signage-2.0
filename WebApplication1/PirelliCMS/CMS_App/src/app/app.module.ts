@@ -22,6 +22,8 @@ import { MediaComponent } from './component/upload/tabs/media';
 import { TabsComponent } from './component/category/tabs/tabs.component';
 import { CategoryComponentView } from './component/category/CategoryView/category.component.view';
 import { categoryDialog } from './component/category/are-you-sure-about-it/are-you-sure-about-it.component';
+import { UpateDeleteComponent } from './component/category/upate-delete/upate-delete.component';
+import { DeleteComponent } from './component/category/upate-delete/Delete/delete-component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,9 @@ import { categoryDialog } from './component/category/are-you-sure-about-it/are-y
     MediaComponent,
     TabsComponent,
     CategoryComponentView   ,
-    categoryDialog  
+    categoryDialog,
+    UpateDeleteComponent,
+    DeleteComponent  
   ],
   imports: [
     BrowserModule,
@@ -51,10 +55,10 @@ import { categoryDialog } from './component/category/are-you-sure-about-it/are-y
     MatButtonModule,
     MaterialFileInputModule,
     MatIconModule,
-    MatTabsModule,MatIconModule,MatDialogModule    
+    MatTabsModule,MatIconModule,MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[categoryDialog],
+  entryComponents:[categoryDialog,UpateDeleteComponent],
 })
 export class AppModule { }
