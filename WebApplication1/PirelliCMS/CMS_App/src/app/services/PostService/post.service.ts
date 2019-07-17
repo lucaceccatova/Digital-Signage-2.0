@@ -9,7 +9,7 @@ export class PostService {
   
   constructor(private http:HttpClient) { }
 
-  post(url:string, item:object)
+  post(url:string, item:any)
   {
     const httpOptions = {
       headers: new HttpHeaders({

@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
 
         [Route("api/getCategories")]
         [HttpGet]
-        public List<listMedia> GetLista()
+        public List<ListaMedia> GetLista()
         {
             return GestoreBLL.GetCategories();
         }
@@ -45,9 +45,10 @@ namespace WebApplication1.Controllers
 
         [Route("api/addcategory")]
         [HttpPost]
-        public void AddCategory([FromBody]listMedia cat)
+        public IActionResult AddCategory([FromBody] ListaMedia cat)
         {
             GestoreBLL.AddCategory(cat);
+            return Ok();
         }
 
         [Route("api/addcar")]
