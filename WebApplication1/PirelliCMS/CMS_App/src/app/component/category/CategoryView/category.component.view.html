@@ -1,7 +1,7 @@
 <div class="wrapper">
 
   <div class="gallery">
-    <div class="category"  *ngFor="let element of list">
+    <div (click)="viewUpdateDelete(i)" class="category"  *ngFor="let element of list,let i=index">
       <img src={{element.path}} >
       <div class="infoBox"> {{element.name}}</div>
     </div>

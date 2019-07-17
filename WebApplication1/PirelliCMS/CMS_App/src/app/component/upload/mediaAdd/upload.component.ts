@@ -8,7 +8,7 @@ import { FormGroup,FormBuilder,
 import { GetListService } from 'src/app/services/getListService/get-list.service';
 import { listMedia } from 'src/app/Model/listMedia';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
-import { PostService } from 'src/app/services/PostService/post.service';
+import { apiService } from 'src/app/services/PostService/post.service';
 
 @Component({
   selector: 'app-upload',
@@ -41,7 +41,7 @@ uploadProgress:number=0; uploading=false;
 urlFile="https://localhost:44303/api/upload";urlPost="https://localhost:44303/api/addmedia";
 //
   constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetListService,
-    private path:PathResponseService,private post:PostService) { }
+    private path:PathResponseService,private post:apiService) { }
   fileName = '';
   ngOnInit() {  
     this.getList();
