@@ -36,14 +36,14 @@ namespace BLL
             }
         }
 
-        //public static List<ListaMedia> GetLista()
+        //public static List<listMedia> GetLista()
         //{
-        //    var medias = new List<ListaMedia>();
+        //    var medias = new List<listMedia>();
         //    try
         //    {
         //        medias = new DB_Access(connectionDB).GetLista(); //MANCA GESTIONE ERRORI
 
-        //        //foreach (ListaMedia x in mediasDB)
+        //        //foreach (listMedia x in mediasDB)
         //        //{
         //        //    var med = new ListaMediaBL();
         //        //    med.ID = x.ID;
@@ -88,9 +88,9 @@ namespace BLL
             }
         }
 
-        public static List<ListaMedia> GetCategories()
+        public static List<listMedia> GetCategories()
         {
-            var medias = new List<ListaMedia>();
+            var medias = new List<listMedia>();
             try
             {
                 medias = new DB_Access(connectionDB).GetCategories(); //MANCA GESTIONE ERRORI
@@ -130,7 +130,7 @@ namespace BLL
             return new DB_Access(connectionDB).AddMedia(m);
         }
 
-        public static bool AddCategory(ListaMedia m)
+        public static bool AddCategory(listMedia m)
         {
             //var media = new Media();
             //media.name = m.name;

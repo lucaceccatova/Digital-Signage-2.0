@@ -156,9 +156,9 @@ namespace DAL
             }
         }
 
-        public List<ListaMedia> GetCategories()
+        public List<listMedia> GetCategories()
         {
-            var todoList = new List<ListaMedia>();
+            var todoList = new List<listMedia>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
             {
@@ -184,7 +184,7 @@ namespace DAL
 
                             while (reader.Read())
                             {
-                                var todo = new ListaMedia();
+                                var todo = new listMedia();
                                 todo.ID = (int)reader["ID"];
                                 todo.name = reader["Nome"].ToString();
                                 todo.description = reader["Descrizione"].ToString();
@@ -216,9 +216,9 @@ namespace DAL
         }
 
         //-------------------------------------------------------------------------------------------------------------------------------------//
-        //public List<ListaMedia> GetLista()
+        //public List<listMedia> GetLista()
         //{
-        //    var todoList = new List<ListaMedia>();
+        //    var todoList = new List<listMedia>();
 
         //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
         //    {
@@ -244,7 +244,7 @@ namespace DAL
 
         //                    while (reader.Read())
         //                    {
-        //                        var todo = new ListaMedia();
+        //                        var todo = new listMedia();
         //                        todo.ID = (int)reader["ID"];
         //                        todo.name = reader["Nome"].ToString();
         //                        todo.description = reader["Descrizione"].ToString();
@@ -355,7 +355,7 @@ namespace DAL
             }
         }
 
-        public bool AddCategory(ListaMedia med)
+        public bool AddCategory(listMedia med)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
             {
