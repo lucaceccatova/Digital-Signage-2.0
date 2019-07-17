@@ -5,6 +5,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { categoryDialog } from '../are-you-sure-about-it/are-you-sure-about-it.component';
 import { UploadComponent } from '../../upload/mediaAdd/upload.component';
 import { UploadserviceService } from 'src/app/services/UploadService/uploadservice.service';
+import { HttpEventType } from '@angular/common/http';
+import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
+import { PostService } from 'src/app/services/PostService/post.service';
 
 
 @Component({
@@ -14,8 +17,7 @@ import { UploadserviceService } from 'src/app/services/UploadService/uploadservi
 })
 export class CategoryComponent implements OnInit {
 @Output() public onUploadFinished = new EventEmitter();
-
-url="https://localhost:44303/api/getcategories";
+urlFile="https://localhost:44303/api/upload";urlCategory="https://localhost:44303/api/addcategory";
   public category:listMedia={
     id:0,
     name:null,
@@ -26,8 +28,8 @@ url="https://localhost:44303/api/getcategories";
   formController:FormGroup;
   uploading:Boolean=false;uploadProgress=0;
   file:File;filename;
-
-  constructor(private dialog:MatDialog,private http:UploadserviceService) { }
+  constructor(private dialog:MatDialog,private http:UploadserviceService,
+    private path:PathResponseService, private post:PostService) { }
 
 
   ngOnInit() {
@@ -61,23 +63,49 @@ url="https://localhost:44303/api/getcategories";
       {
         if(data==true)
         {
-          
+          this.upload();
         }
       });
   }
 //upload to DB
 upload()
 {
-  this.http.uploadFile(this.url,this.file).subscribe(data=>
+  this.http.uploadFile(this.urlFile,this.file).subscribe(data=>
     {
-      console.log(data);
+      if (data.type === HttpEventType.UploadProgress)
+        {
+          this.uploading=true;
+          this.uploadProgress=(data.loaded*100/data.total);
+          console.log(data);
+        }
+        else if (data.type === HttpEventType.Response) 
+         {
+           this.category.path=this.path.responseTranslater(data.body);
+           
+           //to reset form for a new insert
+           setTimeout(() => {
+            this.uploading=false;
+            this.formController.reset();
+            Object.keys(this.formController.controls).forEach(key => {
+              this.formController.get(key).setErrors(null) ;
+            });           }, 1000);
+         this.postCategory();
+         }  
     });
 }
+
   assignFormValue()
   {
     this.category.name=this.formController.controls['name'].value;
     this.category.description=this.formController.controls['description'].value;
   }
 
+  postCategory()
+  {
+    this.post.post(this.urlCategory,this.category).subscribe(data=>
+      {
+        console.log(data);
+      });
+  }
   
 }

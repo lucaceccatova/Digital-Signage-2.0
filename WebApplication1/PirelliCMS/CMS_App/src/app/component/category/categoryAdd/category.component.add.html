@@ -16,7 +16,7 @@
     </mat-form-field>
         
         
-        <mat-progress-bar style="margin:3%;" *ngIf="uploading==true" mode="determinate" [(value)]="uploadProgress"></mat-progress-bar>
+        <mat-progress-bar class="medium"style="margin:3%;" *ngIf="uploading==true" mode="determinate" [(value)]="uploadProgress"></mat-progress-bar>
     
 <button [disabled]="!formController.valid" mat-raised-button (click)="sendCategory()">send</button>
       
