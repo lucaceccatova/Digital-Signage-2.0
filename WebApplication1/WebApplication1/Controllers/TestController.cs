@@ -31,66 +31,134 @@ namespace WebApplication1.Controllers
 
         [Route("api/getCategories")]
         [HttpGet]
-        public List<ListaMedia> GetLista()
+        public List<listMedia> GetLista()
         {
             return GestoreBLL.GetCategories();
         }
 
         [Route("api/addmedia")]
         [HttpPost]
-        public void AddMedia([FromBody] Media m)
+        public IActionResult AddMedia([FromBody] Media m)
         {
-            GestoreBLL.AddMedia(m);
+            try
+            {
+                GestoreBLL.AddMedia(m);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+            
         }
 
         [Route("api/addcategory")]
         [HttpPost]
-        public IActionResult AddCategory([FromBody] ListaMedia cat)
+        public IActionResult AddCategory([FromBody] listMedia cat)
         {
+            try
+            {
+
             GestoreBLL.AddCategory(cat);
             return Ok();
+            }
+            catch
+            {
+                return StatusCode(500,"Internal server error");
+            }
         }
 
         [Route("api/addcar")]
         [HttpPost]
-        public void AddCar([FromBody] Car auto)
+        public IActionResult AddCar([FromBody] Car auto)
         {
-            GestoreBLL.AddCar(auto);
+            try
+            {
+                GestoreBLL.AddCar(auto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500,"internal server error");
+            }
+
+
         }
+
 
         [Route("api/addtire")]
         [HttpPost]
-        public void AddCar([FromBody] Tire ruota)
+        public IActionResult AddCar([FromBody] Tire ruota)
         {
-            GestoreBLL.AddTire(ruota);
-        }
+            try
+            {
+                GestoreBLL.AddTire(ruota);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+       }
 
         [Route("api/deletemedia/{id}")]
         [HttpGet]
-        public void DeleteMedia(int id)
+        public IActionResult DeleteMedia(int id)
         {
-            GestoreBLL.DeleteMedia(id);
+            try
+            {
+                GestoreBLL.DeleteMedia(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server erroe");
+            }
         }
 
         [Route("api/deletecategory/{id}")]
         [HttpGet]
-        public void DeleteCategory(int id)
+        public IActionResult DeleteCategory(int id)
         {
-            GestoreBLL.DeleteCategory(id);
+            try
+            {
+                GestoreBLL.DeleteCategory(id);
+                return Ok();
+
+            }catch(Exception ex)
+            {
+                return StatusCode(500, "Intenal server error");
+            }
         }
 
         [Route("api/deletetire/{id}")]
-        [HttpDelete]
-        public void DeleteTire(int id)
+        [HttpGet]
+        public IActionResult DeleteTire(int id)
         {
-            GestoreBLL.DeleteTire(id);
+            try
+            {
+                GestoreBLL.DeleteTire(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [Route("api/deletecar/{id}")]
         [HttpGet]
-        public void DeleteCar(int id)
+        public IActionResult DeleteCar(int id)
         {
-            GestoreBLL.DeleteCar(id);
+            try
+            {
+                GestoreBLL.DeleteCar(id);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         //-------------------------------------------------------------------------------------------------------//
@@ -243,8 +311,8 @@ namespace WebApplication1.Controllers
             try
             {
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources", "Images");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var folderName = Path.Combine("Images");
+                var pathToSave = Path.Combine(@"C:\Users\leon.rahman\Desktop", folderName);
 
                 if (file.Length > 0)
                 {
