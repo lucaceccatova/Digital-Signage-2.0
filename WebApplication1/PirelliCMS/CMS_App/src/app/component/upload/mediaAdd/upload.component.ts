@@ -92,6 +92,7 @@ send() {
   }
   postMedia()
   {
+    
     this.post.post(this.urlPost,this.media).subscribe(data=>
       {
         console.log(data);

@@ -9,6 +9,7 @@ export class PathResponseService {
   constructor() { }
 
  responseTranslater = (event) => {
-    return this.response = event;
+     this.response = event;
+     return this.response.dbPath;
   }
 }

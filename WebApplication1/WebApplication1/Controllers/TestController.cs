@@ -45,9 +45,10 @@ namespace WebApplication1.Controllers
 
         [Route("api/addcategory")]
         [HttpPost]
-        public void AddCategory([FromBody] ListaMedia cat)
+        public IActionResult AddCategory([FromBody] ListaMedia cat)
         {
             GestoreBLL.AddCategory(cat);
+            return Ok();
         }
 
         [Route("api/addcar")]
