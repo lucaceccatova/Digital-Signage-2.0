@@ -20,7 +20,7 @@ import { ShareService } from 'src/app/Services/UniversalShare/universalShareServ
 export class SliderComponent implements OnInit,OnDestroy
 {
   //url:string="/assets/loadeddata.json";
-url:string="https://localhost:44303/api/test/getdati"
+url:string="https://localhost:44303/api/getdati"
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -80,7 +80,7 @@ ngOnDestroy()
   //recursive function that display a slide by changing variable starting slide
 slideEngine()
 {
-  if (this.elements[this.startingSlide].value == 0) {
+  if (this.elements[this.startingSlide].format == 0) {
     this.playVideoFromId("vid" + this.startingSlide);
   }
     this.setTimeoutInterceptor=setTimeout(() => {
