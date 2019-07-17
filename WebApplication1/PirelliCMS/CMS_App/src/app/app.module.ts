@@ -22,8 +22,9 @@ import { MediaComponent } from './component/upload/tabs/media';
 import { TabsComponent } from './component/category/tabs/tabs.component';
 import { CategoryComponentView } from './component/category/CategoryView/category.component.view';
 import { categoryDialog } from './component/category/are-you-sure-about-it/are-you-sure-about-it.component';
-import { UpateDeleteComponent } from './component/category/upate-delete/upate-delete.component';
+import { UpateDeleteComponent } from './component/category/upate-delete/dialogCategory/upate-delete.component';
 import { DeleteComponent } from './component/category/upate-delete/Delete/delete-component';
+import { UpdateCategory } from './component/category/upate-delete/update/update.category';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,7 @@ import { DeleteComponent } from './component/category/upate-delete/Delete/delete
     categoryDialog,
     UpateDeleteComponent,
     DeleteComponent  
+    ,UpdateCategory
   ],
   imports: [
     BrowserModule,

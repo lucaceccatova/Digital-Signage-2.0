@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GetListService } from 'src/app/services/getListService/get-list.service';
 import { apiService } from 'src/app/services/PostService/post.service';
 import { MatDialog } from '@angular/material';
-import { UpateDeleteComponent } from '../upate-delete/upate-delete.component';
+import { UpateDeleteComponent } from '../upate-delete/dialogCategory/upate-delete.component';
 import { categoryDialog } from '../are-you-sure-about-it/are-you-sure-about-it.component';
 
 @Component({
@@ -35,12 +35,17 @@ export class CategoryComponentView implements OnInit {
 
   viewUpdateDelete(id:number)
   {
-    const dialogResponse=this.dialog.open(UpateDeleteComponent);
+    const dialogResponse=this.dialog.open(UpateDeleteComponent,{
+      data:{
+          category:this.list[id]
+        }
+    } );
     dialogResponse.afterClosed().subscribe(data=>
         {
           if(data=='delete')
           {
             this.deleteMedia(this.list[id].id);
+            delete this.list[id];
           }
         }
       );
@@ -49,7 +54,7 @@ export class CategoryComponentView implements OnInit {
   {
     this.api.get_ID(this.urlRemove,id).subscribe(data=>
       {
-
+        alert("cancellato");
       });
   }
 
