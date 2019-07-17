@@ -8,6 +8,7 @@ import { FormGroup,FormBuilder,
 import { GetListService } from 'src/app/services/getListService/get-list.service';
 import { listMedia } from 'src/app/Model/listMedia';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
+import { PostService } from 'src/app/services/PostService/post.service';
 
 @Component({
   selector: 'app-upload',
@@ -36,8 +37,11 @@ export class UploadComponent implements OnInit {
 list:listMedia[]=[];
  form: FormGroup;
 uploadProgress:number=0; uploading=false;
+//string api
+urlFile="https://localhost:44303/api/upload";urlPost="https://localhost:44303/api/addmedia";
+//
   constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetListService,
-    private path:PathResponseService) { }
+    private path:PathResponseService,private post:PostService) { }
   fileName = '';
   ngOnInit() {  
     this.getList();
@@ -57,7 +61,7 @@ send() {
   this.media=this.form.value;
   this.timeConverter();
   
-  this.http.uploadFile("https://localhost:44303/api/upload",this.file).subscribe(data=>
+  this.http.uploadFile(this.urlFile,this.file).subscribe(data=>
   {
     if (data.type === HttpEventType.UploadProgress)
         {
@@ -68,6 +72,7 @@ send() {
         else if (data.type === HttpEventType.Response) 
          {
           this.media.path=this.path.responseTranslater(data.body);
+          this.postMedia();
          }  
   })
 }
@@ -84,5 +89,12 @@ send() {
     this.stremList.getList("/assets/Json/loadeddata.list.json").subscribe(data=>{
       this.list=data;
     });
+  }
+  postMedia()
+  {
+    this.post.post(this.urlPost,this.media).subscribe(data=>
+      {
+        console.log(data);
+      });
   }
 }
