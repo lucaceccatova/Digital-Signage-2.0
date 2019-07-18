@@ -90,7 +90,7 @@ export class UpdateCategory implements OnInit {
         if(this.form.get('name').dirty)
             this.category.name=this.form.get("name").value; 
         if(this.form.get('description').dirty)
-            this.category.name=this.form.get("description").value; 
+            this.category.description=this.form.get("description").value; 
                 
     }
     updateFile(file:File)
