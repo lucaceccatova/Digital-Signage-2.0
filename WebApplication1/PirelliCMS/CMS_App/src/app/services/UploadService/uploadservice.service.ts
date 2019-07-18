@@ -15,6 +15,6 @@ export class UploadserviceService {
     var fileToUpload=<File>file[0];
     let formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
-        return this.http.post(url, formData,{reportProgress: true, observe: 'events'});
+    return this.http.post(url, formData,{reportProgress: true, observe: 'events'});
   }
 }

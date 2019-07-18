@@ -18,7 +18,7 @@ export class CategoryComponentView implements OnInit {
 
   list:listMedia[]=[];
 
-  urlRemove="https://localhost:44303/api/deletecategory";
+  urlRemove:"https://localhost:44303/api/deletecategory";
   constructor(private http:GetListService,
      private api:apiService,private dialog:MatDialog) { }
 
@@ -28,7 +28,7 @@ export class CategoryComponentView implements OnInit {
   }
   getList()
   {
-    this.http.getList("https://localhost:44303/api/getCategories").subscribe(data=>{
+    this.http.getList("/assets/Json/loadeddata.list.json").subscribe(data=>{
     this.list=data;
     });
   }
@@ -45,7 +45,7 @@ export class CategoryComponentView implements OnInit {
           if(data=='delete')
           {
             this.deleteMedia(this.list[id].id);
-            this.list.splice(id, 1);
+            this.list.splice(id,1);
           }
         }
       );

@@ -105,7 +105,7 @@ upload()
     console.log(this.category);
     this.post.post(this.urlCategory,this.category).subscribe(data=>
       {
-        console.log(data);
+        
       });
   }
   
