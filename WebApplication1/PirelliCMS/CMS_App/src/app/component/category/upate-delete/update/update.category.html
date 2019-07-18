@@ -1,3 +1,16 @@
-<h2>
-    {{category.name}}
-</h2>
+<div class="container">
+        <img src={{updatedCategory.path}}>
+    <form [formGroup]="form" class="form">
+        <mat-form-field >
+                <input matInput formControlName="name" placeholder="Name">
+        </mat-form-field>
+        <mat-form-field >
+                <input matInput formControlName="description" placeholder="Description">
+        </mat-form-field>
+        <mat-form-field>
+                <ngx-mat-file-input (change)="updateFile($event.target.files)" formControlName="file" ></ngx-mat-file-input>
+        </mat-form-field>
+        
+        <button [disabled]="form.pristine" mat-raised-button (click)="update()">Update</button>
+    </form>
+</div>

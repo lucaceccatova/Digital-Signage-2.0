@@ -45,7 +45,7 @@ export class CategoryComponentView implements OnInit {
           if(data=='delete')
           {
             this.deleteMedia(this.list[id].id);
-            delete this.list[id];
+            this.list.splice(id,1);
           }
         }
       );

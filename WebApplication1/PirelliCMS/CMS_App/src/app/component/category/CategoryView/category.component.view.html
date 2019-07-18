@@ -1,11 +1,12 @@
 <div class="wrapper">
-
+<button mat-fab (click)="getList()">
+  <mat-icon >cached</mat-icon>
+</button>
   <div class="gallery">
     <div (click)="viewUpdateDelete(i)" class="category"  *ngFor="let element of list,let i=index;trackBy: trackByFn; ">
       <img src={{element.path}} >
       <div class="infoBox"> {{element.name}}</div>
     </div>
-
   </div>
 
 </div>
