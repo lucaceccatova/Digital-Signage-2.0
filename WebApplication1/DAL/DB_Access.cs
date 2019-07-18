@@ -7,6 +7,7 @@ namespace DAL
     public class DB_Access
     {
         string _connectionString;
+
         public DB_Access(string conn)
         {
             _connectionString = conn;
@@ -498,7 +499,9 @@ namespace DAL
                 }
             }
         }
+
         //--------------------------------------------------------------------------------------------------------------------------//
+
         public List<Media> GetVideos()
         {
             var todoList = new List<Media>();
@@ -1024,6 +1027,115 @@ namespace DAL
             }
         }
 
+        public bool UpdateCategory(listMedia cat)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    var query = "update dbo.listaMedia set Nome = '"+cat.name+"', Descrizione = '"+cat.description+"', Percorso = '"+cat.path+"' where ID='"+cat.ID+"'";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        public bool UpdateMedia(Media med)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    var query = "update dbo.media set Nome = '" + med.name + "', Descrizione = '" + med.description + "', Percorso = '" + med.path + "',Tipo = '"+med.format.ToString()+"', Timer = '"+med.timer+"', lista_ID = '"+med.listId+"' where ID='" + med.id + "'";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        public bool UpdateCar(Car car)
+        {
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                // Create a SqlCommand, and identify it as a stored procedure.
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    var query = "update dbo.media set name = '" + car.invokeName + "', brand = '" + car.brand + "', Percorso = '" + car.path + "', where ID='" + car.id + "'";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        public bool UpdateTire(Tire ruota)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    var query = "update dbo.media set model = '" + ruota.model + "', tireType = '" + ruota.tireType + "', Percorso = '" + ruota.tirePath + "', size = '" + ruota.size + "', price = '" + ruota.price + "', FK_car = '" + ruota.FK_car + "' where id='" + ruota.id + "'";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
     }
+
 }
+
 
