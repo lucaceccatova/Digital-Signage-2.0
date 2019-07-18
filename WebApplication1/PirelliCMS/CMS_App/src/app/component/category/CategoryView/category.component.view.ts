@@ -17,7 +17,7 @@ export class CategoryComponentView implements OnInit {
 @Output() public onUploadFinished = new EventEmitter();
 
   list:listMedia[]=[];
-
+  ngRock="https://883c5b7c.ngrok.io";
   urlRemove="https://localhost:44303/api/deletecategory";
   constructor(private http:GetListService,
      private api:apiService,private dialog:MatDialog) { }
