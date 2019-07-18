@@ -1,0 +1,13 @@
+<div class="wrapper">
+
+        <button mat-fab>
+            <mat-icon >cached</mat-icon>
+          </button>
+      <div class="gallery">
+        <div class="category"  *ngFor="let media of mediaList,let i=index;trackBy: trackByFn; ">
+          <img src={{media.path}} >
+          <div class="infoBox"> {{media.name}}</div>
+        </div>
+      </div>
+    
+    </div>

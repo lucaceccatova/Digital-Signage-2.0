@@ -17,8 +17,9 @@ export class apiService {
       })};
     return this.http.post(url,item,httpOptions);
   }
-  get_ID(url:string,id:number)
+ public get_ID(url:string,id:number)
   {
     return this.http.get(url+'/'+id);
   }
+  
 }

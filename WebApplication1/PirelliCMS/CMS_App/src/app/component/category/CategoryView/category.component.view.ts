@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { listMedia } from 'src/app/Model/listMedia';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { GetListService } from 'src/app/services/getListService/get-list.service';
-import { apiService } from 'src/app/services/PostService/post.service';
+import { GetObjectService } from 'src/app/services/getListService/get-object.service';
+import { apiService } from 'src/app/services/ApiService/Api.service';
 import { MatDialog } from '@angular/material';
 import { UpateDeleteComponent } from '../upate-delete/dialogCategory/upate-delete.component';
 import { categoryDialog } from '../are-you-sure-about-it/are-you-sure-about-it.component';
@@ -20,7 +20,7 @@ urlApi="/assets/Json/loadeddata.list.json";
   list:listMedia[]=[];
   ngRock="https://883c5b7c.ngrok.io/";
   urlRemove="https://localhost:44303/api/deletecategory";
-  constructor(private http:GetListService,
+  constructor(private http:GetObjectService,
      private api:apiService,private dialog:MatDialog) { }
 
 

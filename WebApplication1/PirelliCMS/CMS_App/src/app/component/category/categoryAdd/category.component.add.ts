@@ -7,7 +7,7 @@ import { UploadComponent } from '../../upload/mediaAdd/upload.component';
 import { UploadserviceService } from 'src/app/services/UploadService/uploadservice.service';
 import { HttpEventType } from '@angular/common/http';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
-import { apiService } from 'src/app/services/PostService/post.service';
+import { apiService } from 'src/app/services/ApiService/Api.service';
 
 
 @Component({

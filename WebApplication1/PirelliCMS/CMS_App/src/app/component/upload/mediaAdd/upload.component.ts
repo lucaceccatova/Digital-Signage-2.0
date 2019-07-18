@@ -5,10 +5,10 @@ import { HttpEventType } from '@angular/common/http';
 import { FormGroup,FormBuilder,
   Validators,
   FormControl } from '@angular/forms';
-import { GetListService } from 'src/app/services/getListService/get-list.service';
+import { GetObjectService } from 'src/app/services/getListService/get-object.service';
 import { listMedia } from 'src/app/Model/listMedia';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';
-import { apiService } from 'src/app/services/PostService/post.service';
+import { apiService } from 'src/app/services/ApiService/Api.service';
 
 @Component({
   selector: 'app-upload',
@@ -40,7 +40,7 @@ uploadProgress:number=0; uploading=false;
 //string api
 urlFile="https://localhost:44303/api/upload";urlPost="https://localhost:44303/api/addmedia";
 //
-  constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetListService,
+  constructor(private http:UploadserviceService,private formBuilder: FormBuilder, private stremList:GetObjectService,
     private path:PathResponseService,private post:apiService) { }
   fileName = '';
   ngOnInit() {  
