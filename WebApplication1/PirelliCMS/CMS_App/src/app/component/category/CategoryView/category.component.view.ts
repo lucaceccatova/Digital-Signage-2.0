@@ -16,8 +16,9 @@ import { categoryDialog } from '../are-you-sure-about-it/are-you-sure-about-it.c
 export class CategoryComponentView implements OnInit {
 @Output() public onUploadFinished = new EventEmitter();
 
+urlApi="/assets/Json/loadeddata.list.json";
   list:listMedia[]=[];
-  ngRock="https://883c5b7c.ngrok.io";
+  ngRock="https://883c5b7c.ngrok.io/";
   urlRemove="https://localhost:44303/api/deletecategory";
   constructor(private http:GetListService,
      private api:apiService,private dialog:MatDialog) { }
@@ -28,7 +29,7 @@ export class CategoryComponentView implements OnInit {
   }
   getList()
   {
-    this.http.getList("/assets/Json/loadeddata.list.json").subscribe(data=>{
+    this.http.getList(this.urlApi).subscribe(data=>{
     this.list=data;
     });
   }
