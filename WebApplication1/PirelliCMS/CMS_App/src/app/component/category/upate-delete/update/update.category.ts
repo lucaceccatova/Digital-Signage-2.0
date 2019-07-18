@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Directive } from '@angular/core';
 import { listMedia } from 'src/app/Model/listMedia';
 import { FormGroup, FormControl } from '@angular/forms';
-import { apiService } from 'src/app/services/PostService/post.service';
+import { apiService } from 'src/app/services/ApiService/Api.service';
 import { UploadserviceService } from 'src/app/services/UploadService/uploadservice.service';
 import { HttpEventType } from '@angular/common/http';
 import { PathResponseService } from 'src/app/services/pathServie/path-response.service';

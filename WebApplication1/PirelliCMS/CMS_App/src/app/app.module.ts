@@ -25,6 +25,9 @@ import { categoryDialog } from './component/category/are-you-sure-about-it/are-y
 import { UpateDeleteComponent } from './component/category/upate-delete/dialogCategory/upate-delete.component';
 import { DeleteComponent } from './component/category/upate-delete/Delete/delete-component';
 import { UpdateCategory } from './component/category/upate-delete/update/update.category';
+import { mediaViewComponent } from './component/upload/mediaView/mediaView.Component';
+import { UpateDeleteMedia } from './component/upload/upate-delete/dialogCategory/upate-delete.component';
+import { media_mod } from './component/upload/upate-delete/update/update.media';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +40,11 @@ import { UpdateCategory } from './component/category/upate-delete/update/update.
     CategoryComponentView   ,
     categoryDialog,
     UpateDeleteComponent,
-    DeleteComponent  
-    ,UpdateCategory
+    UpateDeleteMedia,
+    DeleteComponent ,
+    media_mod 
+    ,UpdateCategory,
+    mediaViewComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +67,6 @@ import { UpdateCategory } from './component/category/upate-delete/update/update.
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[categoryDialog,UpateDeleteComponent],
+  entryComponents:[categoryDialog,UpateDeleteComponent,UpateDeleteMedia],
 })
 export class AppModule { }

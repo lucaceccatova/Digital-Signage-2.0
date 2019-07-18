@@ -5,6 +5,5 @@ export class media
     timer:number;
     format:number;
     listId:number;
-    mediaType:number;
     path:string;
 }
