@@ -38,7 +38,8 @@ urlApi="/assets/Json/loadeddata.list.json";
   {
     const dialogResponse=this.dialog.open(UpateDeleteComponent,{
       data:{
-          category:this.list[id]
+          object:this.list[id],
+          message:"Are you sure to delete this Category?"
         }
     } );
     dialogResponse.afterClosed().subscribe(data=>

@@ -26,6 +26,8 @@ import { UpateDeleteComponent } from './component/category/upate-delete/dialogCa
 import { DeleteComponent } from './component/category/upate-delete/Delete/delete-component';
 import { UpdateCategory } from './component/category/upate-delete/update/update.category';
 import { mediaViewComponent } from './component/upload/mediaView/mediaView.Component';
+import { UpateDeleteMedia } from './component/upload/upate-delete/dialogCategory/upate-delete.component';
+import { media_mod } from './component/upload/upate-delete/update/update.media';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,9 @@ import { mediaViewComponent } from './component/upload/mediaView/mediaView.Compo
     CategoryComponentView   ,
     categoryDialog,
     UpateDeleteComponent,
-    DeleteComponent  
+    UpateDeleteMedia,
+    DeleteComponent ,
+    media_mod 
     ,UpdateCategory,
     mediaViewComponent
   ],
@@ -63,6 +67,6 @@ import { mediaViewComponent } from './component/upload/mediaView/mediaView.Compo
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents:[categoryDialog,UpateDeleteComponent],
+  entryComponents:[categoryDialog,UpateDeleteComponent,UpateDeleteMedia],
 })
 export class AppModule { }
