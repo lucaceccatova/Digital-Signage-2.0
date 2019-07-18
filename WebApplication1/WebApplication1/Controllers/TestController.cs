@@ -161,6 +161,66 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Route("api/updatecategory")]
+        [HttpPost]
+        public IActionResult UpdateCategoty([FromBody]listMedia cat)
+        {
+            try
+            {
+                GestoreBLL.UpdateCategory(cat);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Route("api/updatemedia")]
+        [HttpPost]
+        public IActionResult UpdateMedia([FromBody]Media med)
+        {
+            try
+            {
+                GestoreBLL.UpdateMedia(med);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Route("api/updatecar")]
+        [HttpPost]
+        public IActionResult UpdateCar([FromBody]Car auto)
+        {
+            try
+            {
+                GestoreBLL.UpdateCar(auto);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [Route("api/updatetire")]
+        [HttpPost]
+        public IActionResult UpdateTire([FromBody]Tire tire)
+        {
+            try
+            {
+                GestoreBLL.UpdateTire(tire);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         //-------------------------------------------------------------------------------------------------------//
 
 

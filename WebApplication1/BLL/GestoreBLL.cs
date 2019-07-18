@@ -219,6 +219,26 @@ namespace BLL
         {
             return new DB_Access(connectionDB).DeleteCar(id);
         }
+
+        public static bool UpdateCategory(listMedia cat)
+        {
+            return new DB_Access(connectionDB).UpdateCategory(cat);
+        }
+
+        public static bool UpdateMedia(Media med)
+        {
+            return new DB_Access(connectionDB).UpdateMedia(med);
+        }
+
+        public static bool UpdateCar(Car car)
+        {
+            return new DB_Access(connectionDB).UpdateCar(car);
+        }
+
+        public static bool UpdateTire(Tire tire)
+        {
+            return new DB_Access(connectionDB).UpdateTire(tire);
+        }
     }
 
 
