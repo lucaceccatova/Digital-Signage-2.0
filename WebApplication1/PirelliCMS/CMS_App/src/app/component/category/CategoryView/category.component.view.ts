@@ -18,7 +18,7 @@ export class CategoryComponentView implements OnInit {
 
   list:listMedia[]=[];
 
-  urlRemove:"https://localhost:44303/api/deletecategory";
+  urlRemove="https://localhost:44303/api/deletecategory";
   constructor(private http:GetListService,
      private api:apiService,private dialog:MatDialog) { }
 
