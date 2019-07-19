@@ -12,7 +12,7 @@ import { GetObjectService } from 'src/app/services/getListService/get-object.ser
 @Component({
     selector: 'update-media',
     templateUrl: './update.media.html',
-    styleUrls: ['./update.media.scss']
+    styleUrls: ['./update.media.scss','../../../../app.component.scss']
 })
 export class media_mod implements OnInit {
     constructor(private upload:UploadserviceService,
