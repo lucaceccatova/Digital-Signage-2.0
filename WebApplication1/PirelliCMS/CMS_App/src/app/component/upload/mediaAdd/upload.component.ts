@@ -13,7 +13,7 @@ import { apiService } from 'src/app/services/ApiService/Api.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.scss','../../../app.component.scss']
 })
 
 export class UploadComponent implements OnInit {

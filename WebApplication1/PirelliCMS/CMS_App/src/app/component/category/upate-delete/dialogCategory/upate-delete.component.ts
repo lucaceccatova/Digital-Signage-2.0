@@ -11,7 +11,7 @@ export interface data
 @Component({
   selector: 'app-upate-delete',
   templateUrl: './upate-delete.component.html',
-  styleUrls: ['./upate-delete.component.scss']
+  styleUrls: ['./upate-delete.component.scss','../../../../app.component.scss']
 })
 export class UpateDeleteComponent {
 
