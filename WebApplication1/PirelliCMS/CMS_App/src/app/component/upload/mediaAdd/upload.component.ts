@@ -27,7 +27,6 @@ export class UploadComponent implements OnInit {
    timer:undefined,
    format:null,
    listId:null,
-   mediaType:null,
    path:null
 
  };
