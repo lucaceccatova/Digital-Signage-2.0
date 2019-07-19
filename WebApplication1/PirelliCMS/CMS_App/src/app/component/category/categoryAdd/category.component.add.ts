@@ -13,7 +13,7 @@ import { apiService } from 'src/app/services/ApiService/Api.service';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.add.html',
-  styleUrls: ['./category.component.add.scss']
+  styleUrls: ['./category.component.add.scss','../../../app.component.scss']
 })
 export class CategoryComponent implements OnInit {
 @Output() public onUploadFinished = new EventEmitter();
