@@ -1,0 +1,39 @@
+<div class="wrapper">
+    <div class="leftSide">
+        <div class="image">
+            <img src="{{tire.tirePath}}">
+            <h1>
+                {{tire.model}}
+            </h1>         
+        </div>
+        <div class="text">
+           <p>
+               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque tempore quidem et! Ratione qui numquam deserunt voluptas accusamus alias unde cumque a sapiente eligendi enim, obcaecati sequi reiciendis sint veniam!
+           </p>
+           Size: {{tire.size}}<br>
+           Type: {{tire.tireType}}<br>
+           Price: {{tire.price}}<br>
+
+           
+        </div>
+    </div>
+    <div class="rightSide"> 
+        <div class="video">
+            <div class="videoElement">
+                <video [muted]="'muted'" autoplay="autoplay" loop >
+                    <source src={{videos[0].path}}>
+                </video>
+            </div>
+            <div class="videoElement">
+                <video [muted]="'muted'" autoplay="autoplay" loop >
+                    <source src={{videos[1].path}}>
+                </video>
+            </div>
+            <div class="videoElement">
+                <video [muted]="'muted'" autoplay="autoplay" loop >
+                    <source src={{videos[2].path}}>
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
