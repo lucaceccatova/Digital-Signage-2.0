@@ -8,6 +8,7 @@ import {videoPage} from 'src/app/Models/videoPage';
 import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
+import { tireShareService } from 'src/app/Services/shareTiresService/shareTireService';
 @Component({
   selector: 'app-video-gallery',
   templateUrl: './video-gallery.component.html',
@@ -26,7 +27,8 @@ export class VideoGalleryComponent implements OnInit {
 
   constructor(private getVideo:GetMediaService, private stream:sharedStringService,
     private router:Router,private streamElements:shareElementsService,
-    private connectionService:SignalRService) { 
+    private connectionService:SignalRService,
+    private tireStream:tireShareService) { 
     }
 
   ngOnInit() {
@@ -74,6 +76,12 @@ signalRListner()
     this.elements=data;
     this.divideInMorePages();
     this.reloadNgFor();
+  });
+  //pass to show-tire 
+  this.connectionService.connection.on("show-tire",(data)=>
+  {
+    this.tireStream.tires=data;
+    this.router.navigateByUrl('/tire');
   });
 
   //switch page if invoked by backend. (why not a bool :(  )

@@ -32,7 +32,11 @@ const MyRoutes:Routes=[
     },
     {
       path:"tire",
-      loadChildren:()=> import("../my_module/tire-selection/tire-selection.module").then(m=>m.tireModule)
+      loadChildren:()=> import("../my_module/tireShow/tire-show.module").then(m=>m.tireShowModule)
+    },
+    {
+      path:"specs",
+      loadChildren:()=> import ("../my_module/tireSpecs/tire-specs.module").then(m=>m.tireSpecsModule)
     }
   ]
 }

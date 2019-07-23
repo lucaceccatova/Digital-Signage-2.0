@@ -66,7 +66,6 @@ send() {
         {
           this.uploading=true;
           this.uploadProgress=(data.loaded*100/data.total);
-          console.log(data);
         }
         else if (data.type === HttpEventType.Response) 
          {

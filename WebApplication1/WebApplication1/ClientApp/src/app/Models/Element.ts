@@ -5,7 +5,7 @@ export class element
     description:string;
     format:number;
     timer:number;
-    create_date:Date;
+    create_date:string;
     path:string;  
     ListaID:number;
 }
