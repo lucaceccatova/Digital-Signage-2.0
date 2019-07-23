@@ -72,7 +72,7 @@ namespace AlexaSkills
                             messaggio = $"Ciao, se vuoi ti mostro qualche video. Quale vuoi vedere ?";
                             timer = 2000;
                             
-                        //----------------------    await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
+                        await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
                             videosUtteranceInovked = true;
                         }
                         else if (intentRequest.Intent.Slots["numero"].Value != null && videosUtteranceInovked == true)// ----- Enter here only when user can tell to alexa to play a video 
@@ -85,7 +85,7 @@ namespace AlexaSkills
 
                                     //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                             
-                        //--------------------------------------await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
+                        await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
                         
 
                         
@@ -135,7 +135,7 @@ namespace AlexaSkills
                             ShowTireInvoked = true;
                             videosUtteranceInovked = false;
                             messaggio = "Visuallizo le ruote per type";
-                            //---------------------- await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTires(intentRequest.Intent.Slots["TireType"].Value));
+                            await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTires(intentRequest.Intent.Slots["TireType"].Value));
                             
                         
                         
@@ -158,7 +158,7 @@ namespace AlexaSkills
                             messaggio = "MOSTRA UNA RUOTA IN SPECIFICO";
                             ShowTireInfoInvoked = true;
                             ShowTireInvoked = false;
-                            //----------------------await connection.InvokeAsync("AskIdTire", intentRequest.Intent.Slots["numero"].Value);
+                            await connection.InvokeAsync("AskIdTire", intentRequest.Intent.Slots["numero"].Value);
 
 
 
@@ -178,7 +178,7 @@ namespace AlexaSkills
                         {
                             carUtteranceInvoked = true;
                             messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
-                            //---------------------- await connection.InvokeAsync("tireShow", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                            await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
                         }
                         else
                         {
@@ -196,7 +196,7 @@ namespace AlexaSkills
                             //{ //Enter here If the user confirm to return to slider
                                 messaggio = $"Va bene, ritorno allo slider";
 
-                            //----------------------  await connection.InvokeAsync("returnToSlide", true);
+                            await connection.InvokeAsync("returnToSlide", true);
                             videosUtteranceInovked = false;
                                 ShowTireInfoInvoked = false;
                                 ShowTireInvoked = false;
@@ -225,7 +225,7 @@ namespace AlexaSkills
                     case "NextPageIntent":
                         if (videosUtteranceInovked != false)
                         {
-                            //----------------------await connection.InvokeAsync("sendPage", "next");
+                            await connection.InvokeAsync("sendPage", "next");
                             messaggio = $"next";
                         }
                         else

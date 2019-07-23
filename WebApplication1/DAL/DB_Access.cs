@@ -224,7 +224,7 @@ namespace DAL
                             while (reader.Read())
                             {
 
-
+                                tireCar = new Tire();
                                 tireCar.id = (int)reader["id"];
                                 tireCar.model = reader["model"].ToString();
                                 //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
@@ -710,7 +710,14 @@ namespace DAL
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
                                 todo.listId = (int)reader["lista_ID"];
-                                todo.FK_Car = (int)reader["FK_Car"];
+                                if (reader["FK_Car"].ToString().Length == 0)
+                                {
+                                    todo.FK_Car = null;
+                                }
+                                else
+                                {
+                                    todo.FK_Car = (int)reader["FK_Car"];
+                                }
                                 todo.format = type.vid;
                                 
                                 todoList.Add(todo);
@@ -1090,7 +1097,7 @@ namespace DAL
                             while (reader.Read())
                             {
 
-
+                                tireCar = new Tire();
                                 tireCar.id = (int)reader["id"];
                                 tireCar.model = reader["model"].ToString();
                                 //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
@@ -1143,7 +1150,7 @@ namespace DAL
                             while (reader.Read())
                             {
 
-
+                                tireCar = new Tire();
                                 tireCar.id = (int)reader["id"];
                                 tireCar.model = reader["model"].ToString();
                                 //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 

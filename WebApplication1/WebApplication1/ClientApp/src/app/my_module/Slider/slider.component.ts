@@ -145,15 +145,6 @@ slideEngine()
     clearTimeout(this.setTimeoutInterceptor);
   }
 
-
-  //method that listen to signalR messages from backend and verify them
-  signalRDirectiveListener(){
-    //provvisory: invoke signalr method 
-    this.connectionService.connection
-    .invoke('SendMessage', 2)
-    .catch(err => console.error(err));
-    //what happens whe ReceiveMessage signalR function is invoked 
-  }
   
   playVideoFromId(id:string)
   {

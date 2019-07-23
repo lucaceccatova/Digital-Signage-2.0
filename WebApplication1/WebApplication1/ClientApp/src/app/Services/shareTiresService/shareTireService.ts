@@ -1,6 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { tire } from 'src/app/Models/tire';
+import { element } from 'src/app/Models/Element';
 
 @Injectable(
     {
@@ -8,5 +9,7 @@ import { tire } from 'src/app/Models/tire';
     }
 )
 export class tireShareService {
-tires:tire[]=[];
+tires:tire[];
+videos:element[]=[];
+selectedTire:tire;
 }

@@ -14,24 +14,22 @@ import $ from 'jquery';
 export class TireSelectionComponent implements OnInit {
   car:car;
   selectedTire:tire;
-  url:string='assets/loadeddata.tire.json';
+  //url:string='assets/loadeddata.tire.json';
+
   constructor(private http:HttpClient,private UnivShare:ShareService,
     private connectionService:SignalRService) { }
 
   ngOnInit() {
    //to mockup
-    this.http.get<car>(this.url).subscribe(data=>
-      {
-        this.car=data;
-        this.selectedTire=this.car.tires[0];
+    /*this.selectedTire=this.car.tires[0];
       });
-
+      */
       //todb
-      /*
+      
     this.car = this.UnivShare.sharedObject;
     this.selectedTire = this.car.tires[0];
     console.log(this.car);
-    */
+ 
     this.connectionService.connection.on("receiveTire", data => {
       this.pitStop(data);
     });

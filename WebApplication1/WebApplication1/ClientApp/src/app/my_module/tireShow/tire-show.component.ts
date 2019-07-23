@@ -3,19 +3,25 @@ import { tire } from 'src/app/Models/tire';
 import { tireShareService } from 'src/app/Services/shareTiresService/shareTireService';
 import $ from 'jquery';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
+import { element } from '../../Models/Element';
+import { RouterModule, Router } from '@angular/router';
 @Component({
     selector: 'tireShow-component',
     templateUrl: './tire-show.component.html',
     styleUrls: ['./tire-show.component.scss']
 })
 export class tireShowComponent implements OnInit {
-    constructor(private tiresStream:tireShareService ,private listner:SignalRService) { }
+  constructor(private tiresStream: tireShareService, private listner: SignalRService,
+  private router: Router) { }
     @Input() tires:tire[];
-    id:number;
+  id: number;
+  videos: element[] = [];
+  selectedTire: tire;
 
     ngOnInit(): void { 
         this.tires=this.tiresStream.tires;
-        this.mockFunction();
+        console.log(this.tires);
+       // this.mockFunction();
         $("#first").animate({opacity:1},700);
         setTimeout(() => {
             $("#second").animate({opacity:1},700);
@@ -24,6 +30,7 @@ export class tireShowComponent implements OnInit {
 
             }, 700);
         }, 700);
+        this.signalRListner();
         }
     mockFunction()
     {
@@ -47,9 +54,29 @@ export class tireShowComponent implements OnInit {
     {
         this.listner.connection.on("receiveAskIdTire",data=>
         {
-            this.id=this.findId(data);
+          console.log(data);
+          this.selectedTire = this.tires[data];
+          this.id = this.findId(data);
+          this.listner.connection.invoke("SendIdTire", this.id);
         });
-    }
+      this.listner.connection.on("receiveTireVideos", data => {
+        this.videos = data;
+        console.log(data);
+      });
+      this.listner.connection.on("tireShow",data=>
+      {
+        console.log(this.tires);
+        this.tires=data;
+        console.log(this.tires);
+
+      });
+
+  }
+  goToSpec() {
+    this.tiresStream.selectedTire = this.selectedTire;
+    this.tiresStream.videos = this.videos;
+    this.router.navigateByUrl("/specs");
+  }
     findId(id:number):number
     {
         return this.tires[id].id;

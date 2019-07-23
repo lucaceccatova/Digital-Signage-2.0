@@ -16,7 +16,7 @@ import { tireShareService } from 'src/app/Services/shareTiresService/shareTireSe
 })
 export class VideoGalleryComponent implements OnInit {
   //api url
-  url:string="/assets/loadeddata.video.json";
+ // url:string="/assets/loadeddata.video.json";
   //model for video
   elements:element[]=[];
   unsubscribes: Subscription[]=[];
@@ -35,19 +35,22 @@ export class VideoGalleryComponent implements OnInit {
     //mockup without signalR
     //this.loadVideo(this.url);
     //db
-    this.elements=this.streamElements.elements;
-    this.divideInMorePages();
+    
+    if(this.stream.pages!=null)
+    {
+      this.pages=this.stream.pages;
+      this.stream.pages=null;
+    }
+    else{
+      this.elements=this.streamElements.elements;
+      this.divideInMorePages();
+    }
     //contains function invoked by signalr
    this.signalRListner();
 }
 
 //timer that navigate after x seconds of inactivity
-returnBackTimer()
-{
-  setTimeout(() => {
-    this.router.navigateByUrl('/slider');
-  }, 2000);
-}
+
 
 ngOnDestroy(): void {
   //Called once, before the instance is destroyed.
@@ -64,11 +67,11 @@ signalRListner()
   //to play one video fullscreen
   this.connectionService.connection.on('showVideo',(data)=>
   {
-    if(data<this.pages[this.indexPage].sixElements.length)
-      this.sendData(this.pages[this.indexPage].sixElements[data-1]);
+    if(data<=this.pages[this.indexPage].sixElements.length)
+      {
+        this.sendData(this.pages[this.indexPage].sixElements[data-1]);
+      }
   });
-
-;
   //change wich videos are displayed on the gallery 
   this.connectionService.connection.on('showVideoGallery',(data)=>
   {
@@ -78,9 +81,12 @@ signalRListner()
     this.reloadNgFor();
   });
   //pass to show-tire 
-  this.connectionService.connection.on("show-tire",(data)=>
+  this.connectionService.connection.on("tireShow",(data)=>
   {
     this.tireStream.tires=data;
+    console.log(this.tireStream.tires);
+    console.log(data);
+    this.connectionService.connection.off("tireShow");
     this.router.navigateByUrl('/tire');
   });
 
@@ -124,7 +130,9 @@ divideInMorePages()
   //without expose the Url in the Url 
   sendData(i:element)
   {
+    this.stream.pages=this.pages;
     this.stream.singleVideo=i;
+    console.log(i);
     this.router.navigateByUrl("/video/media");
   }
 
@@ -134,7 +142,6 @@ divideInMorePages()
    this.unsubscribes.push(this.getVideo.get(url).subscribe(data=>
     {
       this.elements=data;
-      console.log(data);
       this.divideInMorePages();
     }));
   }
