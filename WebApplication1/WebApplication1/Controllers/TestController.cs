@@ -19,22 +19,24 @@ namespace WebApplication1.Controllers
         public List<Media> GetMedia()
         {
 
-            return GestoreBLL.GetMedia();
+            return GestoreBLL.GetImages();
         }
 
-        [Route("api/getcategorybyid/{id}")]
-        [HttpGet]
-        public List<Media> GetListaById(int id)
-        {
-            return GestoreBLL.GetVideosByCategoryId(id);
-        }
+//----------------------------------------------------------------------------------------------------//
+        //[Route("api/getcategorybyid/{id}")]
+        //[HttpGet]
+        //public List<Media> GetListaById(int id)
+        //{
+        //    return GestoreBLL.GetVideosByCategoryId(id);
+        //}
 
-        [Route("api/getCategories")]
-        [HttpGet]
-        public List<listMedia> GetLista()
-        {
-            return GestoreBLL.GetCategories();
-        }
+        //[Route("api/getCategories")]
+        //[HttpGet]
+        //public List<listMedia> GetLista()
+        //{
+        //    return GestoreBLL.GetCategories();
+        //}
+//--------------------------------------------------------------------------------------------------//
 
         [Route("api/addmedia")]
         [HttpPost]
@@ -52,21 +54,23 @@ namespace WebApplication1.Controllers
             
         }
 
-        [Route("api/addcategory")]
-        [HttpPost]
-        public IActionResult AddCategory([FromBody] listMedia cat)
-        {
-            try
-            {
+//----------------------------------------------------------------------------------------------//
+        //[Route("api/addcategory")]
+        //[HttpPost]
+        //public IActionResult AddCategory([FromBody] listMedia cat)
+        //{
+        //    try
+        //    {
 
-            GestoreBLL.AddCategory(cat);
-            return Ok();
-            }
-            catch
-            {
-                return StatusCode(500,"Internal server error");
-            }
-        }
+        //    GestoreBLL.AddCategory(cat);
+        //    return Ok();
+        //    }
+        //    catch
+        //    {
+        //        return StatusCode(500,"Internal server error");
+        //    }
+        //}
+//----------------------------------------------------------------------------------------------//
 
         [Route("api/addcar")]
         [HttpPost]
@@ -116,20 +120,22 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [Route("api/deletecategory/{id}")]
-        [HttpGet]
-        public IActionResult DeleteCategory(int id)
-        {
-            try
-            {
-                GestoreBLL.DeleteCategory(id);
-                return Ok();
+//----------------------------------------------------------------------------------------------//
+        //[Route("api/deletecategory/{id}")]
+        //[HttpGet]
+        //public IActionResult DeleteCategory(int id)
+        //{
+        //    try
+        //    {
+        //        GestoreBLL.DeleteCategory(id);
+        //        return Ok();
 
-            }catch(Exception ex)
-            {
-                return StatusCode(500, "Intenal server error");
-            }
-        }
+        //    }catch(Exception ex)
+        //    {
+        //        return StatusCode(500, "Intenal server error");
+        //    }
+        //}
+//----------------------------------------------------------------------------------------------//
 
         [Route("api/deletetire/{id}")]
         [HttpGet]
@@ -161,20 +167,22 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [Route("api/updatecategory")]
-        [HttpPost]
-        public IActionResult UpdateCategoty([FromBody]listMedia cat)
-        {
-            try
-            {
-                GestoreBLL.UpdateCategory(cat);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal server error");
-            }
-        }
+//----------------------------------------------------------------------------------------------//
+        //[Route("api/updatecategory")]
+        //[HttpPost]
+        //public IActionResult UpdateCategoty([FromBody]listMedia cat)
+        //{
+        //    try
+        //    {
+        //        GestoreBLL.UpdateCategory(cat);
+        //        return Ok();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500, "Internal server error");
+        //    }
+        //}
+//----------------------------------------------------------------------------------------------//
 
         [Route("api/updatemedia")]
         [HttpPost]

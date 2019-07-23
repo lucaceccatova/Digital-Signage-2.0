@@ -85,7 +85,7 @@ namespace DAL
             }
         }
 
-        public List<Media> GetVideosByCategory(int id)
+        public List<Media> GetImages()
         {
             var todoList = new List<Media>();
 
@@ -94,10 +94,7 @@ namespace DAL
                 // Create a SqlCommand, and identify it as a stored procedure.
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from media where lista_ID=" + id;
+                    sqlCommand.CommandText = "select * from media where Tipo ='img'";
                     sqlCommand.Connection = connection;
 
                     try
@@ -121,26 +118,12 @@ namespace DAL
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
                                 todo.listId = (int)reader["lista_ID"];
-                                if (reader["Tipo"].ToString().ToLower() == "vid")
-                                {
-                                    todo.format = type.vid;
-
-                                }
-                                else if (reader["Tipo"].ToString().ToLower() == "img")
-                                {
-                                    todo.format = type.img;
-                                }
-                                //todo.format = (tipo)reader["Tipo"];
+                                todo.format = type.img;
                                 todoList.Add(todo);
                             }
                         }
 
                         reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
-
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
                         connection.Close();
                     }
                     catch (SqlException)
@@ -157,19 +140,18 @@ namespace DAL
             }
         }
 
-        public List<listMedia> GetCategories()
+        public List<Media> GetVideosByCar(int idTire)
         {
-            var todoList = new List<listMedia>();
+            var todoList = new List<Media>();
+            int idCar = 0;
 
             using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
             {
                 // Create a SqlCommand, and identify it as a stored procedure.
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from listaMedia";
+                   
+                    sqlCommand.CommandText = "select FK_car from tire where id=" + idTire;
                     sqlCommand.Connection = connection;
 
                     try
@@ -182,24 +164,28 @@ namespace DAL
 
                         if (reader.HasRows)
                         {
-
-                            while (reader.Read())
+                            idCar = (int)reader["FK_car"];
+                        }
+                        reader.Close();
+                        if (idCar != 0)
+                        {
+                            sqlCommand.CommandText = "select * from media where FK_Car=" + idCar+" and Tipo='img'";
+                            var reader2 = sqlCommand.ExecuteReader();
+                            if (reader2.HasRows)
                             {
-                                var todo = new listMedia();
-                                todo.ID = (int)reader["ID"];
+                                var todo = new Media();
+                                todo.id = (int)reader["ID"];
                                 todo.name = reader["Nome"].ToString();
                                 todo.description = reader["Descrizione"].ToString();
+                                todo.create_date = (DateTime)reader["DataCreazione"];
+                                todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
+                                todo.listId = (int)reader["lista_ID"];
+                                todo.format = type.vid;
                                 todoList.Add(todo);
                             }
+                            reader2.Close();
                         }
-
-                        reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
-
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
                         connection.Close();
                     }
                     catch (SqlException)
@@ -215,6 +201,193 @@ namespace DAL
                 return todoList;
             }
         }
+
+        public List<Tire> GetTiresByCar(int idCar)
+        {
+            Tire tireCar = new Tire();
+            List<Tire> tires = new List<Tire>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from tire where FK_car='" + idCar + "'";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+
+
+                                tireCar.id = (int)reader["id"];
+                                tireCar.model = reader["model"].ToString();
+                                //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
+                                tireCar.tireType = reader["tireType"].ToString();
+                                tireCar.tirePath = reader["tirePath"].ToString();
+                                tireCar.size = float.Parse(reader["size"].ToString());
+                                tireCar.price = float.Parse(reader["price"].ToString());
+                                tireCar.FK_car = (int)reader["FK_car"];
+                                tires.Add(tireCar);
+
+                            }
+
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return tires;
+            }
+        }
+    
+    
+    //-----------------------------------------------------------------------------------------------------------//
+    //public List<Media> GetVideosByCategory(int id)
+    //{
+    //    var todoList = new List<Media>();
+
+    //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+    //    {
+    //        // Create a SqlCommand, and identify it as a stored procedure.
+    //        using (SqlCommand sqlCommand = new SqlCommand())
+    //        {
+    //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+    //            //sqlCommand.CommandText = "GetTodos";
+    //            //text -- query interna
+    //            sqlCommand.CommandText = "select * from media where lista_ID=" + id;
+    //            sqlCommand.Connection = connection;
+
+    //            try
+    //            {
+    //                connection.Open();
+
+
+    //                // Run the stored procedure.
+    //                var reader = sqlCommand.ExecuteReader();
+
+    //                if (reader.HasRows)
+    //                {
+
+    //                    while (reader.Read())
+    //                    {
+    //                        var todo = new Media();
+    //                        todo.id = (int)reader["ID"];
+    //                        todo.name = reader["Nome"].ToString();
+    //                        todo.description = reader["Descrizione"].ToString();
+    //                        todo.create_date = (DateTime)reader["DataCreazione"];
+    //                        todo.timer = (int)reader["Timer"];
+    //                        todo.path = reader["Percorso"].ToString();
+    //                        todo.listId = (int)reader["lista_ID"];
+    //                        if (reader["Tipo"].ToString().ToLower() == "vid")
+    //                        {
+    //                            todo.format = type.vid;
+
+    //                        }
+    //                        else if (reader["Tipo"].ToString().ToLower() == "img")
+    //                        {
+    //                            todo.format = type.img;
+    //                        }
+    //                        //todo.format = (tipo)reader["Tipo"];
+    //                        todoList.Add(todo);
+    //                    }
+    //                }
+
+    //                reader.Close();
+    //                // Customer ID is an IDENTITY format from the database.
+    //                //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+
+    //                // Put the Customer ID format into the read-only text box.
+    //                //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+    //                connection.Close();
+    //            }
+    //            catch (SqlException)
+    //            {
+    //                //Stringa errata
+    //            }
+    //            catch (ArgumentNullException)
+    //            {
+    //                //problemi nella tabella del database
+    //            }
+    //        }
+
+    //        return todoList;
+    //    }
+    //}
+
+    //    public List<listMedia> GetCategories()
+    //    {
+    //        var todoList = new List<listMedia>();
+
+    //        using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+    //        {
+    //            // Create a SqlCommand, and identify it as a stored procedure.
+    //            using (SqlCommand sqlCommand = new SqlCommand())
+    //            {
+    //                //sqlCommand.CommandType = CommandType.StoredProcedure;
+    //                //sqlCommand.CommandText = "GetTodos";
+    //                //text -- query interna
+    //                sqlCommand.CommandText = "select * from listaMedia";
+    //                sqlCommand.Connection = connection;
+
+    //                try
+    //                {
+    //                    connection.Open();
+
+
+    //                    // Run the stored procedure.
+    //                    var reader = sqlCommand.ExecuteReader();
+
+    //                    if (reader.HasRows)
+    //                    {
+
+    //                        while (reader.Read())
+    //                        {
+    //                            var todo = new listMedia();
+    //                            todo.ID = (int)reader["ID"];
+    //                            todo.name = reader["Nome"].ToString();
+    //                            todo.description = reader["Descrizione"].ToString();
+    //                            todo.path = reader["Percorso"].ToString();
+    //                            todoList.Add(todo);
+    //                        }
+    //                    }
+
+    //                    reader.Close();
+    //                    // Customer ID is an IDENTITY format from the database.
+    //                    //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+
+    //                    // Put the Customer ID format into the read-only text box.
+    //                    //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+    //                    connection.Close();
+    //                }
+    //                catch (SqlException)
+    //                {
+    //                    //Stringa errata
+    //                }
+    //                catch (ArgumentNullException)
+    //                {
+    //                    //problemi nella tabella del database
+    //                }
+    //            }
+
+    //            return todoList;
+    //        }
+    //    }
+        //------------------------------------------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------------------------------------------------------------------//
         //public List<listMedia> GetLista()
@@ -356,81 +529,84 @@ namespace DAL
             }
         }
 
-        public bool AddCategory(listMedia med)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    var query = "INSERT INTO dbo.listaMedia (Nome, Descrizione, Percorso) VALUES (@catname, @catdescription, @catpath) ";
-                    SqlCommand cmd = new SqlCommand(query, connection);
-                    connection.Open();
-                    try
-                    {
-                        cmd.Parameters.AddWithValue("@catname", med.name);
-                        cmd.Parameters.AddWithValue("@catdescription", med.description);
-                        cmd.Parameters.AddWithValue("@catpath", med.path);
-                        cmd.ExecuteNonQuery();
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
+        //-------------------------------------------//
+        //public bool AddCategory(listMedia med)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            var query = "INSERT INTO dbo.listaMedia (Nome, Descrizione, Percorso) VALUES (@catname, @catdescription, @catpath) ";
+        //            SqlCommand cmd = new SqlCommand(query, connection);
+        //            connection.Open();
+        //            try
+        //            {
+        //                cmd.Parameters.AddWithValue("@catname", med.name);
+        //                cmd.Parameters.AddWithValue("@catdescription", med.description);
+        //                cmd.Parameters.AddWithValue("@catpath", med.path);
+        //                cmd.ExecuteNonQuery();
+        //                return true;
+        //            }
+        //            catch (Exception)
+        //            {
+        //                return false;
+        //            }
+        //            finally
+        //            {
+        //                connection.Close();
+        //            }
+        //        }
+        //    }
+        //}
 
-        public bool DeleteCategory(int n)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                //connection.Open();
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    var query = "DELETE FROM dbo.media WHERE lista_ID=" + n + ";";
-                    var query2 = "Delete from dbo.listaMedia where ID=" + n + ";";
-                    SqlCommand cmd = new SqlCommand(query, connection);
-                    SqlCommand cmd2 = new SqlCommand(query2, connection);
-                    connection.Open();
-                    try
-                    {
-                        var control = false;
-                        try
-                        {
-                            cmd.ExecuteNonQuery();
-                            control = true;
-                        }
-                        catch (Exception)
-                        {
-                            control = false;
-                        }
-                        if (control == true)
-                        {
-                            cmd2.ExecuteNonQuery();
-                        }
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
+        //public bool DeleteCategory(int n)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        //connection.Open();
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            //sqlCommand.CommandText = "GetTodos";
+        //            //text -- query interna
+        //            var query = "DELETE FROM dbo.media WHERE lista_ID=" + n + ";";
+        //            var query2 = "Delete from dbo.listaMedia where ID=" + n + ";";
+        //            SqlCommand cmd = new SqlCommand(query, connection);
+        //            SqlCommand cmd2 = new SqlCommand(query2, connection);
+        //            connection.Open();
+        //            try
+        //            {
+        //                var control = false;
+        //                try
+        //                {
+        //                    cmd.ExecuteNonQuery();
+        //                    control = true;
+        //                }
+        //                catch (Exception)
+        //                {
+        //                    control = false;
+        //                }
+        //                if (control == true)
+        //                {
+        //                    cmd2.ExecuteNonQuery();
+        //                }
+        //                return true;
+        //            }
+        //            catch (Exception)
+        //            {
+        //                return false;
+        //            }
+        //            finally
+        //            {
+        //                connection.Close();
+        //            }
+        //        }
+        //    }
+        //}
+        //------------------------------------------//
+
 
         public bool AddCar(Car auto)
         {
@@ -500,8 +676,6 @@ namespace DAL
             }
         }
 
-        //--------------------------------------------------------------------------------------------------------------------------//
-
         public List<Media> GetVideos()
         {
             var todoList = new List<Media>();
@@ -511,9 +685,7 @@ namespace DAL
                 // Create a SqlCommand, and identify it as a stored procedure.
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
+                   
                     sqlCommand.CommandText = "select * from media where Tipo ='vid'";
                     sqlCommand.Connection = connection;
 
@@ -538,18 +710,15 @@ namespace DAL
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
                                 todo.listId = (int)reader["lista_ID"];
+                                todo.FK_Car = (int)reader["FK_Car"];
                                 todo.format = type.vid;
-                                //todo.format = (tipo)reader["Tipo"];
+                                
                                 todoList.Add(todo);
                             }
                         }
 
                         reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
-
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+                  
                         connection.Close();
                     }
                     catch (SqlException)
@@ -566,266 +735,268 @@ namespace DAL
             }
         }
 
-        public List<Media> GetVideosById(int idVideo)
-        {
-            var todoList = new List<Media>();
+        //---------------------------------------------//
+        //public List<Media> GetVideosById(int idVideo)
+        //{
+        //    var todoList = new List<Media>();
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from media where Tipo ='vid' AND lista_ID=" + idVideo + "";
-                    sqlCommand.Connection = connection;
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            //sqlCommand.CommandText = "GetTodos";
+        //            //text -- query interna
+        //            sqlCommand.CommandText = "select * from media where Tipo ='vid' AND lista_ID=" + idVideo + "";
+        //            sqlCommand.Connection = connection;
 
-                    try
-                    {
-                        connection.Open();
-
-
-                        // Run the stored procedure.
-                        var reader = sqlCommand.ExecuteReader();
-
-                        if (reader.HasRows)
-                        {
-
-                            while (reader.Read())
-                            {
-                                var todo = new Media();
-                                todo.id = (int)reader["ID"];
-                                todo.name = reader["Nome"].ToString();
-                                todo.description = reader["Descrizione"].ToString();
-                                todo.create_date = (DateTime)reader["DataCreazione"];
-                                todo.timer = (int)reader["Timer"];
-                                todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.format = type.vid;
-                                //todo.format = (tipo)reader["Tipo"];
-                                todoList.Add(todo);
-                            }
-                        }
-
-                        reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
-
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
-                        connection.Close();
-                    }
-                    catch (SqlException)
-                    {
-                        //Stringa errata
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        //problemi nella tabella del database
-                    }
-                }
-
-                return todoList;
-            }
-        }
-
-        public Media GetVideoById(int idVideo)
-        {
-            var todo = new Media();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from media where Tipo ='vid' AND ID=" + idVideo + "";
-                    sqlCommand.Connection = connection;
-
-                    try
-                    {
-                        connection.Open();
+        //            try
+        //            {
+        //                connection.Open();
 
 
-                        // Run the stored procedure.
-                        var reader = sqlCommand.ExecuteReader();
+        //                // Run the stored procedure.
+        //                var reader = sqlCommand.ExecuteReader();
 
-                        if (reader.HasRows)
-                        {
+        //                if (reader.HasRows)
+        //                {
 
-                            while (reader.Read())
-                            {
+        //                    while (reader.Read())
+        //                    {
+        //                        var todo = new Media();
+        //                        todo.id = (int)reader["ID"];
+        //                        todo.name = reader["Nome"].ToString();
+        //                        todo.description = reader["Descrizione"].ToString();
+        //                        todo.create_date = (DateTime)reader["DataCreazione"];
+        //                        todo.timer = (int)reader["Timer"];
+        //                        todo.path = reader["Percorso"].ToString();
+        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.format = type.vid;
+        //                        //todo.format = (tipo)reader["Tipo"];
+        //                        todoList.Add(todo);
+        //                    }
+        //                }
 
-                                todo.id = (int)reader["ID"];
-                                todo.name = reader["Nome"].ToString();
-                                todo.description = reader["Descrizione"].ToString();
-                                todo.create_date = (DateTime)reader["DataCreazione"];
-                                todo.timer = (int)reader["Timer"];
-                                todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.format = type.vid;
-                                //todo.format = (tipo)reader["Tipo"];
+        //                reader.Close();
+        //                // Customer ID is an IDENTITY format from the database.
+        //                //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
 
-                            }
-                        }
+        //                // Put the Customer ID format into the read-only text box.
+        //                //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+        //                connection.Close();
+        //            }
+        //            catch (SqlException)
+        //            {
+        //                //Stringa errata
+        //            }
+        //            catch (ArgumentNullException)
+        //            {
+        //                //problemi nella tabella del database
+        //            }
+        //        }
 
-                        reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+        //        return todoList;
+        //    }
+        //}
 
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
-                        connection.Close();
-                    }
-                    catch (SqlException)
-                    {
-                        //Stringa errata
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        //problemi nella tabella del database
-                    }
-                }
+        //public Media GetVideoById(int idVideo)
+        //{
+        //    var todo = new Media();
 
-                return todo;
-            }
-        }
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            //sqlCommand.CommandText = "GetTodos";
+        //            //text -- query interna
+        //            sqlCommand.CommandText = "select * from media where Tipo ='vid' AND ID=" + idVideo + "";
+        //            sqlCommand.Connection = connection;
 
-        public Media GetVideoByName(string name)
-        {
-            var todo = new Media();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from media where Tipo ='vid' AND Nome='" + name + "'";
-                    sqlCommand.Connection = connection;
-
-                    try
-                    {
-                        connection.Open();
-
-
-                        // Run the stored procedure.
-                        var reader = sqlCommand.ExecuteReader();
-
-                        if (reader.HasRows)
-                        {
-
-                            while (reader.Read())
-                            {
-
-                                todo.id = (int)reader["ID"];
-                                todo.name = reader["Nome"].ToString();
-                                todo.description = reader["Descrizione"].ToString();
-                                todo.create_date = (DateTime)reader["DataCreazione"];
-                                todo.timer = (int)reader["Timer"];
-                                todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.format = type.vid;
-                                //todo.format = (tipo)reader["Tipo"];
-
-                            }
-                        }
-
-                        reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
-
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
-                        connection.Close();
-                    }
-                    catch (SqlException)
-                    {
-                        //Stringa errata
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        //problemi nella tabella del database
-                    }
-                }
-
-                return todo;
-            }
-        } 
-
-        public Media GetVideoByNameId(string name, int id)
-        {
-            var todo = new Media();
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    //sqlCommand.CommandType = CommandType.StoredProcedure;
-                    //sqlCommand.CommandText = "GetTodos";
-                    //text -- query interna
-                    sqlCommand.CommandText = "select * from media where Tipo ='vid' AND Nome='" + name + "' AND ID=" + id + "";
-                    sqlCommand.Connection = connection;
-
-                    try
-                    {
-                        connection.Open();
+        //            try
+        //            {
+        //                connection.Open();
 
 
-                        // Run the stored procedure.
-                        var reader = sqlCommand.ExecuteReader();
+        //                // Run the stored procedure.
+        //                var reader = sqlCommand.ExecuteReader();
 
-                        if (reader.HasRows)
-                        {
+        //                if (reader.HasRows)
+        //                {
 
-                            while (reader.Read())
-                            {
+        //                    while (reader.Read())
+        //                    {
 
-                                todo.id = (int)reader["ID"];
-                                todo.name = reader["Nome"].ToString();
-                                todo.description = reader["Descrizione"].ToString();
-                                todo.create_date = (DateTime)reader["DataCreazione"];
-                                todo.timer = (int)reader["Timer"];
-                                todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.format = type.vid;
-                                //todo.format = (tipo)reader["Tipo"];
+        //                        todo.id = (int)reader["ID"];
+        //                        todo.name = reader["Nome"].ToString();
+        //                        todo.description = reader["Descrizione"].ToString();
+        //                        todo.create_date = (DateTime)reader["DataCreazione"];
+        //                        todo.timer = (int)reader["Timer"];
+        //                        todo.path = reader["Percorso"].ToString();
+        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.format = type.vid;
+        //                        //todo.format = (tipo)reader["Tipo"];
 
-                            }
-                        }
+        //                    }
+        //                }
 
-                        reader.Close();
-                        // Customer ID is an IDENTITY format from the database.
-                        //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+        //                reader.Close();
+        //                // Customer ID is an IDENTITY format from the database.
+        //                //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
 
-                        // Put the Customer ID format into the read-only text box.
-                        //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
-                        connection.Close();
-                    }
-                    catch (SqlException)
-                    {
-                        //Stringa errata
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        //problemi nella tabella del database
-                    }
-                }
+        //                // Put the Customer ID format into the read-only text box.
+        //                //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+        //                connection.Close();
+        //            }
+        //            catch (SqlException)
+        //            {
+        //                //Stringa errata
+        //            }
+        //            catch (ArgumentNullException)
+        //            {
+        //                //problemi nella tabella del database
+        //            }
+        //        }
 
-                return todo;
-            }
-        }
+        //        return todo;
+        //    }
+        //}
 
-        public Car GetCarsAndTires(int id)
+        //public Media GetVideoByName(string name)
+        //{
+        //    var todo = new Media();
+
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            //sqlCommand.CommandText = "GetTodos";
+        //            //text -- query interna
+        //            sqlCommand.CommandText = "select * from media where Tipo ='vid' AND Nome='" + name + "'";
+        //            sqlCommand.Connection = connection;
+
+        //            try
+        //            {
+        //                connection.Open();
+
+
+        //                // Run the stored procedure.
+        //                var reader = sqlCommand.ExecuteReader();
+
+        //                if (reader.HasRows)
+        //                {
+
+        //                    while (reader.Read())
+        //                    {
+
+        //                        todo.id = (int)reader["ID"];
+        //                        todo.name = reader["Nome"].ToString();
+        //                        todo.description = reader["Descrizione"].ToString();
+        //                        todo.create_date = (DateTime)reader["DataCreazione"];
+        //                        todo.timer = (int)reader["Timer"];
+        //                        todo.path = reader["Percorso"].ToString();
+        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.format = type.vid;
+        //                        //todo.format = (tipo)reader["Tipo"];
+
+        //                    }
+        //                }
+
+        //                reader.Close();
+        //                // Customer ID is an IDENTITY format from the database.
+        //                //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+
+        //                // Put the Customer ID format into the read-only text box.
+        //                //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+        //                connection.Close();
+        //            }
+        //            catch (SqlException)
+        //            {
+        //                //Stringa errata
+        //            }
+        //            catch (ArgumentNullException)
+        //            {
+        //                //problemi nella tabella del database
+        //            }
+        //        }
+
+        //        return todo;
+        //    }
+        //} 
+
+        //public Media GetVideoByNameId(string name, int id)
+        //{
+        //    var todo = new Media();
+
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            //sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            //sqlCommand.CommandText = "GetTodos";
+        //            //text -- query interna
+        //            sqlCommand.CommandText = "select * from media where Tipo ='vid' AND Nome='" + name + "' AND ID=" + id + "";
+        //            sqlCommand.Connection = connection;
+
+        //            try
+        //            {
+        //                connection.Open();
+
+
+        //                // Run the stored procedure.
+        //                var reader = sqlCommand.ExecuteReader();
+
+        //                if (reader.HasRows)
+        //                {
+
+        //                    while (reader.Read())
+        //                    {
+
+        //                        todo.id = (int)reader["ID"];
+        //                        todo.name = reader["Nome"].ToString();
+        //                        todo.description = reader["Descrizione"].ToString();
+        //                        todo.create_date = (DateTime)reader["DataCreazione"];
+        //                        todo.timer = (int)reader["Timer"];
+        //                        todo.path = reader["Percorso"].ToString();
+        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.format = type.vid;
+        //                        //todo.format = (tipo)reader["Tipo"];
+
+        //                    }
+        //                }
+
+        //                reader.Close();
+        //                // Customer ID is an IDENTITY format from the database.
+        //                //this.parsedCustomerID = (int)sqlCommand.Parameters["@CustomerID"].Value;
+
+        //                // Put the Customer ID format into the read-only text box.
+        //                //this.txtCustomerID.Text = Convert.ToString(parsedCustomerID);
+        //                connection.Close();
+        //            }
+        //            catch (SqlException)
+        //            {
+        //                //Stringa errata
+        //            }
+        //            catch (ArgumentNullException)
+        //            {
+        //                //problemi nella tabella del database
+        //            }
+        //        }
+
+        //        return todo;
+        //    }
+        //}
+        //-----------------------------------------------//
+
+
+        public Car GetCarsAndTires(int id) //VEDERE CON CHE VALORI FILTRARE LE RUOTE 
         {
             var todo = new Car();
-
 
             using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
             {
@@ -858,6 +1029,7 @@ namespace DAL
                         {
                             List<Tire> tmpTire = new List<Tire>();
                             sqlCommand.CommandText = "select * from tire where FK_car=" + id + "";
+                            //sqlCommand.CommandText = "select * from tire where FK_car=" + id + " and tireType='"+tipo+"'";
                             reader = sqlCommand.ExecuteReader();
                             if (reader.HasRows)
                             {
@@ -897,7 +1069,7 @@ namespace DAL
             }
         }
 
-        public Tire GetTire(int id)
+        public Tire GetSingleTire(int id)
         {
             Tire tireCar = new Tire();
             using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
@@ -949,6 +1121,58 @@ namespace DAL
             }
         }
 
+        public List<Tire> GetTires(string tipo) //SISTEMARE IL BL E FUNCTION 1
+        {
+            Tire tireCar = new Tire();
+            List<Tire> tires = new List<Tire>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from tire where tireType='" + tipo +"'";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+
+
+                                tireCar.id = (int)reader["id"];
+                                tireCar.model = reader["model"].ToString();
+                                //tireCar.typeValue =(tireType)reader["tireType"]; // --> ENUM 
+                                tireCar.tireType = reader["tireType"].ToString();
+                                tireCar.tirePath = reader["tirePath"].ToString();
+                                tireCar.size = float.Parse(reader["size"].ToString());
+                                tireCar.price = float.Parse(reader["price"].ToString());
+                                tireCar.FK_car = (int)reader["FK_car"];
+                                tires.Add(tireCar);
+
+                            }
+
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return tires;
+            }
+        }
         public bool DeleteTires(int id)
         {
                 using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
@@ -1027,32 +1251,34 @@ namespace DAL
             }
         }
 
-        public bool UpdateCategory(listMedia cat)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
-            {
-                // Create a SqlCommand, and identify it as a stored procedure.
-                using (SqlCommand sqlCommand = new SqlCommand())
-                {
-                    var query = "update dbo.listaMedia set Nome = '"+cat.name+"', Descrizione = '"+cat.description+"', Percorso = '"+cat.path+"' where ID='"+cat.ID+"'";
-                    SqlCommand cmd = new SqlCommand(query, connection);
-                    connection.Open();
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                        return true;
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
+        //--------------------------------------------------//
+        //public bool UpdateCategory(listMedia cat)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+        //    {
+        //        // Create a SqlCommand, and identify it as a stored procedure.
+        //        using (SqlCommand sqlCommand = new SqlCommand())
+        //        {
+        //            var query = "update dbo.listaMedia set Nome = '"+cat.name+"', Descrizione = '"+cat.description+"', Percorso = '"+cat.path+"' where ID='"+cat.ID+"'";
+        //            SqlCommand cmd = new SqlCommand(query, connection);
+        //            connection.Open();
+        //            try
+        //            {
+        //                cmd.ExecuteNonQuery();
+        //                return true;
+        //            }
+        //            catch (Exception)
+        //            {
+        //                return false;
+        //            }
+        //            finally
+        //            {
+        //                connection.Close();
+        //            }
+        //        }
+        //    }
+        //}
+        //--------------------------------------------------//
 
         public bool UpdateMedia(Media med)
         {
@@ -1137,5 +1363,6 @@ namespace DAL
     }
 
 }
+
 
 

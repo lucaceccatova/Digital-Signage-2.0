@@ -19,6 +19,7 @@ namespace DAL
         public DateTime create_date { get; set; }
         public string path { get; set; }
         public int listId { get; set; }
+        public int FK_Car { get; set; }
 
 
     }
