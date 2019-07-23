@@ -52,16 +52,18 @@ export class tireShowComponent implements OnInit {
     }
     signalRListner()
     {
-        this.listner.connection.on("receiveAskIdTire",data=>
+      this.listner.connection.on("receiveAskIdTire",data=>
         {
           console.log(data);
-          this.selectedTire = this.tires[data];
+          this.selectedTire = this.tires[data-1];
           this.id = this.findId(data);
-          this.listner.connection.invoke("SendIdTire", this.id);
+          this.listner.connection.send("SendIdTire",this.id)
+          .catch(err => console.error(err));
         });
       this.listner.connection.on("receiveTireVideos", data => {
         this.videos = data;
         console.log(data);
+      this.goToSpec();
       });
       this.listner.connection.on("tireShow",data=>
       {
