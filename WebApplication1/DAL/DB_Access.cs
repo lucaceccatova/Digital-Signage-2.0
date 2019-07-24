@@ -164,25 +164,32 @@ namespace DAL
 
                         if (reader.HasRows)
                         {
-                            idCar = (int)reader["FK_car"];
+                            while (reader.Read())
+                            {
+                                idCar = (int)reader["FK_car"];
+
+                            }
                         }
                         reader.Close();
                         if (idCar != 0)
                         {
-                            sqlCommand.CommandText = "select * from media where FK_Car=" + idCar+" and Tipo='img'";
+                            sqlCommand.CommandText = "select * from media where FK_Car=" + idCar+" and Tipo='vid'";
                             var reader2 = sqlCommand.ExecuteReader();
-                            if (reader2.HasRows)
+                            while (reader2.Read())
                             {
-                                var todo = new Media();
-                                todo.id = (int)reader["ID"];
-                                todo.name = reader["Nome"].ToString();
-                                todo.description = reader["Descrizione"].ToString();
-                                todo.create_date = (DateTime)reader["DataCreazione"];
-                                todo.timer = (int)reader["Timer"];
-                                todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.format = type.vid;
-                                todoList.Add(todo);
+                                if (reader2.HasRows)
+                                {
+                                    var todo = new Media();
+                                    todo.id = (int)reader2["ID"];
+                                    todo.name = reader2["Nome"].ToString();
+                                    todo.description = reader2["Descrizione"].ToString();
+                                    todo.create_date = (DateTime)reader2["DataCreazione"];
+                                    todo.timer = (int)reader2["Timer"];
+                                    todo.path = reader2["Percorso"].ToString();
+                                    todo.listId = (int)reader2["lista_ID"];
+                                    todo.format = type.vid;
+                                    todoList.Add(todo);
+                                }
                             }
                             reader2.Close();
                         }

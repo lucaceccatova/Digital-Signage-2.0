@@ -158,7 +158,7 @@ namespace AlexaSkills
                             messaggio = "MOSTRA UNA RUOTA IN SPECIFICO";
                             ShowTireInfoInvoked = true;
                             ShowTireInvoked = false;
-                            await connection.InvokeAsync("AskIdTire", intentRequest.Intent.Slots["numero"].Value);
+                            await connection.InvokeAsync("AskIdTire", int.Parse(intentRequest.Intent.Slots["numero"].Value));
 
 
 
