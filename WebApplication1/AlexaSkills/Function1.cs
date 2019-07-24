@@ -43,14 +43,14 @@ namespace AlexaSkills
 
             if (requestType == typeof(LaunchRequest)) //-- Enter in this if when we tell to Alexa to open our skill: "Controllo Vocale"
             {
-                if (videosUtteranceInovked == false)
+                if (videosUtteranceInovked != true || ShowTireInfoInvoked != true || ShowTireInvoked != true)
                 {
                     response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
                     response.Response.ShouldEndSession = false;
                 }
-                else if (videosUtteranceInovked == true)
+                else
                 {
-                    response = ResponseBuilder.Tell("AVVIO DELLA SKILL DALL'AREA VIDEO GALLERY");
+                    response = ResponseBuilder.Tell("Ciao");
                     response.Response.ShouldEndSession = false;
                 }
                 await connection.StartAsync(); //-- Starting our SignalR connnection only one time at the opening of our skill. It will be closed only when user will invoke the "AMAZON.StopIntent"
@@ -72,7 +72,7 @@ namespace AlexaSkills
                             messaggio = $"Ciao, se vuoi ti mostro qualche video. Quale vuoi vedere ?";
                             timer = 2000;
                             
-                        await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
+                            await connection.InvokeAsync("sendAllVideo", GestoreBLL.GetAllVideos()); //-- this will send to the client (Front-End) a List of Media (but only Videos)  
                             videosUtteranceInovked = true;
                         }
                         else if (intentRequest.Intent.Slots["numero"].Value != null && videosUtteranceInovked == true)// ----- Enter here only when user can tell to alexa to play a video 
@@ -80,16 +80,20 @@ namespace AlexaSkills
 
                             //if (idCategory == 0 /*&& !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")*/) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
                             //{
+                            if (int.Parse(intentRequest.Intent.Slots["numero"].Value) > 6 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
+                            { //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                                 messaggio = $"Buona visione";
                                 timer = 0;
-
-                                    //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
-                            
-                        await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
+                                await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
+                            }
+                            else
+                            {
+                                messaggio = $"Il Video " + int.Parse(intentRequest.Intent.Slots["numero"].Value) +"non è disponibile, quelli che puoi riprodurre sono sul display";
+                            }
                         }
                         else
                         {
-                            messaggio = $"Mi spiace ma in quest'area non è possibile mostrare il filmato che hai richiesto. Per poter accedere alla sezione video basta che mi chiedi:'Alexa, voglio vedere i video'";
+                            messaggio = $"Mi spiace non ho video da mostrarti in quest'area. Se vuoi vedere i filmati basta che mi dici :'Alexa, voglio vedere i video'";
                         }
                         response = ResponseBuilder.Tell(messaggio); //-- response will contain the message that we want send to Alexa 
                         response.Response.ShouldEndSession = false; //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
@@ -97,8 +101,8 @@ namespace AlexaSkills
                     case "ShowTireIntent": //RIGUARDARE IN CASO DI TIPOLOGIA GOMMA ERRATA
                         if (videosUtteranceInovked != false)
                         {
-                            /*messaggio = $"Hey ciao, se non ti dispiace mi puoi dire che auto possiedi o che vorresti ?";
-                            timer = 4000;*/
+                            messaggio = "Hey puoi dirmi che auto hai ? oppure che auto vorresti avere ?";
+                            timer = 3000;
                             ShowTireInvoked = true;
                             videosUtteranceInovked = false;
                             messaggio = "Visuallizo le ruote per type";
@@ -122,14 +126,12 @@ namespace AlexaSkills
                         if (ShowTireInvoked != false) //Enter here only if front-end is on the "Video Gallery" area (mean that ShowVideosIntent has to be invoked before)
                         {
                             //CHIEDERE A STEFANO SE ALEXA CHIEDE ALL'UTENTE RIGUARDO L'AUTO
-                            messaggio = "MOSTRA UNA RUOTA IN SPECIFICO";
+
+                            messaggio = "In questa schermata puoi vedere tutte le informazioni sul pneumatico che hai scelto, inoltre se vuoi posso mostrarti i video, basta che mi dici il numero del filmato";
                             ShowTireInfoInvoked = true;
                             ShowTireInvoked = false;
                             videosUtteranceInovked = true;
                             await connection.InvokeAsync("AskIdTire", int.Parse(intentRequest.Intent.Slots["numero"].Value));
-
-
-
 
                             //MANCA METODO CHE RESTITUISCE I VIDEO IN BASE ALLA GOMMA SCELTA E SE POSSIBILE ANCHE IN BASE ALL'AUTO.
                             //await connection.InvokeAsync("sendTireAndVideos", GestoreBLL.GetTireById(int.Parse(intentRequest.Intent.Slots["ruote"].Resolution.Authorities[0].Values[0].Value.Id))); //Sending the tire selected to the front-end
@@ -141,33 +143,33 @@ namespace AlexaSkills
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
-                    case "ShowVideoTireIntent":
-                        if (ShowTireInfoInvoked != false)
-                        {
-                            switch (intentRequest.Intent.Slots["lettera"].Value.ToLower())
-                            {
-                                case "a":
-                                    messaggio = "video 1";
-                                    await connection.InvokeAsync("sendVideo", 1);
-                                    break;
-                                case "b":
-                                    messaggio = "video 2";
-                                    await connection.InvokeAsync("sendVideo", 2);
-                                    break;
-                                case "c":
-                                    messaggio = "video 3";
-                                    await connection.InvokeAsync("sendVideo", 3);
-                                    break;
-                                default:
-                                    messaggio = "lettera inserita sbagliata";
-                                    break;
-                            }
-                            response = ResponseBuilder.Tell(messaggio);
-                            response.Response.ShouldEndSession = false;
-                        }
-                        break;
+                    //case "ShowVideoTireIntent":
+                    //    if (ShowTireInfoInvoked != false)
+                    //    {
+                    //        switch (intentRequest.Intent.Slots["lettera"].Value.ToLower())
+                    //        {
+                    //            case "a":
+                    //                messaggio = "video 1";
+                    //                await connection.InvokeAsync("sendVideo", 1);
+                    //                break;
+                    //            case "b":
+                    //                messaggio = "video 2";
+                    //                await connection.InvokeAsync("sendVideo", 2);
+                    //                break;
+                    //            case "c":
+                    //                messaggio = "video 3";
+                    //                await connection.InvokeAsync("sendVideo", 3);
+                    //                break;
+                    //            default:
+                    //                messaggio = "lettera inserita sbagliata";
+                    //                break;
+                    //        }
+                    //        response = ResponseBuilder.Tell(messaggio);
+                    //        response.Response.ShouldEndSession = false;
+                    //    }
+                    //    break;
                     case "CarIntent": //RIGUARDARE GESTOREBL E DB
-                        if (ShowTireInvoked != false)
+                        if (ShowTireInvoked != false) //FARE CONTROLLI
                         {
                             carUtteranceInvoked = true;
                             messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
@@ -183,43 +185,25 @@ namespace AlexaSkills
                     case "ReturnToSlideIntent":
                             if (videosUtteranceInovked != false || ShowTireInvoked!= false || ShowTireInfoInvoked!= false) //Enter here when we are in other areas (Video gallery, Custom your car) and the user want to return to the slider
                             {
-
-
-                            //if (intentRequest.Intent.ConfirmationStatus != "DENIED")
-                            //{ //Enter here If the user confirm to return to slider
-                                messaggio = $"Va bene, ritorno allo slider";
-
+                            messaggio = $"Va bene, ritorno allo slider";
                             await connection.InvokeAsync("returnToSlide", true);
                             videosUtteranceInovked = false;
-                                ShowTireInfoInvoked = false;
-                                ShowTireInvoked = false;
-
-                           // }
-                            //else //User at the confirmation prompt decided to not return to slider
-                            //{
-
-                            //    messaggio = $"Va bene";
-                            //    //  connection = new HubConnectionBuilder().WithUrl("https://localhost:44303/voice").Build();
-                            //    //  await connection.StartAsync();
-                            //    await connection.InvokeAsync("returnToSlide", false);
-                            //    videosUtteranceInovked = true;
-                            //    carUtteranceInvoked = true;
-                            //}
-
-                        }
-                        else //If user invokes "ReturnToSlideIntent" from the slider area
-                        {
-                            messaggio = $"Lo slider è gia sul display";
-                        }
-                        timer = 0;
-                        response = ResponseBuilder.Tell(messaggio);
-                        response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
+                            ShowTireInfoInvoked = false;
+                            ShowTireInvoked = false;
+                            }
+                            else //If user invokes "ReturnToSlideIntent" from the slider area
+                            {
+                                messaggio = $"Lo slider è gia sul display";
+                            }
+                            timer = 0;
+                            response = ResponseBuilder.Tell(messaggio);
+                            response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
                     case "NextPageIntent":
                         if (videosUtteranceInovked != false)
                         {
                             await connection.InvokeAsync("sendPage", "next");
-                            messaggio = $"next";
+                            //messaggio = $"next";
                         }
                         else
                         {
@@ -229,11 +213,11 @@ namespace AlexaSkills
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
-                    case "PreviuosPageIntent":
+                    case "PreviousPageIntent":
                         if (videosUtteranceInovked != false)
                         {
-                            //----------------------await connection.InvokeAsync("sendPage", "previus");
-                            messaggio = $"previous";
+                            await connection.InvokeAsync("sendPage", "previus");
+                            //messaggio = $"previous";
                         }
                         else
                         {
