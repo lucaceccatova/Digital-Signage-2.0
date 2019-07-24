@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { car } from '../../Models/carModel';
-import { ShareService } from 'src/app/Services/UniversalShare/universalShareService';
+import { ShareService } from 'src/app/Services/sharedServices/universalShareService';
 import { tire } from 'src/app/Models/tire';
-import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
+import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
 import $ from 'jquery';
 
 @Component({

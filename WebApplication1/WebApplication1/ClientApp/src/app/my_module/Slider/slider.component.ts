@@ -8,9 +8,9 @@ import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import $ from 'jquery';
-import { shareElementsService } from 'src/app/Services/shareElementsServie/shareElement.Service';
-import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
-import { ShareService } from 'src/app/Services/UniversalShare/universalShareService';
+import { shareElementsService } from 'src/app/Services/sharedServices/shareElement.Service';
+import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { ShareService } from 'src/app/Services/sharedServices/universalShareService';
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',

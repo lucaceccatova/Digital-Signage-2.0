@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { tire } from 'src/app/Models/tire';
 import { element } from 'src/app/Models/Element';
-import { tireShareService } from '../../Services/shareTiresService/shareTireService';
+import { tireShareService } from '../../Services/sharedServices/shareTireService';
+import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
+import { Router } from '@angular/router';
+import { preserveSpecService } from 'src/app/Services/preserveSpecComponent/preserveSpec.service';
 
 @Component({
     selector: 'tire-spec',
@@ -9,12 +13,22 @@ import { tireShareService } from '../../Services/shareTiresService/shareTireServ
     styleUrls: ['./tire-specs.component.scss']
 })
 export class tireSpecsComponent implements OnInit {
-    constructor(private dataStream:tireShareService) { }
-    tire:tire;
+    constructor(private dataStream:tireShareService,
+      private connection:SignalRService,
+      private video:sharedStringService,
+      private router:Router,
+      private backUp:preserveSpecService) { }
+    tire:tire; selectedVideo:number;
     videos:element[]=[];
     ngOnInit(): void { 
         //this.mock();
-      this.getData();
+
+      if(this.backUp.video!=null)
+        this.restore();
+      else
+        this.getData();
+
+      this.signalRListnter();
     }
    
     mock()
@@ -40,6 +54,24 @@ export class tireSpecsComponent implements OnInit {
   getData() {
     this.tire = this.dataStream.selectedTire;
     this.videos = this.dataStream.videos;
-
+  }
+  signalRListnter()
+  {
+    this.connection.connection.on("showVideo",data=>{
+      this.video.singleVideo=this.videos[data-1];
+      this.save();
+      this.router.navigateByUrl("/video/media");
+    });
+  }
+  restore()
+  {
+    this.tire=this.backUp.selectedTire;
+    this.videos=this.backUp.video;
+    this.backUp.reset();
+  }
+  save()
+  {
+    this.backUp.video=this.videos;
+    this.backUp.selectedTire=this.tire;
   }
 }
