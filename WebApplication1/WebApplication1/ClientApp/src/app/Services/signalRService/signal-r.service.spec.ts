@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SignalRService } from './signal-r.service';
+import { SignalRService } from '../sharedServices/signal-r.service';
 
 describe('SignalRService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { tire } from 'src/app/Models/tire';
-import { tireShareService } from 'src/app/Services/shareTiresService/shareTireService';
+import { tireShareService } from 'src/app/Services/sharedServices/shareTireService';
 import $ from 'jquery';
-import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
+import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
 import { element } from '../../Models/Element';
 import { RouterModule, Router } from '@angular/router';
 @Component({
@@ -13,7 +13,8 @@ import { RouterModule, Router } from '@angular/router';
 export class tireShowComponent implements OnInit {
   constructor(private tiresStream: tireShareService, private listner: SignalRService,
   private router: Router) { }
-    @Input() tires:tire[];
+//the revious component must use a service to pass data trough this component
+  tires:tire[];
   id: number;
   videos: element[] = [];
   selectedTire: tire;

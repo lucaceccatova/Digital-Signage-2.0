@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { myRouter } from './router/router.module';
-import { shareElementsService } from './Services/shareElementsServie/shareElement.Service';
+import { shareElementsService } from './Services/sharedServices/shareElement.Service';
 
 @NgModule({
   declarations: [
