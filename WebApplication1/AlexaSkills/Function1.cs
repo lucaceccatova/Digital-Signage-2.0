@@ -46,6 +46,7 @@ namespace AlexaSkills
                 if (videosUtteranceInovked != true || ShowTireInfoInvoked != true || ShowTireInvoked != true)
                 {
                     response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
+                   
                     response.Response.ShouldEndSession = false;
                 }
                 else
@@ -99,26 +100,35 @@ namespace AlexaSkills
                         response.Response.ShouldEndSession = false; //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
                     case "ShowTireIntent": //RIGUARDARE IN CASO DI TIPOLOGIA GOMMA ERRATA
-                        if (videosUtteranceInovked != false)
-                        {
-                            messaggio = "Hey puoi dirmi che auto hai ? oppure che auto vorresti avere ?";
-                            timer = 3000;
-                            ShowTireInvoked = true;
-                            videosUtteranceInovked = false;
-                            messaggio = "Visuallizo le ruote per type";
-                            await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTires(intentRequest.Intent.Slots["TireType"].Value));
-                            
-                        
-                        
-                        
-                        
-                        // VISUALIZZARE LE RUOTE PER IL TYPE SELEZIONATO, RIGUARDARE TABELLE DB E GESTOREBL
-                            //  await connection.InvokeAsync();
-                        }
-                        else
-                        {
-                            messaggio = "Mi spiace non ho capito (ShowTireIntent)";
-                        }
+                            if (GestoreBLL.TireTypeExist(intentRequest.Intent.Slots["TireType"].Value)!=true)
+                            {
+                                var types = GestoreBLL.GetTiresType();
+                                messaggio = "Hey potresti dirmi la tipologia dei pneumatici ? Te ne consiglio alcune : ";
+                                if (types.Count >= 1 || types.Count <= 4)
+                                {
+                                    for (int i = 0; i < types.Count; i++)
+                                    {
+                                        messaggio += types[i] + " , ";
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = 0; i <4; i++)
+                                    {
+                                        messaggio += types[i] + " , ";
+                                    }
+                                }
+                                     timer = 0;
+                            }
+                            else
+                            {
+                                messaggio = "Hey puoi dirmi che auto hai ? oppure che auto vorresti avere ?";
+                                timer = 5000;
+                                ShowTireInvoked = true;
+                                videosUtteranceInovked = false;
+                                //messaggio = "Visuallizo le ruote per type";
+                                await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTires(intentRequest.Intent.Slots["TireType"].Value));
+                            }
                         response = ResponseBuilder.Tell(messaggio); //-- response will contain the message that we want send to Alexa 
                         response.Response.ShouldEndSession = false;
                         break;

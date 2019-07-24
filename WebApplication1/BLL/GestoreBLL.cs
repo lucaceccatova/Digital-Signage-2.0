@@ -272,6 +272,16 @@ namespace BLL
         {
             return new DB_Access(connectionDB).UpdateTire(tire);
         }
+
+        public static List<string> GetTiresType()
+        {
+            return new DB_Access(connectionDB).GetTireTypes();
+        }
+
+        public static bool TireTypeExist(string tiipo)
+        {
+            return new DB_Access(connectionDB).TypeExists(tiipo);
+        } 
     }
 
 

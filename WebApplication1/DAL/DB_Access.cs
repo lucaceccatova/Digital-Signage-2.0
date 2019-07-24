@@ -1135,7 +1135,7 @@ namespace DAL
             }
         }
 
-        public List<Tire> GetTires(string tipo) //SISTEMARE IL BL E FUNCTION 1
+        public List<Tire> GetTires(string tipo) 
         {
             Tire tireCar = new Tire();
             List<Tire> tires = new List<Tire>();
@@ -1176,7 +1176,7 @@ namespace DAL
                     }
                     catch (SqlException)
                     {
-                        //Stringa errata
+                      
                     }
                     catch (ArgumentNullException)
                     {
@@ -1185,6 +1185,48 @@ namespace DAL
                 }
 
                 return tires;
+            }
+        }
+
+        public bool TypeExists(string tipo)
+        {
+            bool exist;
+            
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from tire where tireType='" + tipo + "'";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            exist=true;
+                        }
+                        else
+                        {
+                            exist=false;
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        exist = false;
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        exist = false;
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return exist;
             }
         }
         public bool DeleteTires(int id)
@@ -1372,6 +1414,51 @@ namespace DAL
                         connection.Close();
                     }
                 }
+            }
+        }
+
+        public List<string> GetTireTypes()
+        {
+            
+            List<string> tires = new List<string>();
+            
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select tireType from tire";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                if(!tires.Contains(reader["tireType"].ToString())){
+                                    tires.Add(reader["tireType"].ToString());
+                                }
+                            }
+
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return tires;
             }
         }
     }
