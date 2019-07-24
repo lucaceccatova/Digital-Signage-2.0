@@ -58,6 +58,7 @@ ngOnDestroy(): void {
   this.unsubscribes.forEach(element => {
     element.unsubscribe();
   });
+  this.connectionService.connection.off("showVideo");
 }
 
 
@@ -125,6 +126,7 @@ divideInMorePages()
   }
   console.log(this.pages);
 }
+
 
   //service that pass the path to fsVideo component
   //without expose the Url in the Url 
