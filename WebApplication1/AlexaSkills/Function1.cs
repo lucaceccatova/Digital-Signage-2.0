@@ -148,15 +148,15 @@ namespace AlexaSkills
                             {
                                 case "a":
                                     messaggio = "video 1";
-                                    await connection.InvokeAsync("SendVideo", 1);
+                                    await connection.InvokeAsync("sendVideo", 1);
                                     break;
                                 case "b":
                                     messaggio = "video 2";
-                                    await connection.InvokeAsync("SendVideo", 2);
+                                    await connection.InvokeAsync("sendVideo", 2);
                                     break;
                                 case "c":
                                     messaggio = "video 3";
-                                    await connection.InvokeAsync("SendVideo", 3);
+                                    await connection.InvokeAsync("sendVideo", 3);
                                     break;
                                 default:
                                     messaggio = "lettera inserita sbagliata";
