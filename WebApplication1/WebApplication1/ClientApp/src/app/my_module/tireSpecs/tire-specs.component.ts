@@ -30,7 +30,13 @@ export class tireSpecsComponent implements OnInit {
 
       this.signalRListnter();
     }
-   
+    ngOnDestroy(): void {
+      //Called once, before the instance is destroyed.
+      //Add 'implements OnDestroy' to the class.
+      this.connection.connection.off("showVideo");
+
+    }
+
     mock()
     {
         this.tire={
