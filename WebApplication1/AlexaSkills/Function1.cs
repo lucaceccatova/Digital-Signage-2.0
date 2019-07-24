@@ -86,39 +86,6 @@ namespace AlexaSkills
                                     //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                             
                         await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
-                        
-
-                        
-                        
-                        
-                        //------------------------------------------------------------------//
-                        //}
-                            //else/*if (!intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH"))*///-- Enter here when we user selected a category and then give us a correct video name
-                            //{
-
-                            //    /*string[] tmpSplit = intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Values[0].Value.Id.Split(";"); //-- In alexa skill console, the 'VideoNames' slot has an id like: "X;Y" where X => id of category that the video is of AND Y => id of the video; So we need to split by ";" this format of the 'VideoNames' slot to have the both ID
-                            //    if (int.Parse(tmpSplit[0]) == idCategory) //-- when the video that the user selected has the same category ID of the category that the user choosed before it will enter here and send to the front-end the video 
-                            //    {*/
-
-                            //    //BOOLEAN DA SIGNALR FRONTEND PER VERIFICARE SE VIDEO ESISTE O MENO
-                            //        messaggio = $"Buona visione";
-                            //        await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
-                            //        timer = 0;
-
-                            //    //}
-                            //    //else //-- enter here because user give us a video that isn't part of the category that the user choosed before
-                            //    //{
-                            //    //    messaggio = $"Il video che hai richiesto non è presente qui, Tutti i nomi dei video disponibili sono riportati sullo schermo";
-                            //    //    timer = 0;
-                            //    //}
-
-                            //}
-                            //else //-- Enter here when the video name that is given is incorrect
-                            //{
-                            //    messaggio = $"Non ho capito purtroppo, dimmi il nome del video che vuoi guardare";
-                            //    timer = 0;
-                            //}
-                        //--------------------------------------------------------------------------------------------------------//
                         }
                         else
                         {
@@ -158,6 +125,7 @@ namespace AlexaSkills
                             messaggio = "MOSTRA UNA RUOTA IN SPECIFICO";
                             ShowTireInfoInvoked = true;
                             ShowTireInvoked = false;
+                            videosUtteranceInovked = true;
                             await connection.InvokeAsync("AskIdTire", int.Parse(intentRequest.Intent.Slots["numero"].Value));
 
 
@@ -172,6 +140,31 @@ namespace AlexaSkills
                         }
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
+                        break;
+                    case "ShowVideoTireIntent":
+                        if (ShowTireInfoInvoked != false)
+                        {
+                            switch (intentRequest.Intent.Slots["lettera"].Value.ToLower())
+                            {
+                                case "a":
+                                    messaggio = "video 1";
+                                    await connection.InvokeAsync("SendVideo", 1);
+                                    break;
+                                case "b":
+                                    messaggio = "video 2";
+                                    await connection.InvokeAsync("SendVideo", 2);
+                                    break;
+                                case "c":
+                                    messaggio = "video 3";
+                                    await connection.InvokeAsync("SendVideo", 3);
+                                    break;
+                                default:
+                                    messaggio = "lettera inserita sbagliata";
+                                    break;
+                            }
+                            response = ResponseBuilder.Tell(messaggio);
+                            response.Response.ShouldEndSession = false;
+                        }
                         break;
                     case "CarIntent": //RIGUARDARE GESTOREBL E DB
                         if (ShowTireInvoked != false)
