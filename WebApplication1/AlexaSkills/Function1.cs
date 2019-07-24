@@ -80,7 +80,7 @@ namespace AlexaSkills
 
                             //if (idCategory == 0 /*&& !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")*/) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
                             //{
-                            if (int.Parse(intentRequest.Intent.Slots["numero"].Value) > 6 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
+              /*CONTROLLARE*/if (int.Parse(intentRequest.Intent.Slots["numero"].Value) < 6 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
                             { //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                                 messaggio = $"Buona visione";
                                 timer = 0;
