@@ -5,7 +5,6 @@ import { VideoRoutingModule } from './videoGalleryRoutingModule';
 import { VideoGalleryComponent } from './video-gallery.component';
 import { HttpClientModule } from '@angular/common/http';
 import { fullScreenVideo } from './fullScreenVideo/fullScreenVideo.component';
-import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
 @NgModule({
   declarations: [VideoGalleryComponent,fullScreenVideo],
   imports: [
@@ -14,6 +13,6 @@ import { sharedStringService } from 'src/app/Services/sharedServices/sharedStrin
     HttpClientModule,
   ],
  // exports:[VideoGalleryComponent],
-  providers:[GetMediaService,sharedStringService]
+  providers:[GetMediaService]
 })
 export class VideoGalleryModule { }
