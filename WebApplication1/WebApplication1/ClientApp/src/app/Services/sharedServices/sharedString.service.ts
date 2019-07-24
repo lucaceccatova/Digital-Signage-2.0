@@ -10,4 +10,12 @@ import { videoPage } from 'src/app/Models/videoPage';
 export class sharedStringService {
     singleVideo:element;
     pages:videoPage[]=null;
+    index:number;
+    
+    reset()
+    {
+        this.singleVideo=null;
+        this.pages=null;
+        this.index=null;
+    }
 }

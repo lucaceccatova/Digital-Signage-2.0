@@ -38,11 +38,13 @@ export class VideoGalleryComponent implements OnInit {
     
     if(this.stream.pages!=null)
     {
+      this.indexPage=this.stream.index;
       this.pages=this.stream.pages;
-      this.stream.pages=null;
+      this.stream.reset();
     }
     else{
       this.elements=this.streamElements.elements;
+      //receive n elements and divide it in pages of 6 elements
       this.divideInMorePages();
     }
     //contains function invoked by signalr
@@ -79,7 +81,7 @@ signalRListner()
     this.pages=[];
     this.elements=data;
     this.divideInMorePages();
-    this.reloadNgFor();
+    //this.reloadNgFor();
   });
   //pass to show-tire 
   this.connectionService.connection.on("tireShow",(data)=>
@@ -104,6 +106,12 @@ signalRListner()
   });
 }
 
+trackByFn(index,item)
+{
+  if(!item)
+    return null;
+  return index;
+}
 //to divide a json that contains more than 6 videos in object with six or less video
 divideInMorePages()
 {
@@ -132,12 +140,16 @@ divideInMorePages()
   //without expose the Url in the Url 
   sendData(i:element)
   {
-    this.stream.pages=this.pages;
-    this.stream.singleVideo=i;
-    console.log(i);
+    this.backupData(i);
     this.router.navigateByUrl("/video/media");
   }
 
+  backupData(i:element)
+  {
+    this.stream.pages=this.pages;
+    this.stream.singleVideo=i;
+    this.stream.index=this.indexPage;
+  }
   //mockup function that take data from web api
   loadVideo(url:string)
   {
@@ -210,7 +222,13 @@ divideInMorePages()
     {
       if(this.indexPage==index)
         return true;
-        else
-        return false; 
+      return false; 
+    }
+    
+    isVisible(i:number)
+    {
+      if(i==this.indexPage)
+        return true;
+      return false;
     }
 }
