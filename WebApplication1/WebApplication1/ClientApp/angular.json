@@ -118,6 +118,41 @@
           }
         }
       }
+    },
+    "videoGallery": {
+      "projectType": "library",
+      "root": "projects/video-gallery",
+      "sourceRoot": "projects/video-gallery/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/video-gallery/tsconfig.lib.json",
+            "project": "projects/video-gallery/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/video-gallery/src/test.ts",
+            "tsConfig": "projects/video-gallery/tsconfig.spec.json",
+            "karmaConfig": "projects/video-gallery/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/video-gallery/tsconfig.lib.json",
+              "projects/video-gallery/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "ClientApp"
 }

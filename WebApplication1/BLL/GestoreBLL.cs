@@ -5,7 +5,7 @@ namespace BLL
 {
     public static class GestoreBLL
     {
-        private static string connectionDB = @"Server = localhost\SQLEXPRESS02; Database = MediaDB; Trusted_Connection = True;";
+        private static string connectionDB = @" Server = tcp:sd-msdn.database.windows.net;Database=vianima-dev-db;User ID=db_user@sd-msdn.database.windows.net;Password=Password.1!;Trusted_Connection=False;Encrypt=True;";
 
         public static List<Media> GetMedia()
         {

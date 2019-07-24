@@ -61,9 +61,9 @@ ngOnDestroy(): void {
     element.unsubscribe();
   });
   this.connectionService.connection.off("showVideo");
+  this.connectionService.connection.off("receivePage");
 }
-
-
+//
 //signalR directives
 signalRListner()
 {

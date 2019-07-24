@@ -11,7 +11,7 @@
                 <video [muted]="'muted'" autoplay="autoplay" loop >
                   <source src={{media.path}}>
                 </video>
-                <div class="infoBox">{{k+1}}) {{media.name}}
+                <div class="infoBox">{{k+1}}) {{media.name | uppercase}}
                 </div>
             </a>
           </div>
