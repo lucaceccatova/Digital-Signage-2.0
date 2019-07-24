@@ -11,10 +11,11 @@ import {CommonModule} from '@angular/common';
     FormsModule,
     sliderRoutingModule,
     HttpClientModule,
-    CommonModule,  
+    CommonModule,
+      
   ],
   declarations: [ SliderComponent ],
-  providers:[GetMediaService]
+  providers:[GetMediaService,]
 })
 export class SliderModule { 
 }

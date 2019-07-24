@@ -11,6 +11,8 @@ import $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/sharedServices/shareElement.Service';
 import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
 import { ShareService } from 'src/app/Services/sharedServices/universalShareService';
+import { environment } from 'src/environments/environment';
+
 @Component({
   encapsulation:ViewEncapsulation.None,
   templateUrl: 'slider.component.html',
@@ -20,7 +22,7 @@ import { ShareService } from 'src/app/Services/sharedServices/universalShareServ
 export class SliderComponent implements OnInit,OnDestroy
 {
   //url:string="/assets/loadeddata.json";
-url:string="https://localhost:44303/api/getdati"
+url:string=environment.baseUrl+"api/getdati";
   public elements:element[];
   unsubscribes: Subscription[]=[];
   //startingSlide is the index of the media displayed in slider
@@ -42,119 +44,103 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
 {
   
 }
-
-  
-ngOnInit()
-{
-  //obsolete, read param from URL for gallery ID
-  this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
-  //take data by a HTTP get request to url saved in url string 
-  this.getDataMock();
-  //
-  this.signalRConnection();    
-}
-
-
-//to keep application lightweight also after long session
-ngOnDestroy()
-{
-  this.unsubscribes.forEach(element => {
-    element.unsubscribe();
-  });
-}
-
-
-  //get json from BE and deserialize it into an array of element
- getDataMock()
- {
-   console.log(this.MyId);
-  this.temp=this.url+'/'+this.MyId.toString();
-   this.unsubscribes.push(this.http.get(this.url).subscribe(data =>
-      {
-        this.elements=data;
-        this.slideEngine();
-      })  
-    );
- }
-
-  //recursive function that display a slide by changing variable starting slide
-slideEngine()
-{
-  if (this.elements[this.startingSlide].format == 0) {
-    this.playVideoFromId("vid" + this.startingSlide);
-  }
-    this.setTimeoutInterceptor=setTimeout(() => {
-      //if slides are ended restart from zero
-      
-       if(this.elements.length>(this.startingSlide+1))
-      {
-        //fadeOut all the box then change img inside slider
-        $("#mySliderBox").fadeOut(500);
-         setTimeout(() => {
-          this.startingSlide++;
-          this.slideEngine();
-        }, 500);
-        //fadeIn the bo with new img
-        $("#mySliderBox").fadeIn(500);
-        //to start video when is displayed in the slider
-        //if(this.elements[this.startingSlide].value==0)
-        //    this.playVideoFromId("vid"+this.startingSlide);    
+  //#region init
+    ngOnInit()
+    {
+      //obsolete, read param from URL for gallery ID
+      this.MyId=(Number).parseInt(this._Activatedroute.snapshot.paramMap.get("id"));
+      //take data by a HTTP get request to url saved in url string 
+      this.getData();
+      //
+      this.signalRConnection();    
+    }
+  //#endregion
+  //#region destroy
+    //to keep application lightweight also after long session
+    ngOnDestroy()
+    {
+      this.unsubscribes.forEach(element => {
+        element.unsubscribe();
+      });
+    }
+  //#endregion
+  //#region sliderEngine 
+    //recursive function that display a slide by changing variable starting slide
+    slideEngine()
+    {
+      if (this.elements[this.startingSlide].format == 0) {
+        this.playVideoFromId("vid" + this.startingSlide);
       }
-      else
-      {
-        $("#mySliderBox").fadeOut(500);
-        setTimeout(() => {
-          this.startingSlide=0;
-          this.slideEngine();
-        }, 500);
-       
-        $("#mySliderBox").fadeIn(500);
+        this.setTimeoutInterceptor=setTimeout(() => {
+          //if slides are ended restart from zero
+          
+          if(this.elements.length>(this.startingSlide+1))
+          {
+            //fadeOut all the box then change img inside slider
+            $("#mySliderBox").fadeOut(500);
+            setTimeout(() => {
+              this.startingSlide++;
+              this.slideEngine();
+            }, 500);
+            //fadeIn the bo with new img
+            $("#mySliderBox").fadeIn(500);
+            //to start video when is displayed in the slider
+            //if(this.elements[this.startingSlide].value==0)
+            //    this.playVideoFromId("vid"+this.startingSlide);    
+          }
+          else
+          {
+            $("#mySliderBox").fadeOut(500);
+            setTimeout(() => {
+              this.startingSlide=0;
+              this.slideEngine();
+            }, 500);
+          
+            $("#mySliderBox").fadeIn(500);
+          }
+          
+        }, this.elements[this.startingSlide].timer*1000);
       }
+      //to stop slider when leaving the component
+      stopEngine()
+      {
+        clearTimeout(this.setTimeoutInterceptor);
+      }
+  //#endregion
+  //#region signalR directives
+    //function that estabilish a connection withe backend service
+    signalRConnection(){  
+      this.connectionService.connection.on("showVideoGallery", (data)=>
+      {
+        //call service that send data to video gallery component
+        this.streamElements.elements=data;
       
-    }, this.elements[this.startingSlide].timer*1000);
-  }
-
-
-  //function that estabilish a connection withe backend service
-  signalRConnection(){  
-    this.connectionService.connection.on("showVideoGallery", (data)=>
+        //ng route to video gallery component
+        this.stopEngine();
+        this.router.navigateByUrl("/video")
+      });
+      this.connectionService.connection.on("showVideo",data=>
+      {
+        //show one single video
+      });
+      this.connectionService.connection.on("showCarTires",data=>
+      {
+        this.UniversalShare.sharedObject=data;
+        this.stopEngine();
+        this.router.navigateByUrl("/tire");
+      });
+      
+    }
+  //#endregion
+  //#region utilities
+    //start a video
+    playVideoFromId(id:string)
     {
-      //call service that send data to video gallery component
-      this.streamElements.elements=data;
-    
-      //ng route to video gallery component
-      this.stopEngine();
-      this.router.navigateByUrl("/video")
-    });
-    this.connectionService.connection.on("showVideo",data=>
-    {
-      //show one single video
-    });
-    this.connectionService.connection.on("showCarTires",data=>
-    {
-      this.UniversalShare.sharedObject=data;
-      this.stopEngine();
-      this.router.navigateByUrl("/tire");
-    });
-    
-  }
-
-  //to stop slider when leaving the component
-  stopEngine()
-  {
-    clearTimeout(this.setTimeoutInterceptor);
-  }
-
-  
-  playVideoFromId(id:string)
-  {
-    console.log(id);
-    let vid = <HTMLVideoElement>document.getElementById(id);
-    console.log(vid);
-    //uncomment after vs start
-    vid.play();
-  }
-  
+      let vid = <HTMLVideoElement>document.getElementById(id);
+      vid.play();
+    }
+  //#endregion
+  //#region dom logic
   //trying to move logic from dom to typescript
   visible(index:number)
   {
@@ -162,5 +148,18 @@ slideEngine()
     return true;
     else 
       return false;
-  }  
+  } 
+//#endregion 
+  //#region mockup
+      //get json from BE and deserialize it into an array of element
+      getData()
+      {
+        this.unsubscribes.push(this.http.get(this.url).subscribe(data =>
+            {
+              this.elements=data;
+              this.slideEngine();
+            })  
+          );
+      }
+    //#endregion   
 }
