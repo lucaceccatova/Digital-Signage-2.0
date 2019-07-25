@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { myRouter } from './router/router.module';
+import { FiltersPipe } from './Pipes/filters.pipe';
 let AppModule = class AppModule {
 };
 AppModule = tslib_1.__decorate([
     NgModule({
         declarations: [
-            AppComponent
+            AppComponent,
+            FiltersPipe
         ],
         imports: [
             BrowserModule,

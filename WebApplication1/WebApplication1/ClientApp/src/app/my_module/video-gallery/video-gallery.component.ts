@@ -79,16 +79,6 @@ export class VideoGalleryComponent implements OnInit {
       this.elements=data;
       this.divideInMorePages();
     });
-    //pass to show-tire 
-    this.connectionService.connection.on("tireShow",(data)=>
-    {
-      this.tireStream.tires=data;
-      console.log(this.tireStream.tires);
-      console.log(data);
-      this.connectionService.connection.off("tireShow");
-      this.router.navigateByUrl('/tire');
-    });
-
     //switch page if invoked by backend. (why not a bool :(  )
     this.connectionService.connection.on('receivePage',(data)=>
     {
