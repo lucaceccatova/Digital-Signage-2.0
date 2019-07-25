@@ -3,6 +3,7 @@ import { sharedStringService } from 'src/app/Services/sharedServices/sharedStrin
 import { Router } from '@angular/router';
 import { element } from 'src/app/Models/Element';
 import {Location} from '@angular/common';
+import { TimeoutIdService } from 'src/app/Services/sharedServices/timeout-id.service';
 @Component({
     templateUrl:'fullScreenVideo.component.html'
 })
@@ -10,12 +11,13 @@ import {Location} from '@angular/common';
 export class fullScreenVideo
 {
     singleVideo:element;
-    constructor(private stream:sharedStringService,private location:Location)  { }
+    constructor(private stream:sharedStringService,private location:Location,
+        private timeout:TimeoutIdService)  { }
 
     ngOnInit(): void {
     
         this.singleVideo=this.stream.singleVideo;
-        setTimeout(() => {
+        this.timeout.videoTimeout=setTimeout(() => {
            this.location.back(); 
         }, this.singleVideo.timer*1000);
     }

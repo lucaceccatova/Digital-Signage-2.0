@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { tire } from 'src/app/Models/tire';
 import { element } from 'src/app/Models/Element';
 import { tireShareService } from '../../Services/sharedServices/shareTireService';
-import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
 import { Router } from '@angular/router';
 import { preserveSpecService } from 'src/app/Services/preserveSpecComponent/preserveSpec.service';

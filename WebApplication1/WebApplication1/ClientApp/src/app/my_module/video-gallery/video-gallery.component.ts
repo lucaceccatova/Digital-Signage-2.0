@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import {videoPage} from 'src/app/Models/videoPage';
 import { shareElementsService } from 'src/app/Services/sharedServices/shareElement.Service';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
-import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { tireShareService } from 'src/app/Services/sharedServices/shareTireService';
 @Component({
   selector: 'app-video-gallery',
