@@ -1048,7 +1048,7 @@ namespace DAL
                             if (reader.HasRows)
                             {
                                 //CONTROLLA 
-                                while (reader.Read())
+                                while (reader.Read()&&tmpTire.Count<=3)
                                 {
                                     var tireCar = new Tire();
                                     tireCar.id = (int)reader["id"];
@@ -1154,7 +1154,7 @@ namespace DAL
                         if (reader.HasRows)
                         {
 
-                            while (reader.Read())
+                            while (reader.Read() && tires.Count <= 3)
                             {
 
                                 tireCar = new Tire();
@@ -1459,6 +1459,140 @@ namespace DAL
                 }
 
                 return tires;
+            }
+        }
+
+        public bool CarExist(string brand)
+        {
+            bool exist;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select * from car where brand='" + brand.ToUpper() + "'";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            exist = true;
+                        }
+                        else
+                        {
+                            exist = false;
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        exist = false;
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        exist = false;
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return exist;
+            }
+        }
+
+        public List<string> GetCarModel(string brand)
+        {
+            List<string> models = new List<string>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select name from car where brand = '"+brand.ToUpper()+"'";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                if (!models.Contains(reader["name"].ToString()))
+                                {
+                                    models.Add(reader["name"].ToString());
+                                }
+                            }
+
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return models;
+            }
+
+
+        }
+
+        public List<Car> GetCars()
+        {
+            List<Car> cars = new List<Car>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))  //MANCA GESTIONE ERRORI
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.CommandText = "select name,brand from car";
+                    sqlCommand.Connection = connection;
+
+                    try
+                    {
+
+                        connection.Open();
+                        var reader = sqlCommand.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+
+                            while (reader.Read())
+                            {
+                                Car car = new Car();
+                                car.brand = reader["brand"].ToString();
+                                car.invokeName = reader["name"].ToString();
+                                cars.Add(car);
+                            }
+
+                        }
+                        reader.Close();
+                        connection.Close();
+                    }
+                    catch (SqlException)
+                    {
+                        //Stringa errata
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        //problemi nella tabella del database
+                    }
+                }
+
+                return cars;
             }
         }
     }

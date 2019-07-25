@@ -282,6 +282,21 @@ namespace BLL
         {
             return new DB_Access(connectionDB).TypeExists(tiipo);
         } 
+
+        public static bool CarExists(string brand)
+        {
+            return new DB_Access(connectionDB).CarExist(brand);
+        }
+
+        public static List<string> GetCarModels(string brand)
+        {
+            return new DB_Access(connectionDB).GetCarModel(brand);
+        }
+
+        public static List<Car> GetCars()
+        {
+            return new DB_Access(connectionDB).GetCars();
+        }
     }
 
 

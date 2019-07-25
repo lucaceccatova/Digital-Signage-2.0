@@ -23,9 +23,9 @@ namespace WebApplication1.Models
         {
             await Clients.All.SendAsync("showVideo", m);
         }
-        public async Task returnToSlide(bool b)
+        public async Task returnToSlide()
         {
-            await Clients.All.SendAsync("goToSlide",b);
+            await Clients.All.SendAsync("goToSlide");
         }
         public async Task SendTiresByType(List<Tire> tires)
         {
