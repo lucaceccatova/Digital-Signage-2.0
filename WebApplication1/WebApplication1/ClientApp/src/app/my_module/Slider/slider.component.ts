@@ -12,6 +12,8 @@ import { shareElementsService } from 'src/app/Services/sharedServices/shareEleme
 import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
 import { ShareService } from 'src/app/Services/sharedServices/universalShareService';
 import { environment } from 'src/environments/environment';
+import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
+import { tireShareService } from 'src/app/Services/sharedServices/shareTireService';
 
 @Component({
   encapsulation:ViewEncapsulation.None,
@@ -40,7 +42,9 @@ url:string=environment.baseUrl+"api/getdati";
   // this is the id of the gallery that will be displayed,
   //http get will have a int param
 constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,private router : Router,private streamElements:shareElementsService,
-  private connectionService:SignalRService,private UniversalShare:ShareService)
+  private connectionService:SignalRService,
+  private UniversalShare:ShareService,
+  private tireStream:tireShareService)
 {
   
 }
@@ -119,10 +123,13 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
         this.stopEngine();
         this.router.navigateByUrl("/video")
       });
-      this.connectionService.connection.on("showVideo",data=>
-      {
-        //show one single video
-      });
+      //pass to show-tire 
+    this.connectionService.connection.on("tireShow",(data)=>
+    {
+      this.tireStream.tires=data;
+      this.connectionService.connection.off("tireShow");
+      this.router.navigateByUrl('/tire');
+    });
       this.connectionService.connection.on("showCarTires",data=>
       {
         this.UniversalShare.sharedObject=data;
