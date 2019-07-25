@@ -78,13 +78,11 @@ namespace AlexaSkills
                         }
                         else if (intentRequest.Intent.Slots["numero"].Value != null && videosUtteranceInovked == true)// ----- Enter here only when user can tell to alexa to play a video 
                         {
-
-                            //if (idCategory == 0 /*&& !intentRequest.Intent.Slots["VideoNames"].Resolution.Authorities[0].Status.Code.Equals("ER_SUCCESS_NO_MATCH")*/) //-- Enter here when we are in the "All Videos" area and user gave an correct name of the video
-                            //{
-              /*CONTROLLARE*/if (int.Parse(intentRequest.Intent.Slots["numero"].Value) < 6 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
+                            timer = 0;
+                            if (int.Parse(intentRequest.Intent.Slots["numero"].Value) < 6 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
                             { //FARMI INVIARE DA FRONT END CON SIGNALR UN BOOLEAN SE VIDEO ESISTE O NO 
                                 messaggio = $"Buona visione";
-                                timer = 0;
+                                
                                 await connection.InvokeAsync("sendVideo", int.Parse(intentRequest.Intent.Slots["numero"].Value));
                             }
                             else
@@ -94,6 +92,7 @@ namespace AlexaSkills
                         }
                         else
                         {
+                            timer = 0;
                             messaggio = $"Mi spiace non ho video da mostrarti in quest'area. Se vuoi vedere i filmati basta che mi dici :'Alexa, voglio vedere i video'";
                         }
                         response = ResponseBuilder.Tell(messaggio); //-- response will contain the message that we want send to Alexa 
@@ -118,12 +117,12 @@ namespace AlexaSkills
                                         messaggio += types[i] + " , ";
                                     }
                                 }
-                                     timer = 0;
+                                timer = 0;
                             }
                             else
                             {
                                 messaggio = "Hey puoi dirmi che auto hai ? oppure che auto vorresti avere ?";
-                                timer = 5000;
+                                timer = 6000;
                                 ShowTireInvoked = true;
                                 videosUtteranceInovked = false;
                                 //messaggio = "Visuallizo le ruote per type";
@@ -133,62 +132,87 @@ namespace AlexaSkills
                         response.Response.ShouldEndSession = false;
                         break;
                     case "ShowTireInfoIntent": //RIGUARDARE GESTOREBL E DB
-                        if (ShowTireInvoked != false) //Enter here only if front-end is on the "Video Gallery" area (mean that ShowVideosIntent has to be invoked before)
+                        if (ShowTireInvoked != false)
                         {
-                            //CHIEDERE A STEFANO SE ALEXA CHIEDE ALL'UTENTE RIGUARDO L'AUTO
-
-                            messaggio = "In questa schermata puoi vedere tutte le informazioni sul pneumatico che hai scelto, inoltre se vuoi posso mostrarti i video, basta che mi dici il numero del filmato";
-                            ShowTireInfoInvoked = true;
-                            ShowTireInvoked = false;
-                            videosUtteranceInovked = true;
-                            await connection.InvokeAsync("AskIdTire", int.Parse(intentRequest.Intent.Slots["numero"].Value));
-
+                            if (int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 3 || int.Parse(intentRequest.Intent.Slots["numero"].Value) <= 0)
+                            {
+                                timer = 1000;
+                                messaggio = "In questa schermata puoi vedere tutte le informazioni sul pneumatico scelto. Ah se vuoi posso mostrarti qualche video, basta che mi dici quale vuoi vedere";
+                                ShowTireInfoInvoked = true;
+                                ShowTireInvoked = false;
+                                videosUtteranceInovked = true;
+                                await connection.InvokeAsync("AskIdTire", int.Parse(intentRequest.Intent.Slots["numero"].Value));
+                            }
+                            else
+                            {
+                                messaggio = "Mi spiace il numero del pneumatico che hai richiesto è errato. I numeri disponibili sono riportati sul display";
+                            }
                             //MANCA METODO CHE RESTITUISCE I VIDEO IN BASE ALLA GOMMA SCELTA E SE POSSIBILE ANCHE IN BASE ALL'AUTO.
                             //await connection.InvokeAsync("sendTireAndVideos", GestoreBLL.GetTireById(int.Parse(intentRequest.Intent.Slots["ruote"].Resolution.Authorities[0].Values[0].Value.Id))); //Sending the tire selected to the front-end
                         }
                         else
                         {
-                            messaggio = $" è STATO INVOCATO SHOW TIRE INFO senza passare dall'area show tire";
+                            messaggio = $"Non ho capito mi spiace";
                         }
+                        
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
-                    //case "ShowVideoTireIntent":
-                    //    if (ShowTireInfoInvoked != false)
-                    //    {
-                    //        switch (intentRequest.Intent.Slots["lettera"].Value.ToLower())
-                    //        {
-                    //            case "a":
-                    //                messaggio = "video 1";
-                    //                await connection.InvokeAsync("sendVideo", 1);
-                    //                break;
-                    //            case "b":
-                    //                messaggio = "video 2";
-                    //                await connection.InvokeAsync("sendVideo", 2);
-                    //                break;
-                    //            case "c":
-                    //                messaggio = "video 3";
-                    //                await connection.InvokeAsync("sendVideo", 3);
-                    //                break;
-                    //            default:
-                    //                messaggio = "lettera inserita sbagliata";
-                    //                break;
-                    //        }
-                    //        response = ResponseBuilder.Tell(messaggio);
-                    //        response.Response.ShouldEndSession = false;
-                    //    }
-                    //    break;
-                    case "CarIntent": //RIGUARDARE GESTOREBL E DB
-                        if (ShowTireInvoked != false) //FARE CONTROLLI
+                    case "CarIntent": //RIGUARDARE GESTOREBL E DB 
+                        if (ShowTireInvoked != false)
                         {
-                            carUtteranceInvoked = true;
-                            messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
-                            await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                            if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length>1) {
+                                timer = 0;
+                                if (GestoreBLL.CarExists(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name))
+                                {
+                                    messaggio = "Potresti dirmi il modello della " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
+                                    var models = GestoreBLL.GetCarModels(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name);
+                                    if (models.Count >= 3) { 
+                                        messaggio += " ? Ti consiglio alcuni modelli disponibili : " + models[0] + " ," + models[1] + " ," + models[2] + " ,";
+                                    }
+                                    else
+                                    {
+                                        messaggio += " ? Sono disponibili questi due modelli : " + models[0] + " ," + models[1];
+                                    }
+
+                                }
+                                else
+                                {
+                                    var car = GestoreBLL.GetCars();
+                                    messaggio = "La " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name + " non è disponibile. Puoi dirmi il nome di un'altra auto ? Se vuoi puoi scegliere una tra queste : ";
+                                    if (car.Count >= 4)
+                                    {
+                                        for(int i = 0; i < 4; i++)
+                                        {
+                                            messaggio += car[i].brand + " " + car[i].invokeName + " ,";
+                                        }
+                                    }
+                                    else if(car.Count<3)
+                                    {
+                                        for (int i = 0; i < 2; i++)
+                                        {
+                                            messaggio += car[i].brand + " " + car[i].invokeName + " ,";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        messaggio= messaggio = "La " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name + "non è disponibile. Per il momento è disponibile solo questa auto: "+car[0].brand + " " + car[0].invokeName;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                timer = 2000;
+                                carUtteranceInvoked = true;
+                                messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
+                                await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                            }
                         }
                         else
                         {
                             messaggio = "Mi spiace ma non ho capito che cosa vuoi";
                         }
+                        
                         response = ResponseBuilder.Tell(messaggio);
                         response.Response.ShouldEndSession = false;
                         break;
@@ -196,10 +220,11 @@ namespace AlexaSkills
                             if (videosUtteranceInovked != false || ShowTireInvoked!= false || ShowTireInfoInvoked!= false) //Enter here when we are in other areas (Video gallery, Custom your car) and the user want to return to the slider
                             {
                             messaggio = $"Va bene, ritorno allo slider";
-                            await connection.InvokeAsync("returnToSlide", true);
+                            await connection.InvokeAsync("returnToSlide");
                             videosUtteranceInovked = false;
                             ShowTireInfoInvoked = false;
                             ShowTireInvoked = false;
+                            carUtteranceInvoked = false;
                             }
                             else //If user invokes "ReturnToSlideIntent" from the slider area
                             {
@@ -210,7 +235,7 @@ namespace AlexaSkills
                             response.Response.ShouldEndSession = false;  //-- ShouldEndSession is set to false because otherwise alexa will close our skill and user can't continue to interact and have to open again the skill
                         break;
                     case "NextPageIntent":
-                        if (videosUtteranceInovked != false)
+                        if (videosUtteranceInovked != false || ShowTireInfoInvoked != false)
                         {
                             await connection.InvokeAsync("sendPage", "next");
                             //messaggio = $"next";
@@ -224,7 +249,7 @@ namespace AlexaSkills
                         response.Response.ShouldEndSession = false;
                         break;
                     case "PreviousPageIntent":
-                        if (videosUtteranceInovked != false)
+                        if (videosUtteranceInovked != false || ShowTireInfoInvoked != false)
                         {
                             await connection.InvokeAsync("sendPage", "previus");
                             //messaggio = $"previous";
