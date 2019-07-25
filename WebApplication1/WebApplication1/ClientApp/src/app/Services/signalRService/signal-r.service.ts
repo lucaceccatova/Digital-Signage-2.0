@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HubConnection, HubConnectionBuilder} from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
 import { Router } from '@angular/router';
+import { TimeoutIdService } from '../sharedServices/timeout-id.service';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 
 export class SignalRService {
   connection:HubConnection;
-  constructor(private router:Router) { 
+  constructor(private router:Router,private timeoutClose:TimeoutIdService) { 
     this.connect();
     this.defaultMethod();
 
@@ -36,15 +37,18 @@ export class SignalRService {
 
   defaultMethod()
   {
+    
     this.connection.onclose(()=>this.connect());
-    this.connection.on('goToSlide',(data=>
+    this.connection.on('goToSlide',()=>{
+      if(this.timeoutClose.videoTimeout!=null)
       {
-        if(data==true)
-        {
-          
-          this.router.navigateByUrl("/slider");
-        }
-      }));
+        clearTimeout(this.timeoutClose.videoTimeout);
+        this.timeoutClose.videoTimeout=null;
+      }
+      this.router.navigateByUrl("/slider");
+
+    });
+   
   }
   //may move all Invoke functions in this service for better mantainance of code
 }

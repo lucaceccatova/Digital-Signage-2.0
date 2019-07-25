@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 import { Routes } from '@angular/router';
 import $ from 'jquery';
 import { shareElementsService } from 'src/app/Services/sharedServices/shareElement.Service';
-import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { ShareService } from 'src/app/Services/sharedServices/universalShareService';
 import { environment } from 'src/environments/environment';
 import { sharedStringService } from 'src/app/Services/sharedServices/sharedString.service';
@@ -66,6 +66,7 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
       this.unsubscribes.forEach(element => {
         element.unsubscribe();
       });
+      this.stopEngine();
     }
   //#endregion
   //#region sliderEngine 
@@ -77,7 +78,6 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
       }
         this.setTimeoutInterceptor=setTimeout(() => {
           //if slides are ended restart from zero
-          
           if(this.elements.length>(this.startingSlide+1))
           {
             //fadeOut all the box then change img inside slider
@@ -118,18 +118,18 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
       {
         //call service that send data to video gallery component
         this.streamElements.elements=data;
-      
+        
         //ng route to video gallery component
         this.stopEngine();
         this.router.navigateByUrl("/video")
       });
       //pass to show-tire 
-    this.connectionService.connection.on("tireShow",(data)=>
-    {
-      this.tireStream.tires=data;
-      this.connectionService.connection.off("tireShow");
-      this.router.navigateByUrl('/tire');
-    });
+      this.connectionService.connection.on("tireShow",(data)=>
+      {
+        this.tireStream.tires=data;
+        this.connectionService.connection.off("tireShow");
+        this.router.navigateByUrl('/tire');
+      });
       this.connectionService.connection.on("showCarTires",data=>
       {
         this.UniversalShare.sharedObject=data;

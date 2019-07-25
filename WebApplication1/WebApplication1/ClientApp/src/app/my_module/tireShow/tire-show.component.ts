@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { tire } from 'src/app/Models/tire';
 import { tireShareService } from 'src/app/Services/sharedServices/shareTireService';
 import $ from 'jquery';
-import { SignalRService } from 'src/app/Services/sharedServices/signal-r.service';
+import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { element } from '../../Models/Element';
 import { RouterModule, Router } from '@angular/router';
 @Component({
@@ -18,20 +18,32 @@ export class tireShowComponent implements OnInit {
   id: number;
   videos: element[] = [];
   selectedTire: tire;
+  emptyTire:tire={
+    id:-1,
+    model:null,
+    price:null,
+    size:null,
+    tirePath:null,
+    tireType:null,
+  }
 
     ngOnInit(): void { 
         this.tires=this.tiresStream.tires;
         console.log(this.tires);
        // this.mockFunction();
-        $("#first").animate({opacity:1},700);
+        $("#1").animate({opacity:1},700);
         setTimeout(() => {
-            $("#second").animate({opacity:1},700);
+            $("#2").animate({opacity:1},700);
             setTimeout(() => {
-                $("#third").animate({opacity:1},700);
+                $("#3").animate({opacity:1},700);
 
             }, 700);
         }, 700);
-        this.signalRListner();
+        this.signalRListner();        }
+        ngOnDestroy(): void {
+          //Called once, before the instance is destroyed.
+          //Add 'implements OnDestroy' to the class.
+          this.listner.connection.off("tireShow");
         }
     mockFunction()
     {
@@ -55,23 +67,19 @@ export class tireShowComponent implements OnInit {
     {
       this.listner.connection.on("receiveAskIdTire",data=>
         {
-          console.log(data);
           this.selectedTire = this.tires[data-1];
           this.id = this.findId(data);
           this.listner.connection.send("SendIdTire",this.id)
           .catch(err => console.error(err));
         });
       this.listner.connection.on("receiveTireVideos", data => {
-        this.videos = data;
-        console.log(data);
+       this.videos=data;
       this.goToSpec();
       });
       this.listner.connection.on("tireShow",data=>
       {
-        console.log(this.tires);
-        this.tires=data;
-        console.log(this.tires);
-
+        console.log(data);
+        this.changeTire(data);
       });
 
   }
@@ -83,5 +91,27 @@ export class tireShowComponent implements OnInit {
     findId(id:number):number
     {
         return this.tires[id].id;
+    }
+    changeTire(newTires:tire[])
+    {
+      while(newTires.length<this.tires.length)
+      {
+        newTires.push(this.emptyTire);
+      }
+      
+      newTires.forEach((tire,index) => {
+        if(this.tires[index].id!=tire.id)
+        {
+          $("#"+(index+1)).fadeOut(700);
+            setTimeout(() => {
+              if(tire!=this.emptyTire)
+            {
+              this.tires[index]=tire;
+              $("#"+(index+1)).fadeIn(700);
+            }
+            }, 700);
+            
+        }
+      });
     }
 }
