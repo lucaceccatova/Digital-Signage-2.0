@@ -44,6 +44,11 @@ export class tireShowComponent implements OnInit {
           //Called once, before the instance is destroyed.
           //Add 'implements OnDestroy' to the class.
           this.listner.connection.off("tireShow");
+          this.listner.connection.on("tireShow",data=>
+          {
+            this.tiresStream.tires=data;
+        this.router.navigateByUrl('/tire');
+          });
         }
     mockFunction()
     {
