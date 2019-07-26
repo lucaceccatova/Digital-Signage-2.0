@@ -30,15 +30,14 @@ export class tireShowComponent implements OnInit {
     ngOnInit(): void { 
         this.tires=this.tiresStream.tires;
         console.log(this.tires);
-       // this.mockFunction();
-        $("#1").animate({opacity:1},700);
-        setTimeout(() => {
-            $("#2").animate({opacity:1},700);
-            setTimeout(() => {
-                $("#3").animate({opacity:1},700);
 
-            }, 700);
-        }, 700);
+      $("#1").addClass("slide-in-bottom");
+      setTimeout(() => {
+        $("#2").addClass("slide-in-bottom");
+        setTimeout(() => {
+          $("#3").addClass("slide-in-bottom");
+        }, 1000);
+      }, 1000);
         this.signalRListner();        }
         ngOnDestroy(): void {
           //Called once, before the instance is destroyed.
@@ -83,7 +82,6 @@ export class tireShowComponent implements OnInit {
       });
       this.listner.connection.on("tireShow",data=>
       {
-        console.log(data);
         this.changeTire(data);
       });
 
@@ -99,6 +97,18 @@ export class tireShowComponent implements OnInit {
     }
     changeTire(newTires:tire[])
     {
+      $("#1").remove(".slide-out-top");
+      $("#2").remove(".slide-out-top");
+      $("#3").remove(".slide-out-top");
+
+
+      $("#1").addClass("slide-out-top");
+      setTimeout(() => {
+        $("#2").addClass("slide-out-top");
+        setTimeout(() => {
+          $("#3").addClass("slide-out-top");
+        }, 1000);
+      }, 1000);
       while(newTires.length<this.tires.length)
       {
         newTires.push(this.emptyTire);
