@@ -43,6 +43,7 @@ export class VideoGalleryComponent implements OnInit {
       }
       else{
         this.elements=this.streamElements.elements;
+        console.log(this.streamElements.elements);
         //receive n elements and divide it in pages of 6 elements
         this.divideInMorePages();
       }
@@ -98,6 +99,7 @@ export class VideoGalleryComponent implements OnInit {
     sendData(i:element)
     {
       this.backupData(i);
+      console.log(i);
       this.router.navigateByUrl("/video/media");
     }
 
@@ -209,6 +211,7 @@ export class VideoGalleryComponent implements OnInit {
    this.unsubscribes.push(this.getVideo.get(url).subscribe(data=>
     {
       this.elements=data;
+      
       this.divideInMorePages();
     }));
   }

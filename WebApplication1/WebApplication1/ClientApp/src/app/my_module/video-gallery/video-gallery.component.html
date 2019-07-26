@@ -5,9 +5,7 @@
     <div class="videoPage" *ngFor="let page of pages; let i=index" id="page{{i}}" [ngClass]="{'first': isVisible(i)}" >
         <div *ngFor="let media of page.sixElements; let k=index;trackBy:trackByFn" class="listItem">
              <a (click)="sendData(media)">
-                <video [muted]="'muted'" autoplay="autoplay" loop >
-                  <source src={{media.Gifpath}}>
-                </video>
+               <img src={{media.gifpath}}>
                 <div class="infoBox">{{k+1}}) {{media.name | uppercase}}
                 </div>
             </a>
@@ -19,3 +17,7 @@
         </div>
     </div>
   </div>
+  
+<!--                <video [muted]="'muted'" autoplay="autoplay" loop >
+                  <source src={{media.Gifpath}}>
+                </video>-->

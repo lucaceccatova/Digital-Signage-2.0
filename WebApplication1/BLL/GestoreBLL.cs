@@ -23,7 +23,7 @@ namespace BLL
                 //    med.format = (type)x.format;
                 //    med.create_date = x.create_date;
                 //    med.path = x.path;
-                //    med.ListaID = x.listId;
+                //    med.ListaID = x.listid;
                 //    med.description = x.description;
                 //    medias.Add(med);
                 //}
@@ -93,7 +93,7 @@ namespace BLL
         //        //    med.format = (type)x.format;
         //        //    med.create_date = x.create_date;
         //        //    med.path = x.path;
-        //        //    med.ListaID = x.listId;
+        //        //    med.ListaID = x.listid;
         //        //    med.description = x.description;
         //        //    medias.Add(med);
         //        //}
@@ -121,7 +121,7 @@ namespace BLL
         //        //    med.format = (type)x.format;
         //        //    med.create_date = x.create_date;
         //        //    med.path = x.path;
-        //        //    med.ListaID = x.listId;
+        //        //    med.ListaID = x.listid;
         //        //    med.description = x.description;
         //        //    medias.Add(med);
         //        //}
@@ -144,7 +144,7 @@ namespace BLL
             //media.path = m.path;
             //media.format = (DAL.type)m.format;
             //media.create_date = m.create_date;
-            //media.listId = m.ListaID;
+            //media.listid = m.ListaID;
 
             return new DB_Access(connectionDB).AddMedia(m);
         }
@@ -159,7 +159,7 @@ namespace BLL
         //    //media.path = m.path;
         //    //media.format = (DAL.type)m.format;
         //    //media.create_date = m.create_date;
-        //    //media.listId = m.ListaID;
+        //    //media.listid = m.ListaID;
 
         //    return new DB_Access(connectionDB).AddCategory(m);
         //}

@@ -11,6 +11,11 @@
         height: 100%;
         background-image: linear-gradient(to right, rgb(88, 88, 88) , rgb(0,0,0));
         }
+        .center
+        {
+            display: block;
+            margin: auto;
+        }
     .rightSide
     {
         width: 35%;
@@ -34,7 +39,7 @@
     }
     .text
     {
-        margin-top: 35%;
+        margin-top: 3%;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         font-size: 30px;
         color: whitesmoke;
@@ -76,4 +81,8 @@
         margin-bottom: 0;
         float:left;
     }
+}
+#tireImage{
+    margin-top: 3%;
+    width: 20%;
 }

@@ -18,10 +18,10 @@ namespace DAL
         public int timer { get; set; }
         public DateTime create_date { get; set; }
         public string path { get; set; }
-        public int listId { get; set; }
+        public int listid { get; set; }
         public Nullable<int> FK_Car { get; set; }
 
-        public string Gifpath { get; set; }
+        public string gifpath { get; set; }
 
     }
 }

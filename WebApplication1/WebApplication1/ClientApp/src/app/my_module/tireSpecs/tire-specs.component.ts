@@ -21,7 +21,7 @@ export class tireSpecsComponent implements OnInit {
     tire:tire; selectedVideo:number;
     videos:element[]=[];
     ngOnInit(): void { 
-        this.mock();
+        //this.mock();
 
       if(this.backUp.video!=null)
         this.restore();
@@ -37,7 +37,7 @@ export class tireSpecsComponent implements OnInit {
 
     }
 
-    mock()
+ /*   mock()
     {
         this.tire={
                     id:0,
@@ -56,7 +56,7 @@ export class tireSpecsComponent implements OnInit {
           id: 4, name: "Pirelli Girl", description: "Una bella città", format: 0, timer: 15, create_date: "2019-07-06T00:00:00", path: "assets/Movie/pirelliGirl.mp4", ListaID: 1
         }
       );
-  }
+  }*/
   getData() {
     this.tire = this.dataStream.selectedTire;
     this.videos = this.dataStream.videos;

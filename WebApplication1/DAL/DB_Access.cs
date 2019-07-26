@@ -48,7 +48,7 @@ namespace DAL
                                 todo.create_date = (DateTime)reader["DataCreazione"];
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
+                                todo.listid = (int)reader["lista_ID"];
                                 if (reader["Tipo"].ToString().ToLower() == "vid")
                                 {
                                     todo.format = type.vid;
@@ -117,7 +117,7 @@ namespace DAL
                                 todo.create_date = (DateTime)reader["DataCreazione"];
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
+                                todo.listid = (int)reader["lista_ID"];
                                 todo.format = type.img;
                                 todoList.Add(todo);
                             }
@@ -186,8 +186,8 @@ namespace DAL
                                     todo.create_date = (DateTime)reader2["DataCreazione"];
                                     todo.timer = (int)reader2["Timer"];
                                     todo.path = reader2["Percorso"].ToString();
-                                    todo.Gifpath = reader2["Gifpath"].ToString();
-                                    todo.listId = (int)reader2["lista_ID"];
+                                    todo.gifpath = reader2["Gifpath"].ToString();
+                                    todo.listid = (int)reader2["lista_ID"];
                                     todo.format = type.vid;
                                     todoList.Add(todo);
                                 }
@@ -300,7 +300,7 @@ namespace DAL
     //                        todo.create_date = (DateTime)reader["DataCreazione"];
     //                        todo.timer = (int)reader["Timer"];
     //                        todo.path = reader["Percorso"].ToString();
-    //                        todo.listId = (int)reader["lista_ID"];
+    //                        todo.listid = (int)reader["lista_ID"];
     //                        if (reader["Tipo"].ToString().ToLower() == "vid")
     //                        {
     //                            todo.format = type.vid;
@@ -487,7 +487,7 @@ namespace DAL
                             cmd.Parameters.AddWithValue("@medvalue", "vid");
                         }
 
-                        cmd.Parameters.AddWithValue("@medlistaID", med.listId);
+                        cmd.Parameters.AddWithValue("@medlistaID", med.listid);
                         cmd.Parameters.AddWithValue("@medtimer", med.timer);
                         cmd.Parameters.AddWithValue("@medpath", "path"); //SET A REAL PATH LATER
                         cmd.ExecuteNonQuery();
@@ -717,8 +717,8 @@ namespace DAL
                                 todo.create_date = (DateTime)reader["DataCreazione"];
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
-                                todo.listId = (int)reader["lista_ID"];
-                                todo.Gifpath = reader["Gifpath"].ToString();
+                                todo.listid = (int)reader["lista_ID"];
+                                todo.gifpath = reader["Gifpath"].ToString();
                                 if (reader["FK_Car"].ToString().Length == 0)
                                 {
                                     todo.FK_Car = null;
@@ -787,7 +787,7 @@ namespace DAL
         //                        todo.create_date = (DateTime)reader["DataCreazione"];
         //                        todo.timer = (int)reader["Timer"];
         //                        todo.path = reader["Percorso"].ToString();
-        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.listid = (int)reader["lista_ID"];
         //                        todo.format = type.vid;
         //                        //todo.format = (tipo)reader["Tipo"];
         //                        todoList.Add(todo);
@@ -851,7 +851,7 @@ namespace DAL
         //                        todo.create_date = (DateTime)reader["DataCreazione"];
         //                        todo.timer = (int)reader["Timer"];
         //                        todo.path = reader["Percorso"].ToString();
-        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.listid = (int)reader["lista_ID"];
         //                        todo.format = type.vid;
         //                        //todo.format = (tipo)reader["Tipo"];
 
@@ -915,7 +915,7 @@ namespace DAL
         //                        todo.create_date = (DateTime)reader["DataCreazione"];
         //                        todo.timer = (int)reader["Timer"];
         //                        todo.path = reader["Percorso"].ToString();
-        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.listid = (int)reader["lista_ID"];
         //                        todo.format = type.vid;
         //                        //todo.format = (tipo)reader["Tipo"];
 
@@ -979,7 +979,7 @@ namespace DAL
         //                        todo.create_date = (DateTime)reader["DataCreazione"];
         //                        todo.timer = (int)reader["Timer"];
         //                        todo.path = reader["Percorso"].ToString();
-        //                        todo.listId = (int)reader["lista_ID"];
+        //                        todo.listid = (int)reader["lista_ID"];
         //                        todo.format = type.vid;
         //                        //todo.format = (tipo)reader["Tipo"];
 
@@ -1345,7 +1345,7 @@ namespace DAL
                 // Create a SqlCommand, and identify it as a stored procedure.
                 using (SqlCommand sqlCommand = new SqlCommand())
                 {
-                    var query = "update dbo.media set Nome = '" + med.name + "', Descrizione = '" + med.description + "', Percorso = '" + med.path + "',Tipo = '"+med.format.ToString()+"', Timer = '"+med.timer+"', lista_ID = '"+med.listId+"' where ID='" + med.id + "'";
+                    var query = "update dbo.media set Nome = '" + med.name + "', Descrizione = '" + med.description + "', Percorso = '" + med.path + "',Tipo = '"+med.format.ToString()+"', Timer = '"+med.timer+"', lista_ID = '"+med.listid+"' where ID='" + med.id + "'";
                     SqlCommand cmd = new SqlCommand(query, connection);
                     connection.Open();
                     try

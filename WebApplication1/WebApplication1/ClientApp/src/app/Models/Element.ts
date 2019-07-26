@@ -7,6 +7,6 @@ export class element
     timer:number;
     create_date:string;
     path:string;  
-    ListaID:number;
-    Gifpath:string;
+    listid:number;
+    gifpath:string;
 }

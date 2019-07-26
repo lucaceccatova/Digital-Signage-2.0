@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="leftSide">
         <div class="image">
-            <img src="{{tire.tirePath}}">
+            
             <h1>
                 {{tire.model}}
             </h1>         
@@ -11,6 +11,7 @@
             <img src="assets/img/tire2.png" class="brochure">
         </div>
     <br>
+    <img src="{{tire.tirePath}}" id="tireImage">
         <div class="text">
            SIZE: {{tire.size | uppercase }}<br>
            TYPE: {{tire.tireType| uppercase}}<br>
