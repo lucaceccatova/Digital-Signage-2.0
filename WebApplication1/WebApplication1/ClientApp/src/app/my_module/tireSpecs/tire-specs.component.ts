@@ -21,7 +21,7 @@ export class tireSpecsComponent implements OnInit {
     tire:tire; selectedVideo:number;
     videos:element[]=[];
     ngOnInit(): void { 
-        //this.mock();
+        this.mock();
 
       if(this.backUp.video!=null)
         this.restore();

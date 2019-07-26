@@ -6,13 +6,15 @@
                 {{tire.model}}
             </h1>         
         </div>
+        <div class="images">
+            <img src="assets/img/ModifiedBrochure.png" class="brochure">
+            <img src="assets/img/tire2.png" class="brochure">
+        </div>
+    <br>
         <div class="text">
-           <p>
-               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque tempore quidem et! Ratione qui numquam deserunt voluptas accusamus alias unde cumque a sapiente eligendi enim, obcaecati sequi reiciendis sint veniam!
-           </p>
-           Size: {{tire.size}}<br>
-           Type: {{tire.tireType}}<br>
-           Price: {{tire.price}}<br>
+           SIZE: {{tire.size | uppercase }}<br>
+           TYPE: {{tire.tireType| uppercase}}<br>
+           PRICE: {{tire.price}}<br>
 
            
         </div>
@@ -20,7 +22,7 @@
     <div class="rightSide"> 
         <div class="video">
             <div class="videoElement">
-                <video [muted]="'muted'" autoplay="autoplay" loop >
+                <video [muted]="'muted'" autoplay="autoplay" loop  >
                     <source src={{videos[0].path}}>
                 </video>
             </div>
