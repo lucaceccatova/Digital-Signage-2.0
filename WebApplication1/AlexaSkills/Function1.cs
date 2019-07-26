@@ -163,9 +163,9 @@ namespace AlexaSkills
                         {
                             if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length>1) {
                                 timer = 0;
-                                if (GestoreBLL.CarExists(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name))
+                                if (GestoreBLL.CarExists(intentRequest.Intent.Slots["auto"].Value))
                                 {
-                                    messaggio = "Potresti dirmi il modello della " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
+                                    messaggio = "Potresti dirmi il modello della " + intentRequest.Intent.Slots["auto"].Value;
                                     var models = GestoreBLL.GetCarModels(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name);
                                     if (models.Count >= 3) { 
                                         messaggio += " ? Ti consiglio alcuni modelli disponibili : " + models[0] + " ," + models[1] + " ," + models[2] + " ,";
