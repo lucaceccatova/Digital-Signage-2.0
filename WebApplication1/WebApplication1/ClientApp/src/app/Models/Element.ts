@@ -8,4 +8,5 @@ export class element
     create_date:string;
     path:string;  
     ListaID:number;
+    Gifpath:string;
 }

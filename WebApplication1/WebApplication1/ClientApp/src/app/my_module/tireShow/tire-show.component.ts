@@ -114,8 +114,7 @@ export class tireShowComponent implements OnInit {
               this.tires[index]=tire;
               $("#"+(index+1)).fadeIn(700);
             }
-            }, 700);
-            
+            }, 700);           
         }
       });
     }

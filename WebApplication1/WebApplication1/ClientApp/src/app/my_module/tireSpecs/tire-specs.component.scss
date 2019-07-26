@@ -9,8 +9,8 @@
         position: absolute;
         width: 65%;
         height: 100%;
-        background-color: red;
-    }
+        background-image: linear-gradient(to right, rgb(88, 88, 88) , rgb(0,0,0));
+        }
     .rightSide
     {
         width: 35%;
@@ -34,9 +34,9 @@
     }
     .text
     {
-        
+        margin-top: 35%;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 20px;
+        font-size: 30px;
         color: whitesmoke;
         width: 100%;
         text-align: center;
@@ -58,9 +58,22 @@
             border-color: rgb(255, 255, 63)  ;  
             video{
                 width:100%;
-               border-radius: 10px;
-               
+               border-radius: 10px;   
             }
         }
+    }
+    .images {
+        margin-top:4%;
+        display: block;
+        margin: auto;
+        width: 90%;
+        height: 20%;
+    }
+    .brochure{
+        
+        margin: 1%;
+        width: 48%;
+        margin-bottom: 0;
+        float:left;
     }
 }
