@@ -175,7 +175,7 @@ namespace DAL
                         {
                             sqlCommand.CommandText = "select * from media where FK_Car=" + idCar+" and Tipo='vid'";
                             var reader2 = sqlCommand.ExecuteReader();
-                            while (reader2.Read())
+                            while (reader2.Read()&&todoList.Count<=3)
                             {
                                 if (reader2.HasRows)
                                 {
@@ -186,6 +186,7 @@ namespace DAL
                                     todo.create_date = (DateTime)reader2["DataCreazione"];
                                     todo.timer = (int)reader2["Timer"];
                                     todo.path = reader2["Percorso"].ToString();
+                                    todo.Gifpath = reader2["Gifpath"].ToString();
                                     todo.listId = (int)reader2["lista_ID"];
                                     todo.format = type.vid;
                                     todoList.Add(todo);
@@ -717,6 +718,7 @@ namespace DAL
                                 todo.timer = (int)reader["Timer"];
                                 todo.path = reader["Percorso"].ToString();
                                 todo.listId = (int)reader["lista_ID"];
+                                todo.Gifpath = reader["Gifpath"].ToString();
                                 if (reader["FK_Car"].ToString().Length == 0)
                                 {
                                     todo.FK_Car = null;

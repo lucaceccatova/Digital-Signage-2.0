@@ -43,7 +43,7 @@ namespace AlexaSkills
 
             if (requestType == typeof(LaunchRequest)) //-- Enter in this if when we tell to Alexa to open our skill: "Controllo Vocale"
             {
-                if (videosUtteranceInovked != true || ShowTireInfoInvoked != true || ShowTireInvoked != true)
+                if (videosUtteranceInovked != true && ShowTireInfoInvoked != true && ShowTireInvoked != true)
                 {
                     response = ResponseBuilder.Tell("Benvenuto in Pirelli Voice Control");
                    
@@ -161,52 +161,62 @@ namespace AlexaSkills
                     case "CarIntent": //RIGUARDARE GESTOREBL E DB 
                         if (ShowTireInvoked != false)
                         {
-                            if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length>1) {
-                                timer = 0;
-                                if (GestoreBLL.CarExists(intentRequest.Intent.Slots["auto"].Value))
-                                {
-                                    messaggio = "Potresti dirmi il modello della " + intentRequest.Intent.Slots["auto"].Value;
-                                    var models = GestoreBLL.GetCarModels(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name);
-                                    if (models.Count >= 3) { 
-                                        messaggio += " ? Ti consiglio alcuni modelli disponibili : " + models[0] + " ," + models[1] + " ," + models[2] + " ,";
+                            if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values!=null)
+                            {
+                               /* if (GestoreBLL.CarExists(intentRequest.Intent.Slots["auto"].Value))
+                                {*/
+                                    if (intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values.Length > 1)
+                                    {
+                                        timer = 0;
+
+                                        messaggio = "Potresti dirmi il modello della " + intentRequest.Intent.Slots["auto"].Value;
+                                        var models = GestoreBLL.GetCarModels(intentRequest.Intent.Slots["auto"].Value);
+                                        if (models.Count >= 3)
+                                        {
+                                            messaggio += " ? Ti consiglio alcuni modelli disponibili : " + models[0] + " ," + models[1] + " ," + models[2] + " ,";
+                                        }
+                                        else
+                                        {
+                                            messaggio += " ? Sono disponibili questi due modelli : " + models[0] + " ," + models[1];
+                                        }
+
                                     }
                                     else
                                     {
-                                        messaggio += " ? Sono disponibili questi due modelli : " + models[0] + " ," + models[1];
+                                        timer = 2000;
+                                        carUtteranceInvoked = true;
+                                        messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
+                                        await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
                                     }
 
-                                }
-                                else
-                                {
-                                    var car = GestoreBLL.GetCars();
-                                    messaggio = "La " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name + " non è disponibile. Puoi dirmi il nome di un'altra auto ? Se vuoi puoi scegliere una tra queste : ";
-                                    if (car.Count >= 4)
-                                    {
-                                        for(int i = 0; i < 4; i++)
-                                        {
-                                            messaggio += car[i].brand + " " + car[i].invokeName + " ,";
-                                        }
-                                    }
-                                    else if(car.Count<3)
-                                    {
-                                        for (int i = 0; i < 2; i++)
-                                        {
-                                            messaggio += car[i].brand + " " + car[i].invokeName + " ,";
-                                        }
-                                    }
-                                    else
-                                    {
-                                        messaggio= messaggio = "La " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name + "non è disponibile. Per il momento è disponibile solo questa auto: "+car[0].brand + " " + car[0].invokeName;
-                                    }
-                                }
+                                //}
+                                
                             }
                             else
                             {
-                                timer = 2000;
-                                carUtteranceInvoked = true;
-                                messaggio = "Sul display sono mostrate solo le ruote compatibili con la " + intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Name;
-                                await connection.InvokeAsync("SendTiresByType", GestoreBLL.GetTiresByCar(int.Parse(intentRequest.Intent.Slots["auto"].Resolution.Authorities[0].Values[0].Value.Id)));
+                                timer = 0;
+                                var car = GestoreBLL.GetCars();
+                                messaggio = "La " + intentRequest.Intent.Slots["auto"].Value + " non è disponibile. Puoi dirmi il nome di un'altra auto ? Se vuoi puoi scegliere una tra queste : ";
+                                if (car.Count >= 3)
+                                {
+                                    for (int i = 0; i < 3; i++)
+                                    {
+                                        messaggio += car[i].brand + " " + car[i].invokeName + " ,";
+                                    }
+                                }
+                                else if (car.Count == 2)
+                                {
+                                    for (int i = 0; i < 2; i++)
+                                    {
+                                        messaggio += car[i].brand + " " + car[i].invokeName + " ,";
+                                    }
+                                }
+                                else
+                                {
+                                    messaggio = "La " + intentRequest.Intent.Slots["auto"].Value + "non è disponibile. Per il momento è disponibile solo questa auto: " + car[0].brand + " " + car[0].invokeName;
+                                }
                             }
+
                         }
                         else
                         {

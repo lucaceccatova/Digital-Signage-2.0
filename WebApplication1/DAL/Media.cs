@@ -21,6 +21,7 @@ namespace DAL
         public int listId { get; set; }
         public Nullable<int> FK_Car { get; set; }
 
+        public string Gifpath { get; set; }
 
     }
 }
