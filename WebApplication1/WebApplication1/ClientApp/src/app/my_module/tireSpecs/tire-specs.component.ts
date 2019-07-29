@@ -29,6 +29,7 @@ export class tireSpecsComponent implements OnInit {
         this.getData();
 
       this.signalRListnter();
+      
     }
     ngOnDestroy(): void {
       //Called once, before the instance is destroyed.
@@ -80,4 +81,6 @@ export class tireSpecsComponent implements OnInit {
     this.backUp.video=this.videos;
     this.backUp.selectedTire=this.tire;
   }
+  
 }
+  

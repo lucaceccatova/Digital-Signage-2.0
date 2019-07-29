@@ -1,19 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { myRouter } from './router/router.module';
 import { FiltersPipe } from './Pipes/filters.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
-  declarations: [
+  declarations: [    
     AppComponent,
-    FiltersPipe
+    FiltersPipe,
+    
     ],
   imports: [
-    BrowserModule,
+    BrowserModule,BrowserAnimationsModule,
     myRouter,
   ],
+  exports:[],
   providers: [],
   bootstrap: [AppComponent]
 })

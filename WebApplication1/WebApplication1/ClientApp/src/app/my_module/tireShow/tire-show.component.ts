@@ -5,6 +5,10 @@ import $ from 'jquery';
 import { SignalRService } from 'src/app/Services/signalRService/signal-r.service';
 import { element } from '../../Models/Element';
 import { RouterModule, Router } from '@angular/router';
+enum anim {enterSandMan, exitLight, theNumber}
+{
+
+}
 @Component({
     selector: 'tireShow-component',
     templateUrl: './tire-show.component.html',
@@ -26,20 +30,23 @@ export class tireShowComponent implements OnInit {
     tirePath:null,
     tireType:null,
   }
-
+  visible:anim[]=[
+    anim.theNumber,
+    anim.theNumber,
+    anim.theNumber
+  ];
+rotation=[false,false,false];
     ngOnInit(): void { 
         this.tires=this.tiresStream.tires;
         console.log(this.tires);
+      this.visible[0]=anim.enterSandMan;
+      this.setAnim(anim.enterSandMan);
 
-      $("#1").addClass("slide-in-bottom");
-      setTimeout(() => {
-        $("#2").addClass("slide-in-bottom");
-        setTimeout(() => {
-          $("#3").addClass("slide-in-bottom");
-        }, 1000);
-      }, 1000);
-        this.signalRListner();        }
-        ngOnDestroy(): void {
+        this.signalRListner();        
+      }
+        
+        
+    ngOnDestroy(): void {
           //Called once, before the instance is destroyed.
           //Add 'implements OnDestroy' to the class.
           this.listner.connection.off("tireShow");
@@ -97,35 +104,83 @@ export class tireShowComponent implements OnInit {
     }
     changeTire(newTires:tire[])
     {
-      $("#1").remove(".slide-out-top");
-      $("#2").remove(".slide-out-top");
-      $("#3").remove(".slide-out-top");
-
-
-      $("#1").addClass("slide-out-top");
+      this.setAnim(anim.exitLight);
       setTimeout(() => {
-        $("#2").addClass("slide-out-top");
-        setTimeout(() => {
-          $("#3").addClass("slide-out-top");
-        }, 1000);
+        this.changeTireElement(newTires);  
       }, 1000);
+    }
+    changeTireElement(newTires:tire[])
+    {
       while(newTires.length<this.tires.length)
       {
         newTires.push(this.emptyTire);
       }
-      
+      console.log(this.tires);
       newTires.forEach((tire,index) => {
-        if(this.tires[index].id!=tire.id)
+      //  if(tire!=this.emptyTire)
         {
-          $("#"+(index+1)).fadeOut(700);
-            setTimeout(() => {
-              if(tire!=this.emptyTire)
-            {
+          if(tire!=this.emptyTire)
               this.tires[index]=tire;
-              $("#"+(index+1)).fadeIn(700);
-            }
-            }, 700);           
+          else
+            this.tires[index]=null;
         }
       });
+
+      setTimeout(() => {
+        this.setAnim(anim.enterSandMan);
+      }, 1000);
+           
     }
+
+
+
+    incoming(id:number)
+    {
+      if(this.visible[id-1]==anim.enterSandMan)
+        return true;
+      return false;
+    }
+    outgoing(id:number)
+    {
+      if(this.visible[id-1]==anim.exitLight)
+      {
+        return true;
+      }
+      return false;
+    }
+    
+    setAnim(animation:anim)
+    {
+      setTimeout(() => {
+        this.visible[0]=animation;
+        if(animation==anim.enterSandMan)
+        this.rotation[0]=true;
+        else
+        this.rotation[0]=false;
+        setTimeout(() => {
+          this.visible[1]=animation;
+          if(animation==anim.enterSandMan)
+          this.rotation[1]=true;
+          else
+          this.rotation[1]=false;
+          setTimeout(() => {
+            this.visible[2]=animation;
+            if(animation==anim.enterSandMan)
+            this.rotation[2]=true;
+            else
+            this.rotation[2]=false;
+          }, 1000);
+        }, 1000);   
+      }, 1000);
+      
+    }
+    rotating(id:number)
+    {
+      if (this.rotation[id]==true)
+      {
+        return true;
+      }
+      return false;
+    }
+
 }

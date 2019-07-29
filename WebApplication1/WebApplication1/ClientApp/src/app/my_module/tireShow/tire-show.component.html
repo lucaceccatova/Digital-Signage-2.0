@@ -3,20 +3,19 @@
                 <div class="tire" >
                         <div class="breath">
                             
-                            <div class="brouchure" id="1">
-                                <img src={{tires[0].tirePath}}>
-                                <h2> {{tires[0].model}}</h2>
+                            <div class="brouchure" id="1" [ngClass]="{'slide-in-bottom': incoming(1),'slide-in-elliptic-bottom-fwd': outgoing(1)}"> 
+                                <img src={{tires[0].tirePath}} [ngClass]="{'rotate-center': rotating(0)}">
+                                <h2> {{tires[0].model | uppercase}}</h2>
                                 Type: {{tires[0].tireType}}<br>
                                 Price: {{tires[0].price}}<br>
-                                Size: {{tires[0].size}}
-                                
+                                Size: {{tires[0].size}} 
                             </div>
                         </div>
                     </div>
                     <div class="tire" >
                         <div class="breath">
-                            <div class="brouchure" id="2">
-                                    <img src={{tires[1].tirePath}} >
+                            <div class="brouchure" id="2" [ngClass]="{'slide-in-bottom': incoming(2),'slide-in-elliptic-bottom-fwd': outgoing(2)}">
+                                    <img src={{tires[1].tirePath}} [ngClass]="{'rotate-center': rotating(1)}" >
 
                                     <h2> {{tires[1].model}}</h2>
                                     Type: {{tires[1].tireType}}<br>
@@ -28,8 +27,8 @@
                     </div>
                     <div class="tire" >
                         <div class="breath">
-                            <div class="brouchure" id="3">
-                                    <img src={{tires[2].tirePath}}>
+                            <div class="brouchure" id="3" [ngClass]="{'slide-in-bottom': incoming(3),'slide-in-elliptic-bottom-fwd': outgoing(3)}">
+                                    <img src={{tires[2].tirePath}} [ngClass]="{'rotate-center': rotating(2)}">
 
                                     <h2> {{tires[2].model}}</h2>
                                     Type: {{tires[2].tireType}}<br>
