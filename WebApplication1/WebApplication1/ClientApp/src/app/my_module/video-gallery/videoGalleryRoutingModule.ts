@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {Routes,RouterModule} from '@angular/router'
 import { VideoGalleryComponent } from './video-gallery.component';
-import { fullScreenVideo } from './fullScreenVideo/fullScreenVideo.component';
+import { fullScreenVideo } from '../fullScreenVideo/fullScreenVideo.component';
 
 const routes:Routes=[
     {
