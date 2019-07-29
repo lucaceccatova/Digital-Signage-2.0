@@ -13,14 +13,14 @@
     }
 
 
-.mySlides
-{
-    display: none;
+.mySlides {
+  display: none;
+  
 }
 
-.mySlidesVisible
-{
-   display: block;
+.mySlidesVisible {
+  display: block;
+  
 }
 body    
     {
@@ -38,17 +38,104 @@ body
     margin: 0;
     width: 100%;
 }
-#infoBox
-{
-    width: 100%;
-    height: 9%;
-    background: linear-gradient(180deg,rgba(83, 83, 83, 0.58) 0%, rgba(0,0,0,1) 100%); /* w3c */
-    position: absolute;
-    top: 91%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    color: whitesmoke;
-    text-align: center;
-    font-size: 26px;
-    
+#infoBox {
+  width: 100%;
+  height: 9%;
+  background: linear-gradient(180deg,rgba(83, 83, 83, 0.58) 0%, rgba(0,0,0,1) 100%); /* w3c */
+  position: absolute;
+  top: 91%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 32px;
+  -webkit-animation: focus-in-contract-bck 1.2s ease-in-out both;
+  animation: focus-in-contract-bck 1.2s ease-in-out both;
+  /*-webkit-animation: tracking-in-contract-bck 1s ease-out both;
+  animation: tracking-in-contract-bck 1s ease-out both;*/
+}
+/**
+* ----------------------------------------
+* animation tracking-in-contract-bck
+* ----------------------------------------
+
+@-webkit-keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(400px);
+    transform: translateZ(400px);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.6;
+  }
+
+  100% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes tracking-in-contract-bck {
+  0% {
+    letter-spacing: 2em;
+    -webkit-transform: translateZ(400px);
+    transform: translateZ(400px);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.5;
+  }
+
+  100% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}*/
+
+/**
+ * ----------------------------------------
+ * animation focus-in-contract-bck
+ * ----------------------------------------
+ */
+@-webkit-keyframes focus-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(300px);
+    transform: translateZ(300px);
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateZ(12px);
+    transform: translateZ(12px);
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes focus-in-contract-bck {
+  0% {
+    letter-spacing: 1em;
+    -webkit-transform: translateZ(300px);
+    transform: translateZ(300px);
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translateZ(12px);
+    transform: translateZ(12px);
+    -webkit-filter: blur(0);
+    filter: blur(0);
+    opacity: 1;
+  }
 }
