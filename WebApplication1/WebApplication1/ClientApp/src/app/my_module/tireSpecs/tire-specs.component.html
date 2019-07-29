@@ -1,19 +1,22 @@
 <div class="wrapper">
+    <button (click)="notification()">lalala</button>
     <div class="leftSide">
         <div class="image">
             
             <h1>
-                {{tire.model}}
+                {{tire.model | uppercase}}
             </h1>         
         </div>
         <div class="images">
+            <img src="{{tire.tirePath}}" id="tireImage">
+
             <img src="assets/img/ModifiedBrochure.png" class="brochure">
             <img src="assets/img/tire2.png" class="brochure">
         </div>
     <br>
-    <img src="{{tire.tirePath}}" id="tireImage">
         <div class="text">
-           SIZE: {{tire.size | uppercase }}<br>
+
+           SIZE: {{tire.size}}<br>
            TYPE: {{tire.tireType| uppercase}}<br>
            PRICE: {{tire.price}}<br>
 
