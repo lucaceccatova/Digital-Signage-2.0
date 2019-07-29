@@ -3,14 +3,16 @@ import { element } from 'src/app/Models/Element';
 import { tire } from 'src/app/Models/tire';
 
 @Injectable(
+    {providedIn:'root',}
+
 )
 export class preserveSpecService {
-    video:element[]=null;
-    selectedTire:tire=null;
+    video:element[]=[];
+    selectedTire:tire;
 
     reset()
     {
-        this.video=null;
-        this.selectedTire=null;
+        this.video=[];
+        this.selectedTire;
     }
 }
