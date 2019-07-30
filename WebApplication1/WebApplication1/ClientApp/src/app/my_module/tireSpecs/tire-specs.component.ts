@@ -23,7 +23,7 @@ export class tireSpecsComponent implements OnInit {
     ngOnInit(): void { 
         //this.mock();
 
-      if(this.backUp.video!=null)
+      if(this.backUp.video.length!=0)
         this.restore();
       else
         this.getData();
