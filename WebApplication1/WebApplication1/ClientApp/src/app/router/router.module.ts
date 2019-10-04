@@ -8,9 +8,9 @@ const MyRoutes:Routes=[
     redirectTo:'slider',
     pathMatch:"full",
   },
-  //al modules are lazy loaded for better performance cause there are a lot of subscribe and
+  //al modules are lazy loaded for better performance cause there are a lot of subscription and
   //media around the app. the signage could also load all component on start but
-  //in that case some services had to be rewritten as sldier service
+  //in that case some services had to be rewritten like slider service
 
 
   //pros: easier to modify and to add some external module 

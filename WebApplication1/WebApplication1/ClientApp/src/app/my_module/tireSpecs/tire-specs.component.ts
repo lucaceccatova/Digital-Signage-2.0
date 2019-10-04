@@ -32,10 +32,7 @@ export class tireSpecsComponent implements OnInit {
       
     }
     ngOnDestroy(): void {
-      //Called once, before the instance is destroyed.
-      //Add 'implements OnDestroy' to the class.
       this.connection.connection.off("showVideo");
-
     }
 
  /*   mock()

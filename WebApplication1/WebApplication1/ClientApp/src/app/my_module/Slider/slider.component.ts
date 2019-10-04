@@ -63,10 +63,11 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
     //to keep application lightweight also after long session
     ngOnDestroy()
     {
+      this.stopEngine();
+
       this.unsubscribes.forEach(element => {
         element.unsubscribe();
       });
-      this.stopEngine();
     }
   //#endregion
   //#region sliderEngine 
@@ -103,7 +104,7 @@ constructor(private http:GetMediaService,private _Activatedroute:ActivatedRoute,
             $("#mySliderBox").fadeIn(500);
           }
           
-        }, this.elements[this.startingSlide].timer*1000);
+        }, this.elements[this.startingSlide].timer*2000);
       }
       //to stop slider when leaving the component
       stopEngine()
